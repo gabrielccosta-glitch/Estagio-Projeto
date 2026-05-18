@@ -147,7 +147,7 @@ include 'includes/header.php';
                     <input type="checkbox" class="form-check-input" id="aceita_politica" name="aceita_politica" required>
                     <label class="form-check-label" for="aceita_politica">
                         Aceito que as minhas informações sejam processadas conforme descrito na 
-                        <a href="https://freemenu.pt/politica-de-privacidade/" target="_blank">Política de Privacidade</a>
+                        <a href="empresa/politica_privacidade_cliente.php" target="_blank">Política de Privacidade</a>
                     </label>
                 </div>
                 
