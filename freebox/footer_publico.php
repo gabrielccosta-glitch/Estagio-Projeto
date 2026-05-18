@@ -86,14 +86,14 @@
         </div>
 
         <!-- NOME GRANDE -->
-        <div class="footer-brand-name">
+        <div class="footer-brand-name" style="font-size: 6rem; letter-spacing: 3px;">
             <?= htmlspecialchars($nome_empresa); ?>
         </div>
 
         <div class="footer-bottom">
             <div class="container footer-bottom-inner">
-                <h5><span>© <?= date('Y'); ?> <?= htmlspecialchars($nome_empresa); ?> — Todos os direitos reservados</span></h5>
-                <h5><span>Made by <a href="https://webdesigner.is4.pt/" target="_blank" class="made-by">IS4 Web Designer</a></span></h5>
+                <h6><span>© <?= date('Y'); ?> <?= htmlspecialchars($nome_empresa); ?> — Todos os direitos reservados</span></h6>
+                <h6><span>Made by <a href="https://webdesigner.is4.pt/" target="_blank" class="made-by">IS4 Web Designer</a></span></h6>
             </div>
         </div>
     </footer>
