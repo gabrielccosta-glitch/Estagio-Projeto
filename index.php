@@ -22,38 +22,69 @@ if ($esta_logado && $tipo_usuario === 'admin') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <link rel="stylesheet" href="/projeto/css/home.css">
+    <link rel="stylesheet" href="/projeto/css/home.css?v=<?= time(); ?>">
 </head>
 <body>
 
 <header class="main-navbar">
     <div class="container navbar-inner">
 
-        <a href="/projeto/" class="brand">
-            <img src="/projeto/imagens/Logotipo_freebox.png" alt="FreeBox Sites">
-            <span>FreeBox Sites</span>
-        </a>
+        <div class="navbar-left">
+            <a href="/projeto/" class="brand">
+                <img src="/projeto/imagens/Logotipo_freebox.png" alt="FreeBox Sites">
+                <span>FreeBox Sites</span>
+            </a>
 
-        <nav class="nav-menu">
-            <a href="#sobre">Sobre</a>
-            <a href="#funcionalidades">Funcionalidades</a>
-            <a href="#como-funciona">Como funciona</a>
-            <a href="#contacto">Contacto</a>
-        </nav>
+            <nav class="nav-menu">
+                <a href="#sobre">Sobre</a>
+                <a href="#funcionalidades">Funcionalidades</a>
+                <a href="#como-funciona">Como funciona</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+        </div>
 
-        <div class="nav-actions">
-            <?php if ($esta_logado): ?>
-                <a href="<?= htmlspecialchars($dashboard_url); ?>" class="btn btn-outline-main">
-                    Dashboard
-                </a>
-            <?php else: ?>
-                <a href="login.php" class="btn btn-outline-main">
-                    Login
-                </a>
-                <a href="register.php" class="btn btn-main">
-                    Criar Site
-                </a>
-            <?php endif; ?>
+        <div class="nav-right">
+
+            <div class="nav-actions">
+                <?php if ($esta_logado): ?>
+                    <a href="<?= htmlspecialchars($dashboard_url); ?>" class="btn btn-outline-main">
+                        Dashboard
+                    </a>
+                <?php else: ?>
+                    <a href="login.php" class="btn btn-outline-main">
+                        Login
+                    </a>
+                    <a href="register.php" class="btn btn-main">
+                        Criar Site
+                    </a>
+                <?php endif; ?>
+            </div>
+
+            <div class="lang-selector no-translate" id="langSelector">
+                <button type="button" class="lang-btn" id="langBtn">
+                    <span id="langCurrent">🇵🇹 PT</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+
+                <div class="lang-dropdown" id="langDropdown">
+                    <button type="button" class="lang-option" onclick="changeLang('pt', '🇵🇹', 'PT')">
+                        <span class="flag">🇵🇹</span> Português
+                    </button>
+
+                    <button type="button" class="lang-option" onclick="changeLang('en', '🇬🇧', 'EN')">
+                        <span class="flag">🇬🇧</span> English
+                    </button>
+
+                    <button type="button" class="lang-option" onclick="changeLang('es', '🇪🇸', 'ES')">
+                        <span class="flag">🇪🇸</span> Español
+                    </button>
+
+                    <button type="button" class="lang-option" onclick="changeLang('fr', '🇫🇷', 'FR')">
+                        <span class="flag">🇫🇷</span> Français
+                    </button>
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -73,9 +104,9 @@ if ($esta_logado && $tipo_usuario === 'admin') {
             <h1>Cria o site da tua empresa de forma simples e profissional</h1>
 
             <p>
-                O FreeBox Sites permite que empresas criem uma presença online
-                através de um painel simples, sem precisar de programar.
-                Basta preencher os dados, adicionar serviços, imagens e contactos.
+                O FreeBox Sites permite que empresas criem uma presença online através de um
+                painel simples, sem precisar de programar. Basta preencher os dados, adicionar
+                serviços, imagens e contactos.
             </p>
 
             <div class="hero-buttons">
@@ -113,16 +144,15 @@ if ($esta_logado && $tipo_usuario === 'admin') {
                         <h3>FreeBox Sites</h3>
 
                         <p>
-                            Este projeto foi desenvolvido para simplificar a criação
-                            de websites institucionais. O administrador gere empresas
-                            e os clientes conseguem configurar o próprio website através
-                            de um painel simples e direto.
+                            Este projeto foi desenvolvido para simplificar a criação de websites
+                            institucionais. O administrador gere empresas e os clientes conseguem
+                            configurar o próprio website através de um painel simples e direto.
                         </p>
 
                         <p>
-                            Cada empresa pode editar as suas informações, serviços,
-                            portfólio, logotipo, capa, redes sociais e endereço público.
-                            O sistema transforma estes dados num website pronto a visitar.
+                            Cada empresa pode editar as suas informações, serviços, portfólio,
+                            logotipo, capa, redes sociais e endereço público. O sistema transforma
+                            estes dados num website pronto a visitar.
                         </p>
                     </div>
                 </div>
@@ -161,8 +191,8 @@ if ($esta_logado && $tipo_usuario === 'admin') {
                 <div class="feature-icon">
                     <i class="fas fa-circle-info"></i>
                 </div>
-                <h4>Informações</h4>
-                <p>Nome, morada, telefone, email e dados principais da empresa.</p>
+                <h4>Informações da Empresa</h4>
+                <p>Nome, morada, telefone, email e contacto principal.</p>
             </div>
 
             <div class="feature-card">
@@ -170,7 +200,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
                     <i class="fas fa-handshake"></i>
                 </div>
                 <h4>Serviços</h4>
-                <p>Criação e gestão dos serviços apresentados no website público.</p>
+                <p>Criação e gestão dos serviços apresentados no site público.</p>
             </div>
 
             <div class="feature-card">
@@ -183,10 +213,10 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-globe"></i>
+                    <i class="fas fa-palette"></i>
                 </div>
-                <h4>Website</h4>
-                <p>Configuração de logotipo, capa, descrição, redes sociais e URL.</p>
+                <h4>Personalização</h4>
+                <p>Logotipo, capa, descrição, redes sociais e endereço público.</p>
             </div>
 
             <div class="feature-card">
@@ -194,15 +224,15 @@ if ($esta_logado && $tipo_usuario === 'admin') {
                     <i class="fas fa-envelope"></i>
                 </div>
                 <h4>Contacto</h4>
-                <p>Página com contactos, formulário, mapa e informações da empresa.</p>
+                <p>Página de contacto com dados da empresa, mapa e formulário.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-language"></i>
                 </div>
-                <h4>Idiomas</h4>
-                <p>Seletor de idioma no site público para tornar o website mais acessível.</p>
+                <h4>Tradução</h4>
+                <p>Seletor de idioma no site público para tornar o site mais acessível.</p>
             </div>
 
         </div>
@@ -235,7 +265,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 
             <div class="step-card">
                 <div class="step-number">3</div>
-                <h4>Publicar site</h4>
+                <h4>Gerar site</h4>
                 <p>O sistema apresenta automaticamente o website público com os dados inseridos.</p>
             </div>
 
@@ -296,6 +326,123 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 </a>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+let originalTexts = [];
+let currentLang = 'pt';
+
+function getTextNodes() {
+    const skipTags = ['SCRIPT', 'STYLE', 'NOSCRIPT', 'IFRAME', 'INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'];
+
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(node) {
+            if (!node.parentElement) return NodeFilter.FILTER_REJECT;
+            if (skipTags.includes(node.parentElement.tagName)) return NodeFilter.FILTER_REJECT;
+            if (node.parentElement.closest('.no-translate')) return NodeFilter.FILTER_REJECT;
+            if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
+
+            return NodeFilter.FILTER_ACCEPT;
+        }
+    });
+
+    const nodes = [];
+
+    while (walker.nextNode()) {
+        nodes.push(walker.currentNode);
+    }
+
+    return nodes;
+}
+
+async function translateBatch(texts, toLang) {
+    const results = [];
+
+    for (let i = 0; i < texts.length; i += 10) {
+        const batch = texts.slice(i, i + 10);
+
+        const promises = batch.map(text => {
+            const url = 'https://api.mymemory.translated.net/get?q=' +
+                encodeURIComponent(text.trim()) +
+                '&langpair=pt|' + toLang;
+
+            return fetch(url)
+                .then(response => response.json())
+                .then(data => data.responseData?.translatedText || text)
+                .catch(() => text);
+        });
+
+        const batchResults = await Promise.all(promises);
+        results.push(...batchResults);
+    }
+
+    return results;
+}
+
+async function changeLang(lang, flag, code) {
+    if (lang === currentLang) return;
+
+    const btn = document.getElementById('langBtn');
+    const current = document.getElementById('langCurrent');
+    const dropdown = document.getElementById('langDropdown');
+
+    current.textContent = flag + ' ' + code;
+    dropdown.classList.remove('open');
+
+    btn.style.opacity = '0.6';
+    btn.style.pointerEvents = 'none';
+
+    if (lang === 'pt') {
+        const nodes = getTextNodes();
+
+        nodes.forEach((node, index) => {
+            if (originalTexts[index] !== undefined) {
+                node.textContent = originalTexts[index];
+            }
+        });
+
+        originalTexts = [];
+        currentLang = 'pt';
+
+        btn.style.opacity = '1';
+        btn.style.pointerEvents = 'auto';
+        return;
+    }
+
+    let nodes = getTextNodes();
+
+    if (originalTexts.length === 0) {
+        originalTexts = nodes.map(node => node.textContent);
+    } else {
+        nodes.forEach((node, index) => {
+            if (originalTexts[index] !== undefined) {
+                node.textContent = originalTexts[index];
+            }
+        });
+    }
+
+    nodes = getTextNodes();
+    const texts = nodes.map(node => node.textContent);
+    const translated = await translateBatch(texts, lang);
+
+    nodes.forEach((node, index) => {
+        node.textContent = translated[index];
+    });
+
+    currentLang = lang;
+
+    btn.style.opacity = '1';
+    btn.style.pointerEvents = 'auto';
+}
+
+document.getElementById('langBtn').addEventListener('click', function(event) {
+    event.stopPropagation();
+    document.getElementById('langDropdown').classList.toggle('open');
+});
+
+document.addEventListener('click', function() {
+    document.getElementById('langDropdown').classList.remove('open');
+});
+</script>
 
 </body>
 </html>
