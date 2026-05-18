@@ -86,7 +86,7 @@
         </div>
 
         <!-- NOME GRANDE -->
-        <div class="footer-brand-name" style="font-size: 6rem; letter-spacing: 3px;">
+        <div class="footer-brand-name" style="font-size: 4.5rem; letter-spacing: 3px;">
             <?= htmlspecialchars($nome_empresa); ?>
         </div>
 

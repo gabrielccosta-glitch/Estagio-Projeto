@@ -391,7 +391,8 @@
         position: relative;
         cursor: pointer;
         aspect-ratio: 4 / 3;
-        border: 4px solid white;
+        border: 2px solid white;
+        max-height: 230px;
     }
 
     .portfolio-card img {
@@ -451,6 +452,11 @@
         gap: 24px;
         box-sizing: border-box;
         padding: 12px 4px 20px;
+
+    }
+
+    .portfolio-section .carousel-page {
+        justify-items: center;
     }
 
     .carousel-btn {
