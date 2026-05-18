@@ -8,7 +8,10 @@ if (isset($_GET['url'])) {
     $website_stmt->execute();
     $website = $website_stmt->get_result()->fetch_assoc();
     $website_stmt->close();
-    if (!$website) { header("Location: ../index.php"); exit(); }
+    if (!$website) {
+        header("Location: ../index.php");
+        exit();
+    }
     $empresa_id = $website['empresa_id'];
 } elseif (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $empresa_id = intval($_GET['id']);
@@ -28,13 +31,20 @@ $stmt->execute();
 $empresa = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
-if (!$empresa) { header("Location: ../index.php"); exit(); }
+if (!$empresa) {
+    header("Location: ../index.php");
+    exit();
+}
 
 if (!$website) {
     $website = [
-        'logotipo' => '', 'capa_empresa' => '',
-        'descricao_empresa' => '', 'link_facebook' => '',
-        'link_instagram' => '', 'link_x' => '', 'url_site' => ''
+        'logotipo' => '',
+        'capa_empresa' => '',
+        'descricao_empresa' => '',
+        'link_facebook' => '',
+        'link_instagram' => '',
+        'link_x' => '',
+        'url_site' => ''
     ];
 }
 
@@ -65,7 +75,7 @@ include 'header_publico.php';
 
 <section class="about-section section-padding">
     <div class="container">
-        <h2 class="section-title">Formulário de Contacto</h2>
+        <h1 class="section-title" style="font-size: 2.0rem; letter-spacing: 2px; text-transform: none;">Formulário de Contacto</h1>
         <div class="section-line"></div>
 
         <div class="row justify-content-center mt-4">
@@ -104,8 +114,8 @@ include 'header_publico.php';
                         </div>
 
                         <div class="text-end">
-                            <button type="submit" class="hero-button" style="text-decoration:none; cursor:pointer; border:none;">
-                                Enviar 
+                            <button type="submit" class="hero-button" style="text-decoration:none; cursor:pointer; border:none; font-size: 1.0rem; padding: 10px 28px;">
+                                Enviar
                             </button>
                         </div>
                     </form>
@@ -118,41 +128,41 @@ include 'header_publico.php';
 </section>
 
 <script>
-document.getElementById('contactoForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const form = this;
-    const feedback = document.getElementById('formFeedback');
-    const btn = form.querySelector('button[type="submit"]');
+    document.getElementById('contactoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const form = this;
+        const feedback = document.getElementById('formFeedback');
+        const btn = form.querySelector('button[type="submit"]');
 
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> A enviar...';
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> A enviar...';
 
-    fetch('enviar_contacto.php', {
-        method: 'POST',
-        body: new FormData(form)
-    })
-    .then(r => r.json())
-    .then(res => {
-        feedback.style.display = 'block';
-        if (res.success) {
-            feedback.className = 'footer-feedback-ok';
-            feedback.textContent = '✓ Mensagem enviada com sucesso!';
-            form.reset();
-        } else {
-            feedback.className = 'footer-feedback-err';
-            feedback.textContent = '✗ Erro ao enviar. Tente novamente.';
-        }
-        btn.disabled = false;
-        btn.innerHTML = 'Enviar <i class="fas fa-paper-plane ms-1"></i>';
-    })
-    .catch(() => {
-        feedback.style.display = 'block';
-        feedback.className = 'footer-feedback-err';
-        feedback.textContent = '✗ Erro de ligação. Tente novamente.';
-        btn.disabled = false;
-        btn.innerHTML = 'Enviar <i class="fas fa-paper-plane ms-1"></i>';
+        fetch('enviar_contacto.php', {
+                method: 'POST',
+                body: new FormData(form)
+            })
+            .then(r => r.json())
+            .then(res => {
+                feedback.style.display = 'block';
+                if (res.success) {
+                    feedback.className = 'footer-feedback-ok';
+                    feedback.textContent = '✓ Mensagem enviada com sucesso!';
+                    form.reset();
+                } else {
+                    feedback.className = 'footer-feedback-err';
+                    feedback.textContent = '✗ Erro ao enviar. Tente novamente.';
+                }
+                btn.disabled = false;
+                btn.innerHTML = 'Enviar <i class="fas fa-paper-plane ms-1"></i>';
+            })
+            .catch(() => {
+                feedback.style.display = 'block';
+                feedback.className = 'footer-feedback-err';
+                feedback.textContent = '✗ Erro de ligação. Tente novamente.';
+                btn.disabled = false;
+                btn.innerHTML = 'Enviar <i class="fas fa-paper-plane ms-1"></i>';
+            });
     });
-});
 </script>
 
 <?php include 'footer_publico.php'; ?>

@@ -8,19 +8,23 @@ if (!isset($_GET['url'])) {
 
 $url_site = preg_replace('/[^a-zA-Z0-9\-]/', '', $_GET['url']);
 
-$stmt = $conn->prepare("
-    SELECT e.*, w.*
-    FROM empresas e
-    JOIN website_config w ON w.empresa_id = e.id
-    WHERE w.url_site = ?
-");
+$website_stmt = $conn->prepare("SELECT * FROM website_config WHERE url_site = ?");
+$website_stmt->bind_param("s", $url_site);
+$website_stmt->execute();
+$website = $website_stmt->get_result()->fetch_assoc();
+$website_stmt->close();
 
-$stmt->bind_param("s", $url_site);
+if (!$website) {
+    header("Location: ../index.php");
+    exit();
+}
+
+$empresa_id = $website['empresa_id'];
+
+$stmt = $conn->prepare("SELECT * FROM empresas WHERE id = ?");
+$stmt->bind_param("i", $empresa_id);
 $stmt->execute();
-
-$result = $stmt->get_result();
-$empresa = $result->fetch_assoc();
-
+$empresa = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if (!$empresa) {
@@ -28,9 +32,37 @@ if (!$empresa) {
     exit();
 }
 
+$servicos_stmt = $conn->prepare("SELECT * FROM servicos WHERE empresa_id = ?");
+$servicos_stmt->bind_param("i", $empresa_id);
+$servicos_stmt->execute();
+$servicos = $servicos_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$servicos_stmt->close();
+
+$portfolio_stmt = $conn->prepare("SELECT * FROM portfolio WHERE empresa_id = ?");
+$portfolio_stmt->bind_param("i", $empresa_id);
+$portfolio_stmt->execute();
+$portfolio = $portfolio_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$portfolio_stmt->close();
+
 $nome_empresa       = $empresa['nome_empresa'] ?? 'Empresa';
-$email_principal    = $empresa['email_empresa'] ?? '';
-$website            = $empresa;
+$descricao          = trim($website['descricao_empresa'] ?? '');
+$logo               = trim($website['logotipo'] ?? '');
+$capa               = trim($website['capa_empresa'] ?? '');
+$telefone_principal = !empty($empresa['telefone']) ? $empresa['telefone'] : ($empresa['telefone_contato'] ?? '');
+$email_principal    = !empty($empresa['email_empresa']) ? $empresa['email_empresa'] : ($empresa['email_contato'] ?? '');
+$morada_completa    = trim(($empresa['morada'] ?? '') . ' ' . ($empresa['codigo_postal'] ?? ''));
+
+// Corrige caminhos relativos
+if (!empty($logo)) {
+    $logo = '/projeto/freebox/' . ltrim(preg_replace('#^\./#', '', $logo), '/');
+}
+if (!empty($capa)) {
+    $capa = '/projeto/freebox/' . ltrim(preg_replace('#^\./#', '', $capa), '/');
+}
+
+$hero_style      = !empty($capa) ? "background-image: url('" . htmlspecialchars($capa, ENT_QUOTES) . "');" : '';
+$portfolio_bg    = !empty($capa) ? $capa : (!empty($portfolio[0]['imagem']) ? $portfolio[0]['imagem'] : '');
+$portfolio_style = !empty($portfolio_bg) ? "background-image: url('" . htmlspecialchars($portfolio_bg, ENT_QUOTES) . "');" : '';
 
 include 'header_publico.php';
 ?>
@@ -38,7 +70,7 @@ include 'header_publico.php';
 <section class="section-padding">
     <div class="container" style="max-width: 1000px;">
 
-        <h1 class="section-title">Política de Privacidade</h1>
+        <h1 class="section-title" style="font-size: 2.4rem; letter-spacing: 2px;">Política de Privacidade</h1>
         <div class="section-line"></div>
 
         <div class="privacy-content">
@@ -51,7 +83,6 @@ include 'header_publico.php';
 
             <p>
                 O endereço do nosso site é:
-
                 <a href="<?= htmlspecialchars($link_site); ?>" target="_blank">
                     <?= htmlspecialchars($link_site); ?>
                 </a>
@@ -86,9 +117,7 @@ include 'header_publico.php';
 
             <h2>Finalidade dos dados</h2>
 
-            <p>
-                Os dados recolhidos são utilizados exclusivamente para:
-            </p>
+            <p>Os dados recolhidos são utilizados exclusivamente para:</p>
 
             <ul>
                 <li>Responder a pedidos de contacto</li>
@@ -124,7 +153,9 @@ include 'header_publico.php';
             <h2>Partilha de dados</h2>
 
             <p>
+                <div class="footer-brand-name" style="font-size: 6rem; letter-spacing: 3px;">
                 A <?= htmlspecialchars($nome_empresa); ?>
+                </div>
                 não partilha dados pessoais com terceiros,
                 exceto quando exigido por lei.
             </p>
@@ -138,9 +169,7 @@ include 'header_publico.php';
 
             <h2>Direitos do utilizador</h2>
 
-            <p>
-                O utilizador pode solicitar:
-            </p>
+            <p>O utilizador pode solicitar:</p>
 
             <ul>
                 <li>Acesso aos seus dados</li>
@@ -167,9 +196,7 @@ include 'header_publico.php';
 
             <h2>Livro de Reclamações</h2>
 
-            <p>
-                Pode aceder ao Livro de Reclamações Online através do link:
-            </p>
+            <p>Pode aceder ao Livro de Reclamações Online através do link:</p>
 
             <p>
                 <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank">
@@ -179,9 +206,7 @@ include 'header_publico.php';
 
             <h2>Alterações à política</h2>
 
-            <p>
-                Esta Política de Privacidade pode ser alterada sem aviso prévio.
-            </p>
+            <p>Esta Política de Privacidade pode ser alterada sem aviso prévio.</p>
 
             <h2>Legislação aplicável</h2>
 

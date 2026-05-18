@@ -36,13 +36,13 @@
                     <h6 class="footer-col-title">Ajuda & Suporte</h6>
                     <ul>
                         <li>
-                            <a href="#">
+                            <a href="formulario_suporte.php">
                                 <i class="fas fa-question-circle me-2"></i>Centro de Ajuda
                             </a>
                         </li>
 
                         <li>
-                            <a href="#">
+                            <a href="documentacao.php">
                                 <i class="fas fa-book me-2"></i>Documentação
                             </a>
                         </li>
@@ -99,7 +99,7 @@
     </div>
 
     <!-- NOME -->
-    <div class="footer-brand-name">
+    <div class="footer-brand-name" style="font-size: 4.5rem; letter-spacing: 3px;">
         <?= htmlspecialchars($empresa['nome_empresa'] ?? 'FREEBOX'); ?>
     </div>
 

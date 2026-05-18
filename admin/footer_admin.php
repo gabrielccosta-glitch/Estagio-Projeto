@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    <div class="footer-brand-name">
+    <div class="footer-brand-name" style="font-size: 3rem; letter-spacing: 3px;">
         FREEBOX ADMIN
     </div>
 

@@ -82,8 +82,9 @@ include 'header_publico.php';
                 <div class="about-text-block">
                     <div class="about-icon"><i class="fas fa-store"></i></div>
                     <div style="width:100%;">
+                        <div class="footer-brand-name" style="font-size: 6rem; letter-spacing: 3px;">
                         <h3><?= htmlspecialchars($nome_empresa); ?></h3>
-
+                        </div>
                         <div class="about-contact-card" style="margin-top: 20px;">
 
                             <?php if (!empty($morada_completa)): ?>
