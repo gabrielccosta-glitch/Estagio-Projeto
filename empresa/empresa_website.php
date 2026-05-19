@@ -32,6 +32,10 @@ $website_stmt->execute();
 $website = $website_stmt->get_result()->fetch_assoc();
 $website_stmt->close();
 
+// O cliente só pode definir o url_site se ainda estiver vazio
+$url_ja_definido = !empty($website['url_site']);
+$cliente_pode_definir_url = !$is_admin && !$url_ja_definido;
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $descricao_empresa = trim($_POST['descricao_empresa'] ?? '');
@@ -43,44 +47,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hero_botao_texto  = trim($_POST['hero_botao_texto'] ?? '');
     $hero_botao_link   = trim($_POST['hero_botao_link'] ?? '');
 
-
-    // URL do site só o admin pode mudar
+    // URL do site: admin pode sempre mudar; cliente só pode definir se ainda estiver vazio
     if ($is_admin) {
-    $url_site = trim($_POST['url_site'] ?? '');
-    $url_site = preg_replace('/[^a-zA-Z0-9\-]/', '', $url_site);
-    $url_site = strtolower($url_site);
+        $url_site = trim($_POST['url_site'] ?? '');
+        $url_site = preg_replace('/[^a-zA-Z0-9\-]/', '', $url_site);
+        $url_site = strtolower($url_site);
+    } elseif ($cliente_pode_definir_url) {
+        $url_site = trim($_POST['url_site'] ?? '');
+        $url_site = preg_replace('/[^a-zA-Z0-9\-]/', '', $url_site);
+        $url_site = strtolower($url_site);
+    } else {
+        // URL já definido — cliente não pode alterar
+        $url_site = $website['url_site'] ?? '';
+    }
 
-    $email_formulario = trim($_POST['email_formulario'] ?? '');
-
-        if ($is_admin) {
-    $url_site = trim($_POST['url_site'] ?? '');
-    $url_site = preg_replace('/[^a-zA-Z0-9\-]/', '', $url_site);
-    $url_site = strtolower($url_site);
-
+    // Email do formulário: só admin pode mudar
     if ($is_admin) {
         $email_formulario = trim($_POST['email_formulario'] ?? '');
     } else {
         $email_formulario = $website['email_formulario'] ?? '';
     }
 
-        if (!empty($url_site)) {
-            $check_sql  = "SELECT id FROM website_config WHERE url_site = ? AND empresa_id != ?";
-            $check_stmt = $conn->prepare($check_sql);
-            $check_stmt->bind_param("si", $url_site, $empresa_id);
-            $check_stmt->execute();
-            $check_result = $check_stmt->get_result();
-            $check_stmt->close();
+    // Verificar se url_site já existe noutra empresa
+    if (!empty($url_site) && ($is_admin || $cliente_pode_definir_url)) {
+        $check_sql  = "SELECT id FROM website_config WHERE url_site = ? AND empresa_id != ?";
+        $check_stmt = $conn->prepare($check_sql);
+        $check_stmt->bind_param("si", $url_site, $empresa_id);
+        $check_stmt->execute();
+        $check_result = $check_stmt->get_result();
+        $check_stmt->close();
 
-            if ($check_result->num_rows > 0) {
-                $_SESSION['error_message'] = "Este endereço já está em uso por outra empresa. Escolha outro.";
-                header("Location: empresa_website.php?id=$empresa_id&show_message=1");
-                exit();
-            }
+        if ($check_result->num_rows > 0) {
+            $_SESSION['error_message'] = "Este endereço já está em uso por outra empresa. Escolha outro.";
+            header("Location: empresa_website.php?id=$empresa_id&show_message=1");
+            exit();
         }
-    } else {
-    $url_site = $website['url_site'] ?? '';
-    $email_formulario = $website['email_formulario'] ?? '';
-}
+    }
 
     $logotipo     = $website['logotipo'] ?? '';
     $capa_empresa = $website['capa_empresa'] ?? '';
@@ -101,8 +103,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
     }
-
-
 
     if (!empty($_FILES['capa_empresa']['tmp_name'])) {
         $allowed   = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
@@ -147,11 +147,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: empresa_website.php?id=$empresa_id&show_message=1");
     exit();
 }
-}
 
 include '../includes/header.php';
 
-// Mostrar header conforme o tipo de utilizador
 if ($is_admin) {
     include '../admin/header_admin.php';
 } else {
@@ -167,13 +165,10 @@ if ($is_admin) {
         display: none;
         position: fixed;
         z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.4);
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0,0,0,0.4);
     }
-
     .modal-content {
         background-color: #fefefe;
         margin: 15% auto;
@@ -183,7 +178,6 @@ if ($is_admin) {
         max-width: 500px;
         text-align: center;
     }
-
     .preview-img {
         max-width: 200px;
         max-height: 100px;
@@ -194,14 +188,12 @@ if ($is_admin) {
         padding: 4px;
         display: block;
     }
-
     .url-group {
         display: flex;
         align-items: center;
         gap: 5px;
         margin-top: 8px;
     }
-
     .url-prefix {
         background-color: #e9ecef;
         border: 1px solid #ced4da;
@@ -210,8 +202,22 @@ if ($is_admin) {
         white-space: nowrap;
         color: #495057;
     }
+    .url-definido-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 8px;
+        background: #f0f9f0;
+        border: 1px solid #c3e6cb;
+        border-radius: 6px;
+        padding: 10px 14px;
+        color: #2d6a4f;
+        font-weight: 600;
+    }
+    .url-definido-info i {
+        color: #28a745;
+    }
 </style>
-
 
 <div class="separator"></div>
 
@@ -238,9 +244,11 @@ if ($is_admin) {
 
                     <form method="POST" enctype="multipart/form-data">
 
-                        <!-- URL DO SITE — só admin pode mudar -->
+                        <!-- URL DO SITE -->
                         <label class="mt-3"><i class="fas fa-link"></i> Endereço do seu site</label>
+
                         <?php if ($is_admin): ?>
+                            <!-- Admin pode sempre editar -->
                             <div class="url-group">
                                 <span class="url-prefix">http://freebox/</span>
                                 <input type="text" name="url_site" class="form-control"
@@ -248,14 +256,32 @@ if ($is_admin) {
                                     value="<?= htmlspecialchars($website['url_site'] ?? '') ?>"
                                     maxlength="100">
                             </div>
-                            <small class="text-muted">Apenas letras, números e hífens. Ex: <?= htmlspecialchars(strtolower(preg_replace('/[^a-zA-Z0-9\-]/', '-', $empresa['nome_empresa']))); ?></small>
-                        <?php else: ?>
+                            <small class="text-muted">
+                                Apenas letras, números e hífens. Ex: <?= htmlspecialchars(strtolower(preg_replace('/[^a-zA-Z0-9\-]/', '-', $empresa['nome_empresa']))); ?>
+                            </small>
+
+                        <?php elseif ($cliente_pode_definir_url): ?>
+                            <!-- Cliente ainda não definiu — pode definir uma vez -->
                             <div class="url-group">
                                 <span class="url-prefix">http://freebox/</span>
-                                <input type="text" class="form-control"
-                                    value="<?= htmlspecialchars($website['url_site'] ?? '') ?>" disabled>
+                                <input type="text" name="url_site" class="form-control"
+                                    placeholder="nome-do-seu-site"
+                                    value=""
+                                    maxlength="100">
                             </div>
-                            <small class="text-muted">Apenas o administrador pode alterar o endereço do site.</small>
+                            <small class="text-muted">
+                                <i class="fas fa-exclamation-triangle text-warning"></i>
+                                Atenção: só pode definir este endereço <strong>uma vez</strong>. Após guardar, não poderá alterá-lo.
+                            </small>
+
+                        <?php else: ?>
+                            <!-- Cliente já definiu — só mostra, não pode editar -->
+                            <div class="url-definido-info">
+                                <i class="fas fa-lock"></i>
+                                <span>http://freebox/<?= htmlspecialchars($website['url_site']) ?></span>
+                            </div>
+                            <small class="text-muted">O endereço do site já foi definido e não pode ser alterado.</small>
+
                         <?php endif; ?>
 
                         <?php if (!empty($website['url_site'])): ?>
@@ -321,33 +347,20 @@ if ($is_admin) {
                         <label class="mt-3"><i class="fas fa-align-left"></i> Descrição (Sobre Nós)</label>
                         <textarea name="descricao_empresa" class="form-control" rows="4"><?= htmlspecialchars($website['descricao_empresa'] ?? '') ?></textarea>
 
+                        <!-- EMAIL FORMULÁRIO -->
                         <label class="mt-4">
                             <i class="fas fa-envelope"></i> Email para receber formulários do site
                         </label>
 
                         <?php if ($is_admin): ?>
-
-                            <input type="email"
-                                name="email_formulario"
-                                class="form-control"
+                            <input type="email" name="email_formulario" class="form-control"
                                 placeholder="empresa@email.com"
                                 value="<?= htmlspecialchars($website['email_formulario'] ?? '') ?>">
-
-                            <small class="text-muted">
-                                O formulário do site vai enviar as mensagens para este email.
-                            </small>
-
+                            <small class="text-muted">O formulário do site vai enviar as mensagens para este email.</small>
                         <?php else: ?>
-
-                            <input type="email"
-                                class="form-control"
-                                value="<?= htmlspecialchars($website['email_formulario'] ?? '') ?>"
-                                disabled>
-
-                            <small class="text-muted">
-                                Apenas o administrador pode alterar este email.
-                            </small>
-
+                            <input type="email" class="form-control"
+                                value="<?= htmlspecialchars($website['email_formulario'] ?? '') ?>" disabled>
+                            <small class="text-muted">Apenas o administrador pode alterar este email.</small>
                         <?php endif; ?>
 
                         <!-- REDES SOCIAIS -->
@@ -387,27 +400,27 @@ if ($is_admin) {
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get("show_message") === "1") {
-            const modal = document.getElementById("messageModal");
-            const title = document.getElementById("modalTitle");
+            const modal   = document.getElementById("messageModal");
+            const title   = document.getElementById("modalTitle");
             const message = document.getElementById("modalMessage");
-            const okBtn = document.getElementById("okButton");
+            const okBtn   = document.getElementById("okButton");
 
             <?php if (isset($_SESSION['success_message'])): ?>
-                title.textContent = "Sucesso";
+                title.textContent   = "Sucesso";
                 message.textContent = "<?= htmlspecialchars($_SESSION['success_message'], ENT_QUOTES); ?>";
                 <?php unset($_SESSION['success_message']); ?>
             <?php elseif (isset($_SESSION['error_message'])): ?>
-                title.textContent = "Erro";
+                title.textContent   = "Erro";
                 message.textContent = "<?= htmlspecialchars($_SESSION['error_message'], ENT_QUOTES); ?>";
                 <?php unset($_SESSION['error_message']); ?>
             <?php endif; ?>
 
             modal.style.display = "block";
 
-            okBtn.onclick = function() {
+            okBtn.onclick = function () {
                 modal.style.display = "none";
                 window.history.replaceState({}, document.title,
                     window.location.pathname + "?id=<?= $empresa_id ?>");
@@ -417,8 +430,6 @@ if ($is_admin) {
 </script>
 
 <?php
-$url_site = $website['url_site'] ?? '';
-
 if ($is_admin) {
     include '../admin/footer_admin.php';
 } else {

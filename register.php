@@ -147,7 +147,7 @@ include 'includes/header.php';
                     <input type="checkbox" class="form-check-input" id="aceita_politica" name="aceita_politica" required>
                     <label class="form-check-label" for="aceita_politica">
                         Aceito que as minhas informações sejam processadas conforme descrito na 
-                        <a href="empresa/politica_privacidade_cliente.php" target="_blank">Política de Privacidade</a>
+                        <a href="politica_privacidade.php" target="_blank">Política de Privacidade</a>
                     </label>
                 </div>
                 
