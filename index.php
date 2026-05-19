@@ -343,28 +343,21 @@ function getTextNodes() {
     return nodes;
 }
 
-async function translateBatch(texts, toLang) {
-    const results = [];
+// index.php - Página inicial que redireciona para o login ou área do usuário
 
-    for (let i = 0; i < texts.length; i += 10) {
-        const batch = texts.slice(i, i + 10);
+// Incluir arquivos necessários
+require_once 'config/database.php';
+require_once 'includes/functions.php';
 
-        const promises = batch.map(text => {
-            const url = 'https://api.mymemory.translated.net/get?q=' +
-                encodeURIComponent(text.trim()) +
-                '&langpair=pt|' + toLang;
+iniciarSessao();
 
-            return fetch(url)
-                .then(response => response.json())
-                .then(data => data.responseData?.translatedText || text)
-                .catch(() => text);
-        });
-
-        const batchResults = await Promise.all(promises);
-        results.push(...batchResults);
-    }
-
-    return results;
+// Se já estiver logado, redireciona conforme o tipo de usuário
+if (estaLogado()) {
+    redirecionarUsuario();
+} else {
+    // Se não estiver logado, redireciona para a página de login
+    header("Location: login.php");
+    exit;
 }
 
 async function changeLang(lang, flag) {
