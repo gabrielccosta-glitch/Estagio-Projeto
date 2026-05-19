@@ -24,21 +24,30 @@ body {
     box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 
-.navbar-inner {
+.navbar-shell {
+    width: 100%;
     min-height: 78px;
+    padding: 0 7.2vw;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
+    gap: 35px;
 }
 
 .navbar-left {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     gap: 42px;
-    flex: 1 1 auto;
     min-width: 0;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+    flex-shrink: 0;
+    margin-left: auto;
 }
 
 .brand {
@@ -67,10 +76,7 @@ body {
 .nav-menu {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     gap: 34px;
-    flex: 1 1 auto;
-    min-width: 0;
 }
 
 .nav-menu a {
@@ -88,15 +94,6 @@ body {
     color: #1f5b9d;
 }
 
-.nav-right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 14px;
-    flex: 0 0 auto;
-    margin-left: auto;
-}
-
 .nav-actions {
     display: flex;
     align-items: center;
@@ -104,6 +101,7 @@ body {
     flex-shrink: 0;
 }
 
+/* BOTÕES */
 .btn-main {
     background: #1f5b9d;
     border: 2px solid #1f5b9d;
@@ -120,7 +118,7 @@ body {
 }
 
 .btn-outline-main {
-    background: transparent;
+    background: #ffffff;
     border: 2px solid #1f5b9d;
     color: #1f5b9d;
     border-radius: 7px;
@@ -133,37 +131,41 @@ body {
     color: #ffffff;
 }
 
-.btn-outline-white {
+.btn-outline-hero {
     background: transparent;
-    border: 2px solid #ffffff;
-    color: #ffffff;
+    border: 2px solid #1f5b9d;
+    color: #1f5b9d;
     border-radius: 999px;
     padding: 12px 34px;
-    font-weight: 800;
+    font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 
-.btn-outline-white:hover {
-    background: #ffffff;
-    color: #1f5b9d;
+.btn-outline-hero:hover {
+    background: #1f5b9d;
+    color: #ffffff;
 }
 
 /* IDIOMAS */
 .lang-selector {
     position: relative;
+    flex-shrink: 0;
 }
 
 .lang-btn {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 7px;
     background: #ffffff;
     border: 1px solid #d8dee8;
     border-radius: 8px;
-    padding: 10px 13px;
+    padding: 10px 15px;
+    min-width: 72px;
+    height: 48px;
     color: #1f2937;
-    font-size: 0.82rem;
+    font-size: 1.05rem;
     font-weight: 700;
     cursor: pointer;
     transition: 0.2s ease;
@@ -176,7 +178,8 @@ body {
 }
 
 .lang-btn i {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
+    color: #111827;
 }
 
 .lang-dropdown {
@@ -184,7 +187,7 @@ body {
     position: absolute;
     right: 0;
     top: calc(100% + 10px);
-    min-width: 160px;
+    min-width: 190px;
     background: #ffffff;
     border: 1px solid #e5e7eb;
     border-radius: 10px;
@@ -204,10 +207,10 @@ body {
     color: #374151;
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 11px 15px;
-    font-size: 0.88rem;
-    font-weight: 600;
+    gap: 12px;
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    font-weight: 500;
     cursor: pointer;
     text-align: left;
     transition: 0.15s ease;
@@ -219,7 +222,7 @@ body {
 }
 
 .lang-option .flag {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
 }
 
 /* HERO */
@@ -229,8 +232,8 @@ body {
     display: flex;
     align-items: center;
     background:
-        linear-gradient(rgba(12, 28, 47, 0.45), rgba(12, 28, 47, 0.45)),
-        linear-gradient(135deg, #1f5b9d 0%, #dbeafe 100%);
+        linear-gradient(90deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.78) 45%, rgba(255,255,255,0.18) 100%),
+        linear-gradient(135deg, #edf5fb 0%, #dbe8f3 48%, #9ca8b5 100%);
     overflow: hidden;
 }
 
@@ -238,28 +241,22 @@ body {
     content: "";
     position: absolute;
     inset: 0;
-    background-image:
-        linear-gradient(120deg, rgba(255,255,255,0.16), transparent 45%),
-        radial-gradient(circle at 20% 20%, rgba(0,169,143,0.28), transparent 26%),
-        radial-gradient(circle at 85% 70%, rgba(255,255,255,0.20), transparent 28%);
+    background:
+        radial-gradient(circle at 15% 18%, rgba(0,169,143,0.12), transparent 24%),
+        radial-gradient(circle at 90% 80%, rgba(31,91,157,0.22), transparent 34%);
     pointer-events: none;
 }
 
 .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(90deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.78) 48%, rgba(255,255,255,0.25) 100%);
-}
-
-.hero-container {
-    position: relative;
-    z-index: 2;
+    display: none;
 }
 
 .hero-content {
-    max-width: 850px;
+    position: relative;
+    z-index: 2;
+    max-width: 880px;
     padding: 90px 0;
+    margin-left: 7.2vw;
 }
 
 .hero-label {
@@ -307,16 +304,6 @@ body {
     padding: 13px 36px;
     text-transform: uppercase;
     letter-spacing: 2px;
-}
-
-.hero-buttons .btn-outline-white {
-    border-color: #1f5b9d;
-    color: #1f5b9d;
-}
-
-.hero-buttons .btn-outline-white:hover {
-    background: #1f5b9d;
-    color: white;
 }
 
 /* SECÇÕES */
@@ -653,47 +640,28 @@ body {
 }
 
 /* RESPONSIVO */
-@media (max-width: 1400px) {
+@media (max-width: 1300px) {
+    .navbar-shell {
+        padding: 0 4vw;
+        gap: 24px;
+    }
+
     .navbar-left {
         gap: 28px;
     }
 
     .nav-menu {
-        gap: 26px;
+        gap: 24px;
     }
 
     .nav-menu a {
-        letter-spacing: 3px;
-        font-size: 0.8rem;
-    }
-}
-
-@media (max-width: 1200px) {
-    .navbar-inner {
-        gap: 18px;
-    }
-
-    .navbar-left {
-        gap: 22px;
-    }
-
-    .nav-menu {
-        gap: 20px;
-    }
-
-    .nav-menu a {
-        letter-spacing: 2px;
-        font-size: 0.76rem;
+        letter-spacing: 2.4px;
+        font-size: 0.78rem;
     }
 
     .btn-main,
     .btn-outline-main {
-        padding: 10px 20px;
-    }
-
-    .brand span {
-        font-size: 1rem;
-        letter-spacing: 1.5px;
+        padding: 9px 22px;
     }
 }
 
@@ -702,31 +670,42 @@ body {
         display: none;
     }
 
-    .navbar-left {
-        flex: 0 0 auto;
+    .navbar-shell {
+        padding: 0 28px;
     }
 
-    .nav-right {
-        margin-left: auto;
+    .hero-content {
+        margin-left: 28px;
+        margin-right: 28px;
     }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 768px) {
     .main-navbar {
-        height: auto;
+        position: relative;
     }
 
-    .navbar-inner {
-        height: auto;
-        padding: 16px 0;
-        flex-wrap: wrap;
+    .navbar-shell {
+        min-height: auto;
+        padding: 16px 20px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
     }
 
-    .nav-right {
-        margin-left: auto;
-    }
-
+    .navbar-left,
+    .navbar-right,
     .nav-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .navbar-left {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .navbar-right {
         flex-wrap: wrap;
     }
 
@@ -734,14 +713,10 @@ body {
         min-height: auto;
     }
 
-    .hero-overlay {
-        background: rgba(255,255,255,0.86);
-    }
-
     .hero-content {
         text-align: center;
         margin: 0 auto;
-        padding: 75px 0;
+        padding: 75px 20px;
     }
 
     .hero-buttons {
@@ -762,15 +737,6 @@ body {
 }
 
 @media (max-width: 576px) {
-    .navbar-inner {
-        justify-content: center;
-    }
-
-    .navbar-left {
-        width: 100%;
-        justify-content: center;
-    }
-
     .brand span {
         font-size: 0.95rem;
         letter-spacing: 1px;
@@ -780,35 +746,21 @@ body {
         height: 46px;
     }
 
-    .nav-right {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-left: 0;
+    .nav-actions {
+        flex-direction: column;
     }
 
-    .lang-selector {
-        width: 100%;
-    }
-
+    .nav-actions .btn,
+    .lang-selector,
     .lang-btn {
         width: 100%;
         justify-content: center;
+        text-align: center;
     }
 
     .lang-dropdown {
         left: 0;
         right: 0;
-    }
-
-    .nav-actions {
-        width: 100%;
-    }
-
-    .nav-actions .btn {
-        flex: 1;
-        text-align: center;
-        padding: 9px 16px;
     }
 
     .hero-content h1 {
@@ -831,4 +783,4 @@ body {
     .step-card {
         padding: 38px 24px;
     }
-}   
+}

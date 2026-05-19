@@ -27,7 +27,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 <body>
 
 <header class="main-navbar">
-    <div class="container navbar-inner">
+    <div class="navbar-shell">
 
         <div class="navbar-left">
             <a href="/projeto/" class="brand">
@@ -43,8 +43,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
             </nav>
         </div>
 
-        <div class="nav-right">
-
+        <div class="navbar-right">
             <div class="nav-actions">
                 <?php if ($esta_logado): ?>
                     <a href="<?= htmlspecialchars($dashboard_url); ?>" class="btn btn-outline-main">
@@ -60,31 +59,25 @@ if ($esta_logado && $tipo_usuario === 'admin') {
                 <?php endif; ?>
             </div>
 
-            <div class="lang-selector no-translate" id="langSelector">
-                <button type="button" class="lang-btn" id="langBtn">
-                    <span id="langCurrent">🇵🇹 PT</span>
+            <div class="lang-selector" id="langSelector">
+                <button class="lang-btn" id="langBtn">
+                    <img id="langCurrent" src="https://flagcdn.com/w20/pt.png" width="20" alt="PT">
                     <i class="fas fa-chevron-down"></i>
                 </button>
-
                 <div class="lang-dropdown" id="langDropdown">
-                    <button type="button" class="lang-option" onclick="changeLang('pt', '🇵🇹', 'PT')">
-                        <span class="flag">🇵🇹</span> Português
+                    <button class="lang-option" onclick="changeLang('pt', 'https://flagcdn.com/w20/pt.png', 'PT')">
+                        <img src="https://flagcdn.com/w20/pt.png" width="20"> Português
                     </button>
-
-                    <button type="button" class="lang-option" onclick="changeLang('en', '🇬🇧', 'EN')">
-                        <span class="flag">🇬🇧</span> English
+                    <button class="lang-option" onclick="changeLang('en', 'https://flagcdn.com/w20/gb.png', 'EN')">
+                        <img src="https://flagcdn.com/w20/gb.png" width="20"> English
                     </button>
-
-                    <button type="button" class="lang-option" onclick="changeLang('es', '🇪🇸', 'ES')">
-                        <span class="flag">🇪🇸</span> Español
+                    <button class="lang-option" onclick="changeLang('es', 'https://flagcdn.com/w20/es.png', 'ES')">
+                        <img src="https://flagcdn.com/w20/es.png" width="20"> Espanol
                     </button>
-
-                    <button type="button" class="lang-option" onclick="changeLang('fr', '🇫🇷', 'FR')">
-                        <span class="flag">🇫🇷</span> Français
+                    <button class="lang-option" onclick="changeLang('fr', 'https://flagcdn.com/w20/fr.png', 'FR')">
+                        <img src="https://flagcdn.com/w20/fr.png" width="20"> Francês
                     </button>
                 </div>
-            </div>
-
         </div>
 
     </div>
@@ -93,32 +86,28 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 <section id="inicio" class="hero-section">
     <div class="hero-overlay"></div>
 
-    <div class="container hero-container">
-        <div class="hero-content">
+    <div class="hero-content">
+        <span class="hero-label">
+            <i class="fas fa-wand-magic-sparkles"></i>
+            Plataforma de criação automática de websites
+        </span>
 
-            <span class="hero-label">
-                <i class="fas fa-wand-magic-sparkles"></i>
-                Plataforma de criação automática de websites
-            </span>
+        <h1>Cria o site da tua empresa de forma simples e profissional</h1>
 
-            <h1>Cria o site da tua empresa de forma simples e profissional</h1>
+        <p>
+            O FreeBox Sites permite que empresas criem uma presença online através de um
+            painel simples, sem precisar de programar. Basta preencher os dados, adicionar
+            serviços, imagens e contactos.
+        </p>
 
-            <p>
-                O FreeBox Sites permite que empresas criem uma presença online através de um
-                painel simples, sem precisar de programar. Basta preencher os dados, adicionar
-                serviços, imagens e contactos.
-            </p>
+        <div class="hero-buttons">
+            <a href="register.php" class="btn btn-main btn-lg">
+                Criar o meu site
+            </a>
 
-            <div class="hero-buttons">
-                <a href="register.php" class="btn btn-main btn-lg">
-                    Criar o meu site
-                </a>
-
-                <a href="login.php" class="btn btn-outline-white btn-lg">
-                    Já tenho conta
-                </a>
-            </div>
-
+            <a href="login.php" class="btn btn-outline-hero btn-lg">
+                Já tenho conta
+            </a>
         </div>
     </div>
 </section>
@@ -378,14 +367,14 @@ async function translateBatch(texts, toLang) {
     return results;
 }
 
-async function changeLang(lang, flag, code) {
+async function changeLang(lang, flag) {
     if (lang === currentLang) return;
 
     const btn = document.getElementById('langBtn');
     const current = document.getElementById('langCurrent');
     const dropdown = document.getElementById('langDropdown');
 
-    current.textContent = flag + ' ' + code;
+    current.textContent = flag;
     dropdown.classList.remove('open');
 
     btn.style.opacity = '0.6';
