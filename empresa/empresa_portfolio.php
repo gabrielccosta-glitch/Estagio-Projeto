@@ -165,9 +165,7 @@ if ($is_admin) {
                                         <div class="desc"><?= htmlspecialchars($p['descricao_imagem']); ?></div>
                                         <div class="portfolio-actions mt-2 text-center">
                                             <a href="editar_portfolio.php?id=<?= $p['id']; ?>" class="btn btn-success btn-sm">Editar</a>
-                                            <?php if ($is_admin): ?>
-                                                <a href="eliminar_portfolio.php?id=<?= $p['id']; ?>" class="btn btn-danger btn-sm">Eliminar</a>
-                                            <?php endif; ?>
+                                            <a href="eliminar_portfolio.php?id=<?= $p['id']; ?>" class="btn btn-danger btn-sm">Eliminar</a> 
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
@@ -189,9 +187,7 @@ if ($is_admin) {
                                             <div class="desc"><?= htmlspecialchars($p['descricao_imagem']); ?></div>
                                             <div class="portfolio-actions mt-2 text-center">
                                                 <a href="editar_portfolio.php?id=<?= $p['id']; ?>" class="btn btn-success btn-sm">Editar</a>
-                                                <?php if ($is_admin): ?>
-                                                    <a href="eliminar_portfolio.php?id=<?= $p['id']; ?>" class="btn btn-danger btn-sm">Eliminar</a>
-                                                <?php endif; ?>
+                                                <a href="eliminar_portfolio.php?id=<?= $p['id']; ?>" class="btn btn-danger btn-sm">Eliminar</a>
                                             </div>
                                         </div>
                                     <?php endforeach; ?>

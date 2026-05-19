@@ -151,14 +151,14 @@ if ($is_admin) {
                                             Editar
                                         </a>
 
-                                        <?php if ($is_admin): ?>
+                                        
 
-                                            <a href="eliminar_servico.php?id=<?= $s['id']; ?>"
-                                               class="btn btn-danger btn-sm">
-                                                Eliminar
-                                            </a>
+                                        <a href="eliminar_servico.php?id=<?= $s['id']; ?>"
+                                           class="btn btn-danger btn-sm">
+                                           Eliminar
+                                        </a>
 
-                                        <?php endif; ?>
+                                        
 
                                     </div>
 
