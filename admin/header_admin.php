@@ -1,5 +1,4 @@
-
-<link rel="stylesheet" href="/projeto/css/header_cliente.css">
+<link rel="stylesheet" href="../css/header_cliente.css">
 
 <div class="cliente-header">
 
@@ -25,11 +24,13 @@
 
     <div class="cliente-header-right">
 
-        <a href="../admin/editar_admin.php" class="btn btn-primary me-2">
+        <a href="../admin/editar_admin.php"
+           class="btn btn-primary me-2">
             Editar Admin
         </a>
 
-        <a href="../logout.php" class="btn btn-danger">
+        <a href="../logout.php"
+           class="btn btn-danger">
             Logout
         </a>
 

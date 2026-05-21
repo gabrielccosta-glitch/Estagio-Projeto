@@ -15,6 +15,7 @@ if (!$is_admin) {
 $sql = "SELECT e.id, e.nome_empresa, u.email 
         FROM empresas e 
         JOIN usuarios u ON e.usuario_id = u.id";
+
 $result = $conn->query($sql);
 
 include '../includes/header.php';
@@ -28,10 +29,7 @@ if ($is_admin) {
 }
 ?>
 
-
-<link rel="stylesheet" href="/projeto/css/admin_dashboard.css">
-
-
+<link rel="stylesheet" href="../css/admin_dashboard.css">
 
 <!-- CONTEÚDO PRINCIPAL -->
 <div class="container-fluid mt-4">
@@ -39,7 +37,7 @@ if ($is_admin) {
 
         <!-- Toolbar: Adicionar + Pesquisa -->
         <div class="dashboard-toolbar">
-            <a href="/projeto/register.php" class="btn btn-freebox-blue">
+            <a href="../register.php" class="btn btn-freebox-blue">
                 + Adicionar Empresa
             </a>
 
@@ -80,14 +78,16 @@ if ($is_admin) {
                         <tr>
                             <td><?php echo htmlspecialchars($row['nome_empresa']); ?></td>
                             <td><?php echo htmlspecialchars($row['email']); ?></td>
+
                             <td>
                                 <div class="action-buttons">
+
                                     <a href="editar_empresa.php?id=<?php echo $row['id']; ?>"
                                         class="btn btn-sm btn-success">
                                         Editar
                                     </a>
 
-                                    <a href="/projeto/empresa/empresa_informacoes.php?id=<?php echo $row['id']; ?>"
+                                    <a href="../empresa/empresa_informacoes.php?id=<?php echo $row['id']; ?>"
                                         class="btn btn-sm btn-freebox-blue">
                                         Configurar
                                     </a>
@@ -96,13 +96,16 @@ if ($is_admin) {
                                     $url_stmt = $conn->prepare("SELECT url_site FROM website_config WHERE empresa_id = ?");
                                     $url_stmt->bind_param("i", $row['id']);
                                     $url_stmt->execute();
+
                                     $url_row = $url_stmt->get_result()->fetch_assoc();
+
                                     $url_stmt->close();
+
                                     $url_site = $url_row['url_site'] ?? '';
                                     ?>
 
                                     <?php if (!empty($url_site)): ?>
-                                        <a href="/projeto/freebox/<?php echo htmlspecialchars($url_site); ?>"
+                                        <a href="../freebox/<?php echo htmlspecialchars($url_site); ?>"
                                             class="btn btn-sm btn-info"
                                             target="_blank">
                                             Ver Website
@@ -116,9 +119,13 @@ if ($is_admin) {
                                     <?php endif; ?>
 
                                     <button class="btn btn-sm btn-danger"
-                                        onclick="confirmarExclusao(<?php echo (int)$row['id']; ?>, '<?php echo addslashes(htmlspecialchars($row['nome_empresa'])); ?>')">
+                                        onclick="confirmarExclusao(
+                                            <?php echo (int)$row['id']; ?>,
+                                            '<?php echo addslashes(htmlspecialchars($row['nome_empresa'])); ?>'
+                                        )">
                                         Eliminar
                                     </button>
+
                                 </div>
                             </td>
                         </tr>
@@ -137,10 +144,19 @@ if ($is_admin) {
 <!-- Modal Confirmação -->
 <div id="modalConfirm" class="modal-confirm">
     <div class="modal-content">
-        <h2>Eliminar <span id="nomeEmpresaEliminar"></span>?</h2>
 
-        <p>Tem a certeza que deseja eliminar esta empresa? Esta ação não pode ser desfeita.</p>
-        <p>Digite <strong>CONFIRMAR</strong> para prosseguir:</p>
+        <h2>
+            Eliminar <span id="nomeEmpresaEliminar"></span>?
+        </h2>
+
+        <p>
+            Tem a certeza que deseja eliminar esta empresa?
+            Esta ação não pode ser desfeita.
+        </p>
+
+        <p>
+            Digite <strong>CONFIRMAR</strong> para prosseguir:
+        </p>
 
         <input type="text"
             id="confirmText"
@@ -148,6 +164,7 @@ if ($is_admin) {
             placeholder="CONFIRMAR">
 
         <div class="modal-actions">
+
             <button id="btnCancel" class="btn btn-secondary">
                 Cancelar
             </button>
@@ -155,6 +172,7 @@ if ($is_admin) {
             <button id="btnConfirm" class="btn btn-danger">
                 Eliminar
             </button>
+
         </div>
     </div>
 </div>
@@ -162,38 +180,53 @@ if ($is_admin) {
 <!-- Modal Mensagem -->
 <div id="messageModal" class="modal">
     <div class="modal-content">
+
         <p id="modalMessage"></p>
 
-        <button id="modalOkButton" class="btn btn-freebox-blue modal-ok-button">
+        <button id="modalOkButton"
+            class="btn btn-freebox-blue modal-ok-button">
             OK
         </button>
+
     </div>
 </div>
 
 <script>
-    function filtrarEmpresas() {
-        const input = document.getElementById('searchInput').value.toLowerCase();
-        const linhas = document.querySelectorAll('#tabelaEmpresas tbody tr');
-        let visiveis = 0;
+function filtrarEmpresas() {
 
-        linhas.forEach(function(linha) {
-            const nome = linha.cells[0].textContent.toLowerCase();
-            const email = linha.cells[1].textContent.toLowerCase();
+    const input = document
+        .getElementById('searchInput')
+        .value
+        .toLowerCase();
 
-            if (nome.includes(input) || email.includes(input)) {
-                linha.style.display = '';
-                visiveis++;
-            } else {
-                linha.style.display = 'none';
-            }
-        });
+    const linhas = document.querySelectorAll('#tabelaEmpresas tbody tr');
 
-        document.getElementById('semResultados').style.display = visiveis === 0 ? 'block' : 'none';
-    }
+    let visiveis = 0;
+
+    linhas.forEach(function(linha) {
+
+        const nome = linha.cells[0].textContent.toLowerCase();
+        const email = linha.cells[1].textContent.toLowerCase();
+
+        if (nome.includes(input) || email.includes(input)) {
+
+            linha.style.display = '';
+            visiveis++;
+
+        } else {
+
+            linha.style.display = 'none';
+        }
+    });
+
+    document.getElementById('semResultados').style.display =
+        visiveis === 0 ? 'block' : 'none';
+}
 </script>
 
 <?php
 gerarScriptEmpresasAdmin();
+
 $conn->close();
 
 if ($is_admin) {
@@ -201,6 +234,4 @@ if ($is_admin) {
 } else {
     include '../empresa/footer_cliente.php';
 }
-
-
 ?>

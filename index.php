@@ -22,7 +22,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <link rel="stylesheet" href="/projeto/css/home.css?v=<?= time(); ?>">
+    <link rel="stylesheet" href="./css/home.css?v=<?= time(); ?>">
 </head>
 <body>
 
@@ -30,8 +30,8 @@ if ($esta_logado && $tipo_usuario === 'admin') {
     <div class="navbar-shell">
 
         <div class="navbar-left">
-            <a href="/projeto/" class="brand">
-                <img src="/projeto/imagens/Logotipo_freebox.png" alt="FreeBox Sites">
+            <a href="./" class="brand">
+                <img src="./imagens/Logotipo_freebox.png" alt="FreeBox Sites">
                 <span>FreeBox Sites</span>
             </a>
 
@@ -64,20 +64,26 @@ if ($esta_logado && $tipo_usuario === 'admin') {
                     <img id="langCurrent" src="https://flagcdn.com/w20/pt.png" width="20" alt="PT">
                     <i class="fas fa-chevron-down"></i>
                 </button>
+
                 <div class="lang-dropdown" id="langDropdown">
                     <button class="lang-option" onclick="changeLang('pt', 'https://flagcdn.com/w20/pt.png', 'PT')">
                         <img src="https://flagcdn.com/w20/pt.png" width="20"> Português
                     </button>
+
                     <button class="lang-option" onclick="changeLang('en', 'https://flagcdn.com/w20/gb.png', 'EN')">
                         <img src="https://flagcdn.com/w20/gb.png" width="20"> English
                     </button>
+
                     <button class="lang-option" onclick="changeLang('es', 'https://flagcdn.com/w20/es.png', 'ES')">
                         <img src="https://flagcdn.com/w20/es.png" width="20"> Espanol
                     </button>
+
                     <button class="lang-option" onclick="changeLang('fr', 'https://flagcdn.com/w20/fr.png', 'FR')">
                         <img src="https://flagcdn.com/w20/fr.png" width="20"> Francês
                     </button>
                 </div>
+            </div>
+
         </div>
 
     </div>
@@ -343,23 +349,6 @@ function getTextNodes() {
     return nodes;
 }
 
-// index.php - Página inicial que redireciona para o login ou área do usuário
-
-// Incluir arquivos necessários
-require_once 'config/database.php';
-require_once 'includes/functions.php';
-
-iniciarSessao();
-
-// Se já estiver logado, redireciona conforme o tipo de usuário
-if (estaLogado()) {
-    redirecionarUsuario();
-} else {
-    // Se não estiver logado, redireciona para a página de login
-    header("Location: login.php");
-    exit;
-}
-
 async function changeLang(lang, flag) {
     if (lang === currentLang) return;
 
@@ -367,7 +356,7 @@ async function changeLang(lang, flag) {
     const current = document.getElementById('langCurrent');
     const dropdown = document.getElementById('langDropdown');
 
-    current.textContent = flag;
+    current.src = flag;
     dropdown.classList.remove('open');
 
     btn.style.opacity = '0.6';
@@ -401,14 +390,6 @@ async function changeLang(lang, flag) {
             }
         });
     }
-
-    nodes = getTextNodes();
-    const texts = nodes.map(node => node.textContent);
-    const translated = await translateBatch(texts, lang);
-
-    nodes.forEach((node, index) => {
-        node.textContent = translated[index];
-    });
 
     currentLang = lang;
 

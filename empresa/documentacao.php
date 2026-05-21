@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 
@@ -13,8 +14,9 @@ include '../includes/header.php';
 
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <link rel="stylesheet"
-      href="/projeto/css/empresa_dashboard.css">
+      href="../css/empresa_dashboard.css">
 
 <style>
 .doc-wrapper {
@@ -133,15 +135,20 @@ include '../includes/header.php';
 <?php include __DIR__ . '/header_cliente.php'; ?>
 
 <div class="container-fluid mt-4">
+
     <div class="row justify-content-center">
+
         <div class="col-md-10 col-lg-8">
 
             <div class="card dashboard-main-card">
+
                 <div class="card-body">
 
                     <h3 class="mb-1">
-                        <i class="fas fa-book me-2"></i>Documentação
+                        <i class="fas fa-book me-2"></i>
+                        Documentação
                     </h3>
+
                     <p class="text-muted mb-4">
                         Guia completo para utilizar a plataforma Freebox.
                     </p>
@@ -150,198 +157,473 @@ include '../includes/header.php';
 
                     <div class="doc-wrapper">
 
-                        <!-- ========================
-                             PRIMEIROS PASSOS
-                        ======================== -->
+                        <!-- PRIMEIROS PASSOS -->
                         <div class="doc-section">
+
                             <div class="doc-section-title">
-                                <div class="icon-box"><i class="fas fa-rocket"></i></div>
+
+                                <div class="icon-box">
+                                    <i class="fas fa-rocket"></i>
+                                </div>
+
                                 Primeiros Passos
+
                             </div>
 
                             <div class="doc-item">
-                                <div class="doc-item-icon"><i class="fas fa-right-to-bracket"></i></div>
+
+                                <div class="doc-item-icon">
+                                    <i class="fas fa-right-to-bracket"></i>
+                                </div>
+
                                 <div class="doc-item-content">
+
                                     <h6>Como fazer login</h6>
-                                    <p>Acede a <strong>freebox.pt/login</strong>, insere o teu email e palavra-passe e clica em "Entrar". Caso não tenhas conta, clica em "Registar" e preenche os campos.</p>
+
+                                    <p>
+                                        Acede a
+                                        <strong>freebox.pt/login</strong>,
+                                        insere o teu email e palavra-passe
+                                        e clica em "Entrar".
+                                        Caso não tenhas conta,
+                                        clica em "Registar"
+                                        e preenche os campos.
+                                    </p>
+
                                 </div>
+
                             </div>
 
                             <div class="doc-item">
-                                <div class="doc-item-icon"><i class="fas fa-circle-info"></i></div>
-                                <div class="doc-item-content">
-                                    <h6>Preencher as informações da empresa</h6>
-                                    <p>No dashboard, clica em <strong>Informações</strong>. Preenche o nome, morada, telefone, email e outros dados da empresa. Guarda as alterações no final da página.</p>
+
+                                <div class="doc-item-icon">
+                                    <i class="fas fa-circle-info"></i>
                                 </div>
+
+                                <div class="doc-item-content">
+
+                                    <h6>
+                                        Preencher as informações da empresa
+                                    </h6>
+
+                                    <p>
+                                        No dashboard,
+                                        clica em
+                                        <strong>Informações</strong>.
+                                        Preenche o nome, morada,
+                                        telefone, email e outros dados
+                                        da empresa.
+                                        Guarda as alterações
+                                        no final da página.
+                                    </p>
+
+                                </div>
+
                             </div>
 
                             <div class="doc-item">
-                                <div class="doc-item-icon"><i class="fas fa-link"></i></div>
+
+                                <div class="doc-item-icon">
+                                    <i class="fas fa-link"></i>
+                                </div>
+
                                 <div class="doc-item-content">
+
                                     <h6>Definir o URL do website</h6>
-                                    <p>No dashboard, clica em <strong>Website</strong> e preenche o campo <em>Endereço do Website</em>. O URL só pode conter letras, números e hífens (ex: <code>minha-empresa</code>). O teu site ficará disponível em <strong>freebox.pt/minha-empresa</strong>.</p>
+
+                                    <p>
+                                        No dashboard,
+                                        clica em
+                                        <strong>Website</strong>
+                                        e preenche o campo
+                                        <em>Endereço do Website</em>.
+
+                                        O URL só pode conter letras,
+                                        números e hífens
+                                        (ex:
+                                        <code>minha-empresa</code>).
+
+                                        O teu site ficará disponível em
+                                        <strong>
+                                            freebox.pt/minha-empresa
+                                        </strong>.
+                                    </p>
+
                                 </div>
+
                             </div>
+
                         </div>
 
                         <div class="doc-divider"></div>
 
-                        <!-- ========================
-                             GESTÃO DO WEBSITE
-                        ======================== -->
+                        <!-- GESTÃO DO WEBSITE -->
                         <div class="doc-section">
+
                             <div class="doc-section-title">
-                                <div class="icon-box"><i class="fas fa-globe"></i></div>
+
+                                <div class="icon-box">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+
                                 Gestão do Website
+
                             </div>
 
                             <div class="doc-item">
-                                <div class="doc-item-icon"><i class="fas fa-handshake"></i></div>
+
+                                <div class="doc-item-icon">
+                                    <i class="fas fa-handshake"></i>
+                                </div>
+
                                 <div class="doc-item-content">
+
                                     <h6>Adicionar serviços</h6>
-                                    <p>Clica em <strong>Serviços</strong> no dashboard. Podes adicionar o nome, descrição e ícone de cada serviço. Os serviços aparecem automaticamente na página pública da tua empresa.</p>
+
+                                    <p>
+                                        Clica em
+                                        <strong>Serviços</strong>
+                                        no dashboard.
+
+                                        Podes adicionar o nome,
+                                        descrição e ícone
+                                        de cada serviço.
+
+                                        Os serviços aparecem
+                                        automaticamente
+                                        na página pública
+                                        da tua empresa.
+                                    </p>
+
                                 </div>
+
                             </div>
 
                             <div class="doc-item">
-                                <div class="doc-item-icon"><i class="fas fa-images"></i></div>
+
+                                <div class="doc-item-icon">
+                                    <i class="fas fa-images"></i>
+                                </div>
+
                                 <div class="doc-item-content">
+
                                     <h6>Gerir o portfólio</h6>
-                                    <p>Clica em <strong>Portfólio</strong> para carregar imagens dos teus trabalhos. Formatos aceites: JPG, PNG, WEBP. Tamanho máximo por imagem: <strong>5 MB</strong>. Podes eliminar imagens a qualquer momento.</p>
+
+                                    <p>
+                                        Clica em
+                                        <strong>Portfólio</strong>
+                                        para carregar imagens
+                                        dos teus trabalhos.
+
+                                        Formatos aceites:
+                                        JPG, PNG, WEBP.
+
+                                        Tamanho máximo:
+                                        <strong>5 MB</strong>.
+
+                                        Podes eliminar imagens
+                                        a qualquer momento.
+                                    </p>
+
                                 </div>
+
                             </div>
 
                             <div class="doc-item">
-                                <div class="doc-item-icon"><i class="fas fa-image"></i></div>
-                                <div class="doc-item-content">
-                                    <h6>Configurar capa e logótipo</h6>
-                                    <p>Em <strong>Website</strong>, podes carregar uma imagem de capa (banner) e o logótipo da empresa. A capa aparece no topo do site público. Recomendamos uma imagem de capa com pelo menos <strong>1200×400 px</strong>.</p>
+
+                                <div class="doc-item-icon">
+                                    <i class="fas fa-image"></i>
                                 </div>
+
+                                <div class="doc-item-content">
+
+                                    <h6>
+                                        Configurar capa e logótipo
+                                    </h6>
+
+                                    <p>
+                                        Em
+                                        <strong>Website</strong>,
+                                        podes carregar uma imagem
+                                        de capa (banner)
+                                        e o logótipo da empresa.
+
+                                        Recomendamos uma imagem
+                                        com pelo menos
+                                        <strong>1200×400 px</strong>.
+                                    </p>
+
+                                </div>
+
                             </div>
 
                             <div class="doc-item">
-                                <div class="doc-item-icon"><i class="fas fa-share-nodes"></i></div>
+
+                                <div class="doc-item-icon">
+                                    <i class="fas fa-share-nodes"></i>
+                                </div>
+
                                 <div class="doc-item-content">
+
                                     <h6>Redes sociais</h6>
-                                    <p>Em <strong>Website</strong>, preenche os campos de Facebook, Instagram e X (Twitter) com os links completos do teu perfil (ex: <code>https://facebook.com/minha-empresa</code>). Os ícones aparecem no rodapé do site público.</p>
+
+                                    <p>
+                                        Em
+                                        <strong>Website</strong>,
+                                        adiciona os links completos
+                                        do Facebook, Instagram
+                                        e X (Twitter).
+
+                                        Exemplo:
+                                        <code>
+                                            https://facebook.com/minha-empresa
+                                        </code>
+                                    </p>
+
                                 </div>
+
                             </div>
 
                             <div class="doc-item">
-                                <div class="doc-item-icon"><i class="fas fa-eye"></i></div>
+
+                                <div class="doc-item-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+
                                 <div class="doc-item-content">
+
                                     <h6>Ver o website público</h6>
-                                    <p>Após definir o URL, o botão <strong>Ver Website</strong> fica disponível no dashboard. Clica nele para ver o teu site tal como os visitantes o veem. O link abre numa nova aba.</p>
+
+                                    <p>
+                                        Após definir o URL,
+                                        o botão
+                                        <strong>Ver Website</strong>
+                                        ficará disponível
+                                        no dashboard.
+                                    </p>
+
                                 </div>
+
                             </div>
+
                         </div>
 
                         <div class="doc-divider"></div>
 
-                        <!-- ========================
-                             CONTA & DEFINIÇÕES
-                        ======================== -->
+                        <!-- CONTA -->
                         <div class="doc-section">
+
                             <div class="doc-section-title">
-                                <div class="icon-box"><i class="fas fa-user-gear"></i></div>
+
+                                <div class="icon-box">
+                                    <i class="fas fa-user-gear"></i>
+                                </div>
+
                                 Conta &amp; Definições
+
                             </div>
 
                             <div class="doc-item">
-                                <div class="doc-item-icon"><i class="fas fa-pen"></i></div>
+
+                                <div class="doc-item-icon">
+                                    <i class="fas fa-pen"></i>
+                                </div>
+
                                 <div class="doc-item-content">
+
                                     <h6>Alterar nome e email</h6>
-                                    <p>Clica em <strong>Editar Conta</strong> no dashboard. Altera o nome e/ou email e guarda. O novo email será usado no próximo login.</p>
+
+                                    <p>
+                                        Clica em
+                                        <strong>Editar Conta</strong>
+                                        no dashboard.
+
+                                        Altera os dados
+                                        e guarda as alterações.
+                                    </p>
+
                                 </div>
+
                             </div>
 
                             <div class="doc-item">
-                                <div class="doc-item-icon"><i class="fas fa-lock"></i></div>
-                                <div class="doc-item-content">
-                                    <h6>Alterar palavra-passe</h6>
-                                    <p>Em <strong>Editar Conta</strong>, preenche o campo <em>Nova Palavra-passe</em> e confirma. A palavra-passe deve ter pelo menos <strong>8 caracteres</strong>.</p>
+
+                                <div class="doc-item-icon">
+                                    <i class="fas fa-lock"></i>
                                 </div>
+
+                                <div class="doc-item-content">
+
+                                    <h6>
+                                        Alterar palavra-passe
+                                    </h6>
+
+                                    <p>
+                                        Em
+                                        <strong>Editar Conta</strong>,
+                                        define a nova palavra-passe.
+
+                                        Deve ter pelo menos
+                                        <strong>8 caracteres</strong>.
+                                    </p>
+
+                                </div>
+
                             </div>
+
                         </div>
 
                         <div class="doc-divider"></div>
 
-                        <!-- ========================
-                             FAQ
-                        ======================== -->
+                        <!-- FAQ -->
                         <div class="doc-section">
+
                             <div class="doc-section-title">
-                                <div class="icon-box"><i class="fas fa-circle-question"></i></div>
+
+                                <div class="icon-box">
+                                    <i class="fas fa-circle-question"></i>
+                                </div>
+
                                 Perguntas Frequentes
-                                <span class="doc-badge">FAQ</span>
+
+                                <span class="doc-badge">
+                                    FAQ
+                                </span>
+
                             </div>
 
-                            <div class="faq-question" onclick="toggleFaq(this)">
-                                O meu website não aparece após definir o URL. O que faço?
+                            <div class="faq-question"
+                                 onclick="toggleFaq(this)">
+
+                                O meu website não aparece após definir o URL.
+
                                 <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer">
-                                Após definir o URL, aguarda alguns segundos e recarrega a página. Se continuar sem aparecer, verifica se o URL não contém espaços ou caracteres especiais. Em caso de dúvida, contacta o suporte.
+
                             </div>
 
-                            <div class="faq-question" onclick="toggleFaq(this)">
-                                Posso ter mais do que um website na mesma conta?
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
                             <div class="faq-answer">
-                                Atualmente cada conta está associada a uma empresa e um website. Para gerir múltiplos websites, precisas de contas separadas.
+
+                                Aguarda alguns segundos
+                                e recarrega a página.
+
+                                Verifica também
+                                se o URL não contém
+                                espaços ou caracteres especiais.
+
                             </div>
 
-                            <div class="faq-question" onclick="toggleFaq(this)">
-                                As imagens do portfólio não carregam. Qual o problema?
+                            <div class="faq-question"
+                                 onclick="toggleFaq(this)">
+
+                                Posso ter mais do que um website?
+
                                 <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer">
-                                Verifica se o ficheiro é JPG, PNG ou WEBP e se não ultrapassa 5 MB. Se o problema persistir, tenta com outro browser ou limpa a cache.
+
                             </div>
 
-                            <div class="faq-question" onclick="toggleFaq(this)">
-                                Como posso eliminar a minha conta?
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
                             <div class="faq-answer">
-                                Para eliminar a conta, envia um pedido para <a href="mailto:suporte@freebox.pt">suporte@freebox.pt</a> com o assunto "Eliminar conta". A equipa irá processar o pedido em até 5 dias úteis.
+
+                                Atualmente,
+                                cada conta suporta
+                                apenas uma empresa
+                                e um website.
+
+                            </div>
+
+                            <div class="faq-question"
+                                 onclick="toggleFaq(this)">
+
+                                As imagens não carregam.
+
+                                <i class="fas fa-chevron-down"></i>
+
+                            </div>
+
+                            <div class="faq-answer">
+
+                                Verifica se a imagem
+                                é JPG, PNG ou WEBP
+                                e se não ultrapassa 5 MB.
+
+                            </div>
+
+                            <div class="faq-question"
+                                 onclick="toggleFaq(this)">
+
+                                Como eliminar a conta?
+
+                                <i class="fas fa-chevron-down"></i>
+
+                            </div>
+
+                            <div class="faq-answer">
+
+                                Envia um email para
+                                <a href="mailto:suporte@freebox.pt">
+                                    suporte@freebox.pt
+                                </a>
+
                             </div>
 
                         </div>
 
-                        <!-- AJUDA ADICIONAL -->
+                        <!-- AJUDA -->
                         <div class="doc-divider"></div>
-                        <p style="font-size:13px; color:#6b7280; text-align:center;">
+
+                        <p style="
+                            font-size:13px;
+                            color:#6b7280;
+                            text-align:center;
+                        ">
+
                             Não encontraste o que procuras?
-                            <a href="formulario_suporte.php" style="color:#1565C0; font-weight:600;">
+
+                            <a href="formulario_suporte.php"
+                               style="
+                                    color:#1565C0;
+                                    font-weight:600;
+                               ">
                                 Contacta o suporte
                             </a>
+
                         </p>
 
                     </div>
 
                 </div>
+
             </div>
 
         </div>
+
     </div>
+
 </div>
 
 <script>
 function toggleFaq(el) {
-    const answer  = el.nextElementSibling;
-    const icon    = el.querySelector('i');
-    const isOpen  = answer.style.display === 'block';
+
+    const answer = el.nextElementSibling;
+
+    const icon = el.querySelector('i');
+
+    const isOpen = answer.style.display === 'block';
 
     // Fecha todos
-    document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
-    document.querySelectorAll('.faq-question i').forEach(i => {
-        i.style.transform = 'rotate(0deg)';
-    });
+    document
+        .querySelectorAll('.faq-answer')
+        .forEach(a => a.style.display = 'none');
+
+    document
+        .querySelectorAll('.faq-question i')
+        .forEach(i => {
+            i.style.transform = 'rotate(0deg)';
+        });
 
     if (!isOpen) {
+
         answer.style.display = 'block';
+
         icon.style.transform = 'rotate(180deg)';
     }
 }

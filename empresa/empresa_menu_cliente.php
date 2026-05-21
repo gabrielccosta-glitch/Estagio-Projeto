@@ -7,7 +7,7 @@ if (!isset($empresa_id)) {
 }
 ?>
 
-<link rel="stylesheet" href="/projeto/css/empresa_menu.css">
+<link rel="stylesheet" href="../css/empresa_menu.css">
 
 <div class="sidebar-config">
     <div class="sidebar-header">
@@ -18,7 +18,7 @@ if (!isset($empresa_id)) {
 
         <li class="nav-item">
             <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : ''; ?>"
-                href="/projeto/empresa/dashboard.php">
+                href="../empresa/dashboard.php">
                 <span class="nav-icon"><i class="fas fa-house"></i></span>
                 Dashboard
             </a>
@@ -75,7 +75,7 @@ if (!isset($empresa_id)) {
             }
             if (!empty($url_site)): ?>
                 <a class="nav-link"
-                    href="/projeto/freebox/<?= htmlspecialchars($url_site); ?>"
+                    href="../freebox/<?= htmlspecialchars($url_site); ?>"
                     target="_blank">
                     <span class="nav-icon"><i class="fas fa-eye"></i></span>
                     Ver Website

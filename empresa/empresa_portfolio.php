@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['adicionar_portfolio'])
 
         $ext           = pathinfo($_FILES['portfolio_imagem']['name'], PATHINFO_EXTENSION);
         $filename      = uniqid() . '.' . $ext;
-        $uploaded_file = '/projeto/imagens/' . $empresa_id . '/' . $filename;
+        $uploaded_file = '../imagens/' . $empresa_id . '/' . $filename;
 
         if (move_uploaded_file($_FILES['portfolio_imagem']['tmp_name'], $upload_dir . $filename)) {
             $insert_sql  = "INSERT INTO portfolio (empresa_id, imagem, descricao_imagem) VALUES (?, ?, ?)";
@@ -94,7 +94,7 @@ if ($is_admin) {
 ?>
 
 
-<link rel="stylesheet" href="/projeto/css/empresa_portfolio.css">
+<link rel="stylesheet" href="../css/empresa_portfolio.css">
 
 
 
