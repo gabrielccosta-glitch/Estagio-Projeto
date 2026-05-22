@@ -7,7 +7,7 @@
     <title><?= htmlspecialchars($nome_empresa ?? 'Nome da Empresa'); ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="/projeto/css/site_publico.css">
+    <link rel="stylesheet" href="../css/site_publico.css">
 
 
 
@@ -182,8 +182,6 @@
             color: #0066cc;
         }
 
-
-
         /* SELETOR DE LÍNGUA PERSONALIZADO */
         .lang-selector {
             position: relative;
@@ -285,7 +283,7 @@
         <div class="container navbar-inner">
 
             <!-- LOGO / NOME -->
-            <a href="/projeto/freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>" class="brand">
+            <a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>" class="brand">
                 <?php if (!empty($logo)): ?>
                     <img src="<?= htmlspecialchars($logo); ?>" alt="<?= htmlspecialchars($nome_empresa ?? 'Nome da Empresa'); ?>" class="brand-logo">
                 <?php else: ?>
@@ -295,14 +293,14 @@
 
             <!-- LINKS -->
             <nav class="nav-links">
-                <a href="/projeto/freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#sobre">Sobre Nós</a>
+                <a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#sobre">Sobre Nós</a>
                 <?php if (!empty($servicos)): ?>
-                    <a href="/projeto/freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#servicos">Serviços</a>
+                    <a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#servicos">Serviços</a>
                 <?php endif; ?>
                 <?php if (!empty($portfolio)): ?>
-                    <a href="/projeto/freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#portfolio">Portfólio</a>
+                    <a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#portfolio">Portfólio</a>
                 <?php endif; ?>
-                <a href="/projeto/freebox/contato.php?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>">Contacto</a>
+                <a href="../freebox/contato.php?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>">Contacto</a>
             </nav>
 
             <!-- SELETOR DE LÍNGUA -->
@@ -332,10 +330,9 @@
 
     <script>
         // ── Tradutor MyMemory ──────────────────────────────────────────
-        let originalTexts = []; // guarda textos originais para reverter
+        let originalTexts = [];
         let currentLang = 'pt';
 
-        // Recolher todos os nós de texto relevantes (visíveis, não vazios)
         function getTextNodes() {
             const skip = ['SCRIPT', 'STYLE', 'NOSCRIPT', 'IFRAME', 'INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'];
             const skipIds = ['langSelector'];
@@ -343,7 +340,6 @@
                 acceptNode: function(node) {
                     if (!node.parentElement) return NodeFilter.FILTER_REJECT;
                     if (skip.includes(node.parentElement.tagName)) return NodeFilter.FILTER_REJECT;
-                    // Não traduzir o seletor de língua
                     if (node.parentElement.closest('#langSelector')) return NodeFilter.FILTER_REJECT;
                     if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
                     return NodeFilter.FILTER_ACCEPT;
@@ -354,7 +350,6 @@
             return nodes;
         }
 
-        // Traduzir array de strings via MyMemory (em lotes de 10)
         async function translateBatch(texts, toLang) {
             const results = [];
             for (let i = 0; i < texts.length; i += 10) {
@@ -379,13 +374,11 @@
             document.getElementById('langCurrent').src = flag;
             document.getElementById('langDropdown').classList.remove('open');
 
-            // Mostrar loading no botão
             const btn = document.getElementById('langBtn');
             btn.style.opacity = '0.6';
             btn.style.pointerEvents = 'none';
 
             if (lang === 'pt') {
-                // Reverter para originais
                 const nodes = getTextNodes();
                 nodes.forEach((node, i) => {
                     if (originalTexts[i] !== undefined) node.textContent = originalTexts[i];
@@ -394,12 +387,10 @@
                 currentLang = 'pt';
                 document.getElementById('langCurrent').src = flag;
             } else {
-                // Guardar originais se ainda não guardados
                 const nodes = getTextNodes();
                 if (originalTexts.length === 0) {
                     originalTexts = nodes.map(n => n.textContent);
                 } else {
-                    // Reverter para PT antes de traduzir para outra língua
                     nodes.forEach((node, i) => {
                         if (originalTexts[i] !== undefined) node.textContent = originalTexts[i];
                     });
@@ -417,7 +408,6 @@
             btn.style.pointerEvents = 'auto';
         }
 
-        // Toggle dropdown
         document.getElementById('langBtn').addEventListener('click', function(e) {
             e.stopPropagation();
             document.getElementById('langDropdown').classList.toggle('open');

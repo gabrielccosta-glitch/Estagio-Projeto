@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 require_once '../config/database.php';
@@ -41,7 +40,7 @@ if ($is_admin) {
 }
 ?>
 
-<link rel="stylesheet" href="/projeto/css/empresa_servicos.css">
+<link rel="stylesheet" href="../css/empresa_servicos.css">
 
 
 
@@ -151,14 +150,10 @@ if ($is_admin) {
                                             Editar
                                         </a>
 
-                                        
-
                                         <a href="eliminar_servico.php?id=<?= $s['id']; ?>"
                                            class="btn btn-danger btn-sm">
                                            Eliminar
                                         </a>
-
-                                        
 
                                     </div>
 

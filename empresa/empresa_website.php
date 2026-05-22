@@ -32,7 +32,6 @@ $website_stmt->execute();
 $website = $website_stmt->get_result()->fetch_assoc();
 $website_stmt->close();
 
-// O cliente só pode definir o url_site se ainda estiver vazio
 $url_ja_definido = !empty($website['url_site']);
 $cliente_pode_definir_url = !$is_admin && !$url_ja_definido;
 
@@ -47,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hero_botao_texto  = trim($_POST['hero_botao_texto'] ?? '');
     $hero_botao_link   = trim($_POST['hero_botao_link'] ?? '');
 
-    // URL do site: admin pode sempre mudar; cliente só pode definir se ainda estiver vazio
     if ($is_admin) {
         $url_site = trim($_POST['url_site'] ?? '');
         $url_site = preg_replace('/[^a-zA-Z0-9\-]/', '', $url_site);
@@ -57,18 +55,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $url_site = preg_replace('/[^a-zA-Z0-9\-]/', '', $url_site);
         $url_site = strtolower($url_site);
     } else {
-        // URL já definido — cliente não pode alterar
         $url_site = $website['url_site'] ?? '';
     }
 
-    // Email do formulário: só admin pode mudar
     if ($is_admin) {
         $email_formulario = trim($_POST['email_formulario'] ?? '');
     } else {
         $email_formulario = $website['email_formulario'] ?? '';
     }
 
-    // Verificar se url_site já existe noutra empresa
     if (!empty($url_site) && ($is_admin || $cliente_pode_definir_url)) {
         $check_sql  = "SELECT id FROM website_config WHERE url_site = ? AND empresa_id != ?";
         $check_stmt = $conn->prepare($check_sql);
@@ -95,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $file_type = mime_content_type($_FILES['logotipo']['tmp_name']);
         if (in_array($file_type, $allowed) && $_FILES['logotipo']['size'] <= 2 * 1024 * 1024) {
             $ext      = pathinfo($_FILES['logotipo']['name'], PATHINFO_EXTENSION);
-            $logotipo = '/projeto/imagens/' . $empresa_id . '/logotipo.' . $ext;
+            $logotipo = '../imagens/' . $empresa_id . '/logotipo.' . $ext;
             move_uploaded_file($_FILES['logotipo']['tmp_name'], $upload_dir . 'logotipo.' . $ext);
         } else {
             $_SESSION['error_message'] = "Logotipo inválido. Use JPG, PNG, GIF ou WEBP até 2MB.";
@@ -109,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $file_type = mime_content_type($_FILES['capa_empresa']['tmp_name']);
         if (in_array($file_type, $allowed) && $_FILES['capa_empresa']['size'] <= 5 * 1024 * 1024) {
             $ext          = pathinfo($_FILES['capa_empresa']['name'], PATHINFO_EXTENSION);
-            $capa_empresa = '/projeto/imagens/' . $empresa_id . '/capa.' . $ext;
+            $capa_empresa = '../imagens/' . $empresa_id . '/capa.' . $ext;
             move_uploaded_file($_FILES['capa_empresa']['tmp_name'], $upload_dir . 'capa.' . $ext);
         } else {
             $_SESSION['error_message'] = "Capa inválida. Use JPG, PNG, GIF ou WEBP até 5MB.";
@@ -158,7 +153,7 @@ if ($is_admin) {
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="/projeto/css/empresa_website.css">
+<link rel="stylesheet" href="../css/empresa_website.css">
 
 <style>
     .modal {
@@ -248,7 +243,6 @@ if ($is_admin) {
                         <label class="mt-3"><i class="fas fa-link"></i> Endereço do seu site</label>
 
                         <?php if ($is_admin): ?>
-                            <!-- Admin pode sempre editar -->
                             <div class="url-group">
                                 <span class="url-prefix">http://freebox/</span>
                                 <input type="text" name="url_site" class="form-control"
@@ -261,7 +255,6 @@ if ($is_admin) {
                             </small>
 
                         <?php elseif ($cliente_pode_definir_url): ?>
-                            <!-- Cliente ainda não definiu — pode definir uma vez -->
                             <div class="url-group">
                                 <span class="url-prefix">http://freebox/</span>
                                 <input type="text" name="url_site" class="form-control"
@@ -275,7 +268,6 @@ if ($is_admin) {
                             </small>
 
                         <?php else: ?>
-                            <!-- Cliente já definiu — só mostra, não pode editar -->
                             <div class="url-definido-info">
                                 <i class="fas fa-lock"></i>
                                 <span>http://freebox/<?= htmlspecialchars($website['url_site']) ?></span>
@@ -286,7 +278,7 @@ if ($is_admin) {
 
                         <?php if (!empty($website['url_site'])): ?>
                             <div class="mt-2">
-                                <a href="http://localhost/projeto/freebox/<?= htmlspecialchars($website['url_site']); ?>"
+                                <a href="http://localhost/freebox/<?= htmlspecialchars($website['url_site']); ?>"
                                     target="_blank" class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-external-link-alt"></i> Ver site
                                 </a>

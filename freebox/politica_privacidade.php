@@ -54,10 +54,10 @@ $morada_completa    = trim(($empresa['morada'] ?? '') . ' ' . ($empresa['codigo_
 
 // Corrige caminhos relativos
 if (!empty($logo)) {
-    $logo = '/projeto/freebox/' . ltrim(preg_replace('#^\./#', '', $logo), '/');
+    $logo = '../freebox/' . ltrim(preg_replace('#^\./#', '', $logo), '/');
 }
 if (!empty($capa)) {
-    $capa = '/projeto/freebox/' . ltrim(preg_replace('#^\./#', '', $capa), '/');
+    $capa = '../freebox/' . ltrim(preg_replace('#^\./#', '', $capa), '/');
 }
 
 $hero_style      = !empty($capa) ? "background-image: url('" . htmlspecialchars($capa, ENT_QUOTES) . "');" : '';
@@ -78,7 +78,7 @@ include 'header_publico.php';
             <h2>Quem somos</h2>
 
             <?php
-            $link_site = 'http://' . ($_SERVER['HTTP_HOST'] ?? '') . '/projeto/freebox/' . ($website['url_site'] ?? '');
+            $link_site = 'http://' . ($_SERVER['HTTP_HOST'] ?? '') . '/freebox/' . ($website['url_site'] ?? '');
             ?>
 
             <p>

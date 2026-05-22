@@ -1,4 +1,4 @@
-    <footer class="public-footer">
+<footer class="public-footer">
         <div class="footer-top">
             <div class="container">
                 <div class="footer-cols">
@@ -7,28 +7,25 @@
                     <div class="footer-col">
                         <h6 class="footer-col-title">Páginas</h6>
                         <ul>
-                            <li><a href="/projeto/freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#sobre">Sobre Nós</a></li>
+                            <li><a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#sobre">Sobre Nós</a></li>
                             <?php if (!empty($servicos)): ?>
-                                <li><a href="/projeto/freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#servicos">Serviços</a></li>
+                                <li><a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#servicos">Serviços</a></li>
                             <?php endif; ?>
                             <?php if (!empty($portfolio)): ?>
-                                <li><a href="/projeto/freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#portfolio">Portfólio</a></li>
+                                <li><a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#portfolio">Portfólio</a></li>
                             <?php endif; ?>
-                            <li><a href="/projeto/freebox/contato.php?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>">Contacto</a></li>
-
+                            <li><a href="../freebox/contato.php?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>">Contacto</a></li>
                         </ul>
                     </div>
                     <!-- LEGAL -->
                     <div class="footer-col">
                         <h6 class="footer-col-title">Legal</h6>
-
                         <ul>
                             <li>
-                                <a href="/projeto/freebox/<?= htmlspecialchars($website['url_site'] ?? ''); ?>/politica-privacidade">
+                                <a href="../freebox/<?= htmlspecialchars($website['url_site'] ?? ''); ?>/politica-privacidade">
                                     Política de Privacidade
                                 </a>
                             </li>
-
                             <li>
                                 <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank">
                                     Livro de Reclamações
@@ -50,7 +47,7 @@
                                 <li><span><?= htmlspecialchars($morada_completa); ?></span></li>
                             <?php endif; ?>
                             <li style="margin-top:15px;">
-                                <a href="/projeto/freebox/formulario.php?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>"
+                                <a href="../freebox/formulario.php?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>"
                                     class="footer-btn-enviar"
                                     style="display:inline-flex; text-decoration:none;">
                                     Enviar Mensagem <i class="fas fa-paper-plane"></i>
@@ -58,8 +55,6 @@
                             </li>
                         </ul>
                     </div>
-
-
 
                     <!-- REDES SOCIAIS -->
                     <?php
