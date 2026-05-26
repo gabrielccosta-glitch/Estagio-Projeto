@@ -131,7 +131,7 @@ include 'header_publico.php';
                         </div>
 
                         <div class="text-end">
-                            <button type="submit" class="hero-button" style="text-decoration:none; cursor:pointer; border:none; font-size: 1.0rem; padding: 10px 28px;">
+                            <button type="submit" class="form-submit-btn">
                                 Enviar
                             </button>
                         </div>

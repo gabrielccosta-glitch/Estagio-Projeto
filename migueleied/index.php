@@ -114,14 +114,19 @@ $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
             <?php endif; ?>
         </div>
     <?php endif; ?>
+    <div class="hero-scroll-indicator">
+        <span class="mouse-wheel"></span>
+    </div>
 </section>
 
 <!-- SERVIÇOS -->
 <?php if (!empty($servicos)): ?>
     <section id="servicos" class="services-section section-padding">
         <div class="container">
-            <h2 class="section-title">Serviços</h2>
-            <div class="section-line"></div>
+            <div class="section-header">
+                <h2 class="section-title">Serviços</h2>
+                <div class="section-line"></div>
+            </div>
             <?php $servicos_chunks = array_chunk($servicos, 6);
             $s_pages = count($servicos_chunks); ?>
             <div class="carousel-outer mt-3">
@@ -135,7 +140,9 @@ $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
                             <div class="carousel-page">
                                 <?php foreach ($chunk as $servico): ?>
                                     <div class="service-card">
-                                        <div class="service-icon"><i class="fas fa-screwdriver-wrench"></i></div>
+                                        <div class="service-icon">
+                                            <i class="fas fa-screwdriver-wrench"></i>
+                                        </div>
                                         <h4><?= htmlspecialchars($servico['titulo_servico'] ?: ($servico['nome_servico'] ?? '')); ?></h4>
                                         <p><?= nl2br(htmlspecialchars($servico['descricao_servico'] ?? '')); ?></p>
                                     </div>
@@ -160,8 +167,10 @@ $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
 <?php if (!empty($portfolio)): ?>
     <section id="portfolio" class="portfolio-section section-padding">
         <div class="container">
-            <h2 class="section-title">Portfólio</h2>
-            <div class="section-line"></div>
+            <div class="section-header">
+                <h2 class="section-title">Portfólio</h2>
+                <div class="section-line"></div>
+            </div>
             <?php $portfolio_chunks = array_chunk($portfolio, 6);
             $p_pages = count($portfolio_chunks); ?>
             <div class="carousel-outer mt-3">
@@ -178,7 +187,9 @@ $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
                                     <div class="portfolio-card" data-index="<?= $globalIndex ?>">
                                         <img src="<?= htmlspecialchars($item['imagem']); ?>"
                                             alt="<?= htmlspecialchars($item['descricao_imagem'] ?: 'Portfólio'); ?>">
-                                        <div class="overlay"><i class="fas fa-magnifying-glass-plus"></i></div>
+                                        <div class="overlay">
+                                            <i class="fas fa-magnifying-glass-plus"></i>
+                                        </div>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -200,8 +211,10 @@ $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
 <!-- SOBRE NÓS -->
 <section id="sobre" class="about-section section-padding">
     <div class="container">
-        <h2 class="section-title">Sobre Nós</h2>
-        <div class="section-line"></div>
+        <div class="section-header">
+            <h2 class="section-title">Sobre Nós</h2>
+            <div class="section-line"></div>
+        </div>
         <div class="row about-grid">
             <div class="col-lg-8">
                 <div class="about-text-block">
@@ -227,14 +240,18 @@ $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
             </div>
             <div class="col-lg-4">
                 <?php if (!empty($morada_completa)): ?>
-                    <div class="about-map-card">
-                        <iframe src="https://maps.google.com/maps?q=<?= urlencode($morada_completa); ?>&output=embed"
-                            allowfullscreen loading="lazy"></iframe>
+                    <div class="about-map-card-wrapper">
+                        <div class="about-map-card">
+                            <iframe src="https://maps.google.com/maps?q=<?= urlencode($morada_completa); ?>&output=embed"
+                                allowfullscreen loading="lazy"></iframe>
+                        </div>
                     </div>
                 <?php else: ?>
-                    <div class="about-map-placeholder">
-                        <i class="fas fa-map-location-dot"></i>
-                        <p>Morada não disponível.</p>
+                    <div class="about-map-placeholder-wrapper">
+                        <div class="about-map-placeholder">
+                            <i class="fas fa-map-location-dot"></i>
+                            <p>Morada não disponível.</p>
+                        </div>
                     </div>
                 <?php endif; ?>
             </div>

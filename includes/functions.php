@@ -2,44 +2,49 @@
 // includes/functions.php - Funções auxiliares para o sistema de login
 
 // Inicia a sessão se ainda não estiver iniciada
-function iniciarSessao() {
+function iniciarSessao()
+{
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
 }
 
 // Verifica se o usuário está logado
-function estaLogado() {
+function estaLogado()
+{
     iniciarSessao();
     return isset($_SESSION['usuario_id']);
 }
 
 // Verifica se o usuário é administrador
-function eAdmin() {
+function eAdmin()
+{
     iniciarSessao();
     return isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'admin';
 }
 
 // Verifica se o usuário é cliente
-function eCliente() {
+function eCliente()
+{
     iniciarSessao();
     return isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'cliente';
 }
 
 // Redireciona para página adequada conforme o tipo de usuário
-function redirecionarUsuario() {
+function redirecionarUsuario()
+{
     iniciarSessao();
-    
+
     if (!estaLogado()) {
         header("Location: login.php");
         exit;
     }
-    
+
     if (eAdmin()) {
         header("Location: admin/index.php");
         exit;
     }
-    
+
     if (eCliente()) {
         header("Location: empresa/index.php");
         exit;
@@ -47,7 +52,8 @@ function redirecionarUsuario() {
 }
 
 // Limpa e valida dados de entrada
-function limparDados($dados) {
+function limparDados($dados)
+{
     $dados = trim($dados);
     $dados = stripslashes($dados);
     $dados = htmlspecialchars($dados);
@@ -55,7 +61,8 @@ function limparDados($dados) {
 }
 
 // Exibe mensagens de alerta/erro
-function mostrarAlerta($mensagem, $tipo = 'success') {
+function mostrarAlerta($mensagem, $tipo = 'success')
+{
     $_SESSION['alerta'] = [
         'mensagem' => $mensagem,
         'tipo' => $tipo
@@ -63,7 +70,8 @@ function mostrarAlerta($mensagem, $tipo = 'success') {
 }
 
 // Recupera e limpa alertas da sessão
-function obterAlerta() {
+function obterAlerta()
+{
     iniciarSessao();
     if (isset($_SESSION['alerta'])) {
         $alerta = $_SESSION['alerta'];
@@ -74,7 +82,8 @@ function obterAlerta() {
 }
 
 // Retorna a URL pública de uma empresa
-function obterUrlEmpresa($url_site, $root_prefix = '../') {
+function obterUrlEmpresa($url_site, $root_prefix = '../')
+{
     if (empty($url_site)) {
         return '#';
     }
@@ -83,13 +92,14 @@ function obterUrlEmpresa($url_site, $root_prefix = '../') {
     if (is_dir($caminho_relativo)) {
         return $root_prefix . $url_site . '/';
     }
-    
+
     // Fallback para o modo query string se a pasta ainda não existir
     return $root_prefix . 'freebox/?url=' . $url_site;
 }
 
 // Copia um diretório e todo o seu conteúdo recursivamente com personalização de .htaccess
-function copiarDiretorioRecursivo($origem, $destino) {
+function copiarDiretorioRecursivo($origem, $destino)
+{
     if (!is_dir($destino)) {
         mkdir($destino, 0755, true);
     }
@@ -118,7 +128,8 @@ function copiarDiretorioRecursivo($origem, $destino) {
 }
 
 // Elimina um diretório e todo o seu conteúdo recursivamente de forma segura
-function eliminarDiretorio($dir) {
+function eliminarDiretorio($dir)
+{
     if (!is_dir($dir)) {
         return false;
     }

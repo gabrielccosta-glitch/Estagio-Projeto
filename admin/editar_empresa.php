@@ -123,6 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 include '../includes/header.php';
 include '../admin/includes/header_admin.php';
+include 'header_admin.php';
 ?>
 
 <link rel="stylesheet"

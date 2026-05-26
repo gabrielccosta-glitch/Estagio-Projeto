@@ -57,13 +57,13 @@ $portfolio_stmt->execute();
 $portfolio = $portfolio_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $portfolio_stmt->close();
 
-$nome_empresa       = $empresa['nome_empresa'] ?? 'Empresa';
-$descricao          = trim($website['descricao_empresa'] ?? '');
-$logo               = trim($website['logotipo'] ?? '');
-$capa               = trim($website['capa_empresa'] ?? '');
+$nome_empresa = $empresa['nome_empresa'] ?? 'Empresa';
+$descricao = trim($website['descricao_empresa'] ?? '');
+$logo = trim($website['logotipo'] ?? '');
+$capa = trim($website['capa_empresa'] ?? '');
 $telefone_principal = !empty($empresa['telefone']) ? $empresa['telefone'] : ($empresa['telefone_contato'] ?? '');
-$email_principal    = !empty($empresa['email_empresa']) ? $empresa['email_empresa'] : ($empresa['email_contato'] ?? '');
-$morada_completa    = trim(($empresa['morada'] ?? '') . ' ' . ($empresa['codigo_postal'] ?? ''));
+$email_principal = !empty($empresa['email_empresa']) ? $empresa['email_empresa'] : ($empresa['email_contato'] ?? '');
+$morada_completa = trim(($empresa['morada'] ?? '') . ' ' . ($empresa['codigo_postal'] ?? ''));
 
 // Corrige caminhos relativos se for o diretório de preview original
 if (!$is_tenant_dir) {
@@ -75,8 +75,8 @@ if (!$is_tenant_dir) {
     }
 }
 
-$hero_style      = !empty($capa) ? "background-image: url('" . htmlspecialchars($capa, ENT_QUOTES) . "');" : '';
-$portfolio_bg    = !empty($capa) ? $capa : (!empty($portfolio[0]['imagem']) ? $portfolio[0]['imagem'] : '');
+$hero_style = !empty($capa) ? "background-image: url('" . htmlspecialchars($capa, ENT_QUOTES) . "');" : '';
+$portfolio_bg = !empty($capa) ? $capa : (!empty($portfolio[0]['imagem']) ? $portfolio[0]['imagem'] : '');
 $portfolio_style = !empty($portfolio_bg) ? "background-image: url('" . htmlspecialchars($portfolio_bg, ENT_QUOTES) . "');" : '';
 
 include 'header_publico.php';
@@ -93,7 +93,8 @@ include 'header_publico.php';
             <h2>Quem somos</h2>
 
             <?php
-            $link_site = 'http://' . ($_SERVER['HTTP_HOST'] ?? '') . '/freebox/' . ($website['url_site'] ?? '');
+            $protocolo = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+            $link_site = $protocolo . '://' . $_SERVER['HTTP_HOST'] . '/projeto/' . ($website['url_site'] ?? '');
             ?>
 
             <p>
@@ -168,11 +169,11 @@ include 'header_publico.php';
             <h2>Partilha de dados</h2>
 
             <p>
-                <div class="footer-brand-name" style="font-size: 6rem; letter-spacing: 3px;">
+            <div class="footer-brand-name" style="font-size: 6rem; letter-spacing: 3px;">
                 A <?= htmlspecialchars($nome_empresa); ?>
-                </div>
-                não partilha dados pessoais com terceiros,
-                exceto quando exigido por lei.
+            </div>
+            não partilha dados pessoais com terceiros,
+            exceto quando exigido por lei.
             </p>
 
             <h2>Conservação dos dados</h2>
