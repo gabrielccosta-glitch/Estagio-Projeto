@@ -23,6 +23,16 @@ if (!$empresa) {
     exit();
 }
 
+// ── Nome da pasta baseado no nome da empresa ──
+function gerarNomePasta($nome) {
+    $nome = mb_strtolower($nome, 'UTF-8');
+    $nome = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $nome);
+    $nome = preg_replace('/[^a-z0-9]+/', '-', $nome);
+    $nome = trim($nome, '-');
+    return $nome ?: 'empresa';
+}
+$nome_pasta = gerarNomePasta($empresa['nome_empresa']);
+
 $is_admin = isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'admin';
 
 $website_sql = "SELECT * FROM website_config WHERE empresa_id = ?";
@@ -31,6 +41,8 @@ $website_stmt->bind_param("i", $empresa_id);
 $website_stmt->execute();
 $website = $website_stmt->get_result()->fetch_assoc();
 $website_stmt->close();
+
+$old_url_site = $website['url_site'] ?? '';
 
 $url_ja_definido          = !empty($website['url_site']);
 $logotipo_ja_definido     = !empty($website['logotipo']);
@@ -52,6 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $link_x            = trim($_POST['link_x'] ?? '');
     $hero_titulo       = trim($_POST['hero_titulo'] ?? '');
     $hero_subtitulo    = trim($_POST['hero_subtitulo'] ?? '');
+    $cor_primaria      = trim($_POST['cor_primaria'] ?? '#1a1a1a');
+    $cor_secundaria    = trim($_POST['cor_secundaria'] ?? '#555555');
 
     // URL do site
     if ($is_admin) {
@@ -64,17 +78,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $url_site = $website['url_site'] ?? '';
     }
 
-    // Logotipo
+    // ── Logotipo — pasta por nome da empresa ──
     $logotipo = $website['logotipo'] ?? '';
     if ($is_admin || $cliente_pode_definir_logotipo) {
         if (!empty($_FILES['logotipo']['tmp_name'])) {
             $allowed   = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
             $file_type = mime_content_type($_FILES['logotipo']['tmp_name']);
             if (in_array($file_type, $allowed) && $_FILES['logotipo']['size'] <= 2 * 1024 * 1024) {
-                $upload_dir = '../imagens/' . $empresa_id . '/';
+                $upload_dir = '../imagens/' . $nome_pasta . '/';
                 if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
                 $ext      = pathinfo($_FILES['logotipo']['name'], PATHINFO_EXTENSION);
-                $logotipo = '../imagens/' . $empresa_id . '/logotipo.' . $ext;
+                $logotipo = '../imagens/' . $nome_pasta . '/logotipo.' . $ext;
                 move_uploaded_file($_FILES['logotipo']['tmp_name'], $upload_dir . 'logotipo.' . $ext);
             } else {
                 $_SESSION['error_message'] = "Logotipo inválido. Use JPG, PNG, GIF ou WEBP até 2MB.";
@@ -98,23 +112,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hero_botao_link = $website['hero_botao_link'] ?? '';
     }
 
-    // Email — admin sempre, cliente só uma vez
+    // Email
     if ($is_admin || $cliente_pode_definir_email) {
         $email_formulario = trim($_POST['email_formulario'] ?? '');
     } else {
         $email_formulario = $website['email_formulario'] ?? '';
     }
 
-    // Capa
+    // ── Capa — pasta por nome da empresa ──
     $capa_empresa = $website['capa_empresa'] ?? '';
     if (!empty($_FILES['capa_empresa']['tmp_name'])) {
         $allowed   = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
         $file_type = mime_content_type($_FILES['capa_empresa']['tmp_name']);
         if (in_array($file_type, $allowed) && $_FILES['capa_empresa']['size'] <= 5 * 1024 * 1024) {
-            $upload_dir = '../imagens/' . $empresa_id . '/';
+            $upload_dir = '../imagens/' . $nome_pasta . '/';
             if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
             $ext          = pathinfo($_FILES['capa_empresa']['name'], PATHINFO_EXTENSION);
-            $capa_empresa = '../imagens/' . $empresa_id . '/capa.' . $ext;
+            $capa_empresa = '../imagens/' . $nome_pasta . '/capa.' . $ext;
             move_uploaded_file($_FILES['capa_empresa']['tmp_name'], $upload_dir . 'capa.' . $ext);
         } else {
             $_SESSION['error_message'] = "Capa inválida. Use JPG, PNG, GIF ou WEBP até 5MB.";
@@ -138,8 +152,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $sql = "INSERT INTO website_config 
-        (empresa_id, descricao_empresa, logotipo, capa_empresa, hero_titulo, hero_subtitulo, hero_botao_texto, hero_botao_link, link_facebook, link_instagram, link_x, url_site, email_formulario)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (empresa_id, descricao_empresa, logotipo, capa_empresa, hero_titulo, hero_subtitulo, hero_botao_texto, hero_botao_link, link_facebook, link_instagram, link_x, url_site, email_formulario, cor_primaria, cor_secundaria)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON DUPLICATE KEY UPDATE
         descricao_empresa = VALUES(descricao_empresa),
         logotipo          = VALUES(logotipo),
@@ -152,17 +166,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         link_instagram    = VALUES(link_instagram),
         link_x            = VALUES(link_x),
         url_site          = VALUES(url_site),
-        email_formulario  = VALUES(email_formulario)";
+        email_formulario  = VALUES(email_formulario),
+        cor_primaria      = VALUES(cor_primaria),
+        cor_secundaria    = VALUES(cor_secundaria)";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("issssssssssss",
+    $stmt->bind_param("issssssssssssss",
         $empresa_id, $descricao_empresa, $logotipo, $capa_empresa,
         $hero_titulo, $hero_subtitulo, $hero_botao_texto, $hero_botao_link,
-        $link_facebook, $link_instagram, $link_x, $url_site, $email_formulario
+        $link_facebook, $link_instagram, $link_x, $url_site, $email_formulario,
+        $cor_primaria, $cor_secundaria
     );
 
     if ($stmt->execute()) {
         $_SESSION['success_message'] = "Guardado com sucesso!";
+
+        // Criar ou renomear pasta do site dinâmico
+        if (!empty($url_site)) {
+            $projeto_root     = dirname(__DIR__);
+            $novo_diretorio   = $projeto_root . '/' . $url_site;
+            $diretorio_origem = $projeto_root . '/freebox';
+
+            if (!empty($old_url_site) && $old_url_site !== $url_site) {
+                $antigo_diretorio = $projeto_root . '/' . $old_url_site;
+                if (is_dir($antigo_diretorio) && $old_url_site !== 'freebox') {
+                    rename($antigo_diretorio, $novo_diretorio);
+                }
+            }
+
+            if (is_dir($diretorio_origem)) {
+                copiarDiretorioRecursivo($diretorio_origem, $novo_diretorio);
+            }
+        }
     } else {
         $_SESSION['error_message'] = "Erro ao guardar: " . $conn->error;
     }
@@ -267,6 +302,7 @@ if ($is_admin) {
 
                         <!-- URL DO SITE -->
                         <label class="mt-3"><i class="fas fa-link"></i> Endereço do seu site</label>
+
                         <?php if ($is_admin): ?>
                             <div class="url-group">
                                 <span class="url-prefix">http://freebox/</span>
@@ -296,7 +332,7 @@ if ($is_admin) {
 
                         <?php if (!empty($website['url_site'])): ?>
                             <div class="mt-2">
-                                <a href="http://localhost/freebox/<?= htmlspecialchars($website['url_site']); ?>"
+                                <a href="<?= htmlspecialchars(obterUrlEmpresa($website['url_site'], '../')); ?>"
                                     target="_blank" class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-external-link-alt"></i> Ver site
                                 </a>
@@ -335,6 +371,29 @@ if ($is_admin) {
                             <img src="<?= htmlspecialchars($website['capa_empresa']); ?>"
                                 alt="Capa atual" class="preview-img mt-2">
                         <?php endif; ?>
+
+                        <!-- CORES DO SITE -->
+                        <hr class="mt-4">
+                        <h6 class="mt-3 mb-3"><i class="fas fa-palette"></i> Cores do Website</h6>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><i class="fas fa-circle text-primary"></i> Cor Primária</label>
+                                <input type="color" name="cor_primaria" class="form-control form-control-color w-100" 
+                                    value="<?= htmlspecialchars($website['cor_primaria'] ?? '#1a1a1a') ?>" 
+                                    style="height: 48px; padding: 4px; cursor: pointer;"
+                                    title="Escolha a cor primária">
+                                <small class="text-muted">Usada para títulos, botões principais e destaques.</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label><i class="fas fa-circle text-secondary"></i> Cor Secundária</label>
+                                <input type="color" name="cor_secundaria" class="form-control form-control-color w-100" 
+                                    value="<?= htmlspecialchars($website['cor_secundaria'] ?? '#555555') ?>" 
+                                    style="height: 48px; padding: 4px; cursor: pointer;"
+                                    title="Escolha a cor secundária">
+                                <small class="text-muted">Usada para elementos de hover, gradientes e detalhes.</small>
+                            </div>
+                        </div>
 
                         <!-- HERO TEXTO -->
                         <hr class="mt-4">

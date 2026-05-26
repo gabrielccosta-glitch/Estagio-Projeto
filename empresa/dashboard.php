@@ -193,7 +193,7 @@ include '../includes/header.php';
 
                             <?php if (!empty($url_site)): ?>
 
-                                <a href="../freebox/<?= htmlspecialchars($url_site); ?>"
+                                <a href="<?= htmlspecialchars(obterUrlEmpresa($url_site)); ?>"
                                    target="_blank"
                                    class="dashboard-card">
 

@@ -22,6 +22,14 @@
     $conn->begin_transaction();
 
     try {
+        // Obter o url_site associado para saber se há diretório dinâmico
+        $url_stmt = $conn->prepare("SELECT url_site FROM website_config WHERE empresa_id = ?");
+        $url_stmt->bind_param("i", $empresa_id);
+        $url_stmt->execute();
+        $url_row = $url_stmt->get_result()->fetch_assoc();
+        $url_stmt->close();
+        $url_site = $url_row['url_site'] ?? '';
+
         // Primeiro, obter o usuario_id associado à empresa
         $stmt = $conn->prepare("SELECT usuario_id FROM empresas WHERE id = ?");
         $stmt->bind_param("i", $empresa_id);
@@ -57,6 +65,15 @@
 
         // Se chegou até aqui sem erros, commit da transação
         $conn->commit();
+
+        // Eliminar a pasta física do website do cliente, se existir
+        if (!empty($url_site)) {
+            $projeto_root = dirname(__DIR__);
+            $diretorio_cliente = $projeto_root . '/' . $url_site;
+            if (is_dir($diretorio_cliente) && $url_site !== 'freebox') {
+                eliminarDiretorio($diretorio_cliente);
+            }
+        }
 
         $_SESSION['success'] = "Empresa e serviços associados eliminados com sucesso.";
     } catch (Exception $e) {

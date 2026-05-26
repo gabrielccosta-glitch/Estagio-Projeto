@@ -1,4 +1,3 @@
-
 .cliente-header {
     width: 100%;
     background: #ffffff;
@@ -8,7 +7,7 @@
     justify-content: space-between;
     align-items: center;
 
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .cliente-header-left {
@@ -43,11 +42,9 @@
 .cliente-separator {
     width: 100%;
     height: 4px;
-    background: linear-gradient(
-        to right,
-        #2563eb,
-        #1d4ed8
-    );
+    background: linear-gradient(to right,
+            #2563eb,
+            #1d4ed8);
 }
 
 /* RESPONSIVO */
@@ -66,6 +63,7 @@
     }
 
 }
+
 /* ── Layout de página ─────────────────────────────────────────────────────── */
 body {
     background-color: #f0f6ff;
@@ -81,7 +79,7 @@ body {
 .custom-card {
     border: none;
     border-radius: 16px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
     background: #ffffff;
     padding: 20px;
 }
@@ -96,7 +94,7 @@ body {
 
 .custom-card .form-control:focus {
     border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
 }
 
 .custom-card .form-control:disabled {
@@ -126,9 +124,11 @@ body {
     display: none;
     position: fixed;
     z-index: 9999;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.4);
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 #messageModal .modal-content {
@@ -139,5 +139,5 @@ body {
     max-width: 400px;
     margin: 15% auto;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }

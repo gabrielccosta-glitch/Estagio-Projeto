@@ -1,0 +1,7 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Politica de privacidade
+RewriteRule ^politica-privacidade$ politica_privacidade.php [L,QSA]

@@ -1,7 +1,7 @@
 /* Configuração Principal do Footer */
 .public-footer {
     background: linear-gradient(135deg, #0d1f3c 0%, #1a3a6b 50%, #1f5b9d 100%) !important;
-    color: rgba(255,255,255,0.55) !important;
+    color: rgba(255, 255, 255, 0.55) !important;
     margin-top: 60px !important;
     padding: 0 !important;
     overflow: hidden;
@@ -12,7 +12,7 @@
 /* Área de Colunas */
 .footer-top {
     padding: 60px 0 40px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer-cols {
@@ -37,7 +37,8 @@
 }
 
 .footer-col ul {
-    list-style: none !important; /* Remove os pontos da lista */
+    list-style: none !important;
+    /* Remove os pontos da lista */
     padding: 0 !important;
     margin: 0 !important;
     display: flex;
@@ -46,7 +47,7 @@
 }
 
 .footer-col ul li a {
-    color: rgba(255,255,255,0.45);
+    color: rgba(255, 255, 255, 0.45);
     text-decoration: none;
     transition: 0.2s;
 }
@@ -59,16 +60,17 @@
 .footer-brand-name {
     font-size: clamp(3rem, 10vw, 8rem);
     font-weight: 900;
-    color: rgba(255,255,255,0.06);
+    color: rgba(255, 255, 255, 0.06);
     text-transform: uppercase;
     text-align: center;
     line-height: 1;
-    pointer-events: none; /* Garante que não atrapalhe cliques */
+    pointer-events: none;
+    /* Garante que não atrapalhe cliques */
 }
 
 /* Barra Inferior */
 .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
     padding: 18px 0;
 }
 
@@ -88,7 +90,8 @@
     color: white;
     width: 40px;
     height: 40px;
-    border-radius: 50%; /* Corrigido de A50% */
+    border-radius: 50%;
+    /* Corrigido de A50% */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -97,7 +100,8 @@
     z-index: 1000;
 }
 
-.back-to-top:hover { 
-    background: white; /* Corrigido de #white */
-    color: #0d1f3c; 
+.back-to-top:hover {
+    background: white;
+    /* Corrigido de #white */
+    color: #0d1f3c;
 }

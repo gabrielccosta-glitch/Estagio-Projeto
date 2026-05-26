@@ -105,7 +105,7 @@ if ($is_admin) {
                                     ?>
 
                                     <?php if (!empty($url_site)): ?>
-                                        <a href="../freebox/<?php echo htmlspecialchars($url_site); ?>"
+                                        <a href="<?php echo htmlspecialchars(obterUrlEmpresa($url_site)); ?>"
                                             class="btn btn-sm btn-info"
                                             target="_blank">
                                             Ver Website

@@ -17,7 +17,7 @@
 
                         <?php if (!empty($url_site)): ?>
                             <li>
-                                <a href="../freebox/<?= htmlspecialchars($url_site); ?>">
+                                <a href="<?= htmlspecialchars(obterUrlEmpresa($url_site)); ?>">
                                     <i class="fas fa-globe me-2"></i>Meu Website
                                 </a>
                             </li>

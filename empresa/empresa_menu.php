@@ -85,7 +85,7 @@ if (!isset($empresa_id)) {
             }
             if (!empty($url_site)): ?>
                 <a class="nav-link"
-                    href="../freebox/<?= htmlspecialchars($url_site); ?>"
+                    href="<?= htmlspecialchars(obterUrlEmpresa($url_site)); ?>"
                     target="_blank">
                     <span class="nav-icon"><i class="fas fa-eye"></i></span>
                     Ver Website
