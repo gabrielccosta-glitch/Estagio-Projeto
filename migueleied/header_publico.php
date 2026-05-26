@@ -33,11 +33,45 @@ if ($is_tenant) {
     <?php
     $cor_primaria = $website['cor_primaria'] ?? '#1a1a1a';
     $cor_secundaria = $website['cor_secundaria'] ?? '#555555';
+
+    if (!function_exists('isColorLight')) {
+        function isColorLight($hex) {
+            $hex = ltrim($hex, '#');
+            if (strlen($hex) == 3) {
+                $r = hexdec($hex[0].$hex[0]);
+                $g = hexdec($hex[1].$hex[1]);
+                $b = hexdec($hex[2].$hex[2]);
+            } elseif (strlen($hex) == 6) {
+                $r = hexdec(substr($hex, 0, 2));
+                $g = hexdec(substr($hex, 2, 2));
+                $b = hexdec(substr($hex, 4, 2));
+            } else {
+                return false;
+            }
+            $brightness = sqrt($r * $r * 0.299 + $g * $g * 0.587 + $b * $b * 0.114);
+            return $brightness > 170;
+        }
+    }
+
+    $is_light = isColorLight($cor_primaria);
+    $is_sec_light = isColorLight($cor_secundaria);
+    $footer_text = $is_light ? '#475569' : 'rgba(255, 255, 255, 0.65)';
+    $footer_title = $is_light ? '#0f172a' : '#ffffff';
+    $footer_border = $is_light ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)';
+    $footer_muted = $is_light ? '#64748b' : 'rgba(255, 255, 255, 0.45)';
+    $primary_text = $is_light ? '#0f172a' : '#ffffff';
+    $secondary_text = $is_sec_light ? '#0f172a' : '#ffffff';
     ?>
     <style>
         :root {
             --primary: <?= htmlspecialchars($cor_primaria); ?>;
             --secondary: <?= htmlspecialchars($cor_secundaria); ?>;
+            --footer-text: <?= $footer_text; ?>;
+            --footer-title: <?= $footer_title; ?>;
+            --footer-border: <?= $footer_border; ?>;
+            --footer-muted: <?= $footer_muted; ?>;
+            --primary-text: <?= $primary_text; ?>;
+            --secondary-text: <?= $secondary_text; ?>;
         }
     </style>
 
