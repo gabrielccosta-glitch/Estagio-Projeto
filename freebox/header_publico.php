@@ -7,19 +7,18 @@
     <title><?= htmlspecialchars($nome_empresa ?? 'Nome da Empresa'); ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/site_publico.css">
 
-
-
     <style>
+        * { font-family: 'DM Sans', sans-serif; font-weight: 400; }
+
         .carousel-outer {
             position: relative;
             padding: 0 48px;
         }
 
-        .carousel-wrapper {
-            overflow: hidden;
-        }
+        .carousel-wrapper { overflow: hidden; }
 
         .carousel-track {
             display: flex;
@@ -43,38 +42,30 @@
             border-radius: 50%;
             border: none;
             background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.12);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             z-index: 10;
-            font-size: 0.95rem;
-            transition: opacity 0.2s, box-shadow 0.2s;
+            font-size: 0.9rem;
+            transition: box-shadow 0.2s;
         }
 
-        .carousel-btn:hover {
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
-        }
-
-        .carousel-btn.prev {
-            left: 0;
-        }
-
-        .carousel-btn.next {
-            right: 0;
-        }
+        .carousel-btn:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.18); }
+        .carousel-btn.prev { left: 0; }
+        .carousel-btn.next { right: 0; }
 
         .carousel-dots {
             display: flex;
             justify-content: center;
             gap: 8px;
-            margin-top: 28px;
+            margin-top: 24px;
         }
 
         .carousel-dots .dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             background: #ccc;
             border: none;
@@ -88,55 +79,16 @@
             transform: scale(1.4);
         }
 
-        .portfolio-card {
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            aspect-ratio: 4/3;
-        }
 
-        .portfolio-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.4s ease;
-        }
-
-        .portfolio-card:hover img {
-            transform: scale(1.06);
-        }
-
-        .portfolio-card .overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.35);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .portfolio-card:hover .overlay {
-            opacity: 1;
-        }
-
-        .portfolio-card .overlay i {
-            color: white;
-            font-size: 1.6rem;
-        }
-
-        /* NAVBAR */
+        /* ── NAVBAR ── */
         .public-navbar {
             position: sticky;
             top: 0;
             z-index: 1000;
             background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 1px 8px rgba(0,0,0,0.07);
             padding: 0 20px;
-            height: 65px;
+            height: 60px;
             display: flex;
             align-items: center;
         }
@@ -155,37 +107,87 @@
         }
 
         .brand-logo {
-            height: 45px;
+            height: 40px;
             object-fit: contain;
         }
 
         .brand-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #0066cc;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #1a3a5c;
         }
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 28px;
+            align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
             color: #444;
-            font-weight: 500;
-            font-size: 0.95rem;
+            font-weight: 400;
+            font-size: 0.9rem;
             transition: color 0.2s;
         }
 
-        .nav-links a:hover {
-            color: #0066cc;
+        .nav-links a:hover { color: #1a3a5c; }
+
+        /* ── MENU HAMBÚRGUER ── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            z-index: 1100;
         }
 
-        /* SELETOR DE LÍNGUA PERSONALIZADO */
-        .lang-selector {
-            position: relative;
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: #333;
+            border-radius: 2px;
+            transition: all 0.3s;
         }
+
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            z-index: 999;
+            padding: 16px 24px 20px;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            transition: color 0.2s;
+        }
+
+        .mobile-menu a:last-child { border-bottom: none; }
+        .mobile-menu a:hover { color: #1a3a5c; }
+
+        /* ── SELETOR DE LÍNGUA ── */
+        .lang-selector { position: relative; }
 
         .lang-btn {
             display: flex;
@@ -193,24 +195,18 @@
             gap: 6px;
             background: none;
             border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 6px 12px;
-            font-size: 0.85rem;
-            font-weight: 500;
+            border-radius: 7px;
+            padding: 5px 10px;
+            font-size: 0.82rem;
+            font-weight: 400;
             color: #444;
             cursor: pointer;
             transition: border-color 0.2s, color 0.2s;
             white-space: nowrap;
         }
 
-        .lang-btn:hover {
-            border-color: #0066cc;
-            color: #0066cc;
-        }
-
-        .lang-btn i {
-            font-size: 0.7rem;
-        }
+        .lang-btn:hover { border-color: #1a3a5c; color: #1a3a5c; }
+        .lang-btn i { font-size: 0.65rem; }
 
         .lang-dropdown {
             display: none;
@@ -219,23 +215,21 @@
             top: calc(100% + 8px);
             background: white;
             border: 1px solid #eee;
-            border-radius: 10px;
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
-            min-width: 150px;
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            min-width: 140px;
             overflow: hidden;
             z-index: 9999;
         }
 
-        .lang-dropdown.open {
-            display: block;
-        }
+        .lang-dropdown.open { display: block; }
 
         .lang-option {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 10px 16px;
-            font-size: 0.88rem;
+            padding: 9px 14px;
+            font-size: 0.85rem;
             color: #444;
             cursor: pointer;
             transition: background 0.15s;
@@ -245,39 +239,26 @@
             text-align: left;
         }
 
-        .lang-option:hover {
-            background: #f0f6ff;
-            color: #0066cc;
+        .lang-option:hover { background: #f4f7fb; color: #1a3a5c; }
+
+        /* ── RESPONSIVO ── */
+        @media (max-width: 1024px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
         }
 
-        .lang-option .flag {
-            font-size: 1.1rem;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .carousel-page {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .carousel-outer {
-                padding: 0 36px;
-            }
+        @media (max-width: 1024px) {
+            .carousel-page { grid-template-columns: repeat(2, 1fr); }
+            .carousel-outer { padding: 0 36px; }
         }
 
         @media (max-width: 480px) {
-            .carousel-page {
-                grid-template-columns: 1fr;
-            }
+            .carousel-page { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 
 <body>
-
 
     <header class="public-navbar">
         <div class="container navbar-inner">
@@ -285,57 +266,102 @@
             <!-- LOGO / NOME -->
             <a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>" class="brand">
                 <?php if (!empty($logo)): ?>
-                    <img src="<?= htmlspecialchars($logo); ?>" alt="<?= htmlspecialchars($nome_empresa ?? 'Nome da Empresa'); ?>" class="brand-logo">
+                    <img src="<?= htmlspecialchars($logo); ?>"
+                         alt="<?= htmlspecialchars($nome_empresa ?? 'Nome da Empresa'); ?>"
+                         class="brand-logo">
                 <?php else: ?>
                     <span class="brand-name"><?= htmlspecialchars($nome_empresa ?? 'Nome da Empresa'); ?></span>
                 <?php endif; ?>
             </a>
 
-            <!-- LINKS -->
+            <!-- LINKS DESKTOP -->
             <nav class="nav-links">
-                <a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#sobre">Sobre Nós</a>
                 <?php if (!empty($servicos)): ?>
                     <a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#servicos">Serviços</a>
                 <?php endif; ?>
                 <?php if (!empty($portfolio)): ?>
                     <a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#portfolio">Portfólio</a>
                 <?php endif; ?>
+                <a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#sobre">Sobre Nós</a>
                 <a href="../freebox/contato.php?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>">Contacto</a>
             </nav>
 
-            <!-- SELETOR DE LÍNGUA -->
-            <div class="lang-selector" id="langSelector">
-                <button class="lang-btn" id="langBtn">
-                    <img id="langCurrent" src="https://flagcdn.com/w20/pt.png" width="20" alt="PT">
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="lang-dropdown" id="langDropdown">
-                    <button class="lang-option" onclick="changeLang('pt', 'https://flagcdn.com/w20/pt.png', 'PT')">
-                        <img src="https://flagcdn.com/w20/pt.png" width="20"> Português
+            <div style="display:flex;align-items:center;gap:12px;">
+                <!-- SELETOR DE LÍNGUA -->
+                <div class="lang-selector" id="langSelector">
+                    <button class="lang-btn" id="langBtn">
+                        <img id="langCurrent" src="https://flagcdn.com/w20/pt.png" width="18" alt="PT">
+                        <i class="fas fa-chevron-down"></i>
                     </button>
-                    <button class="lang-option" onclick="changeLang('en', 'https://flagcdn.com/w20/gb.png', 'EN')">
-                        <img src="https://flagcdn.com/w20/gb.png" width="20"> English
-                    </button>
-                    <button class="lang-option" onclick="changeLang('es', 'https://flagcdn.com/w20/es.png', 'ES')">
-                        <img src="https://flagcdn.com/w20/es.png" width="20"> Espanol
-                    </button>
-                    <button class="lang-option" onclick="changeLang('fr', 'https://flagcdn.com/w20/fr.png', 'FR')">
-                        <img src="https://flagcdn.com/w20/fr.png" width="20"> Francês
-                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button class="lang-option" onclick="changeLang('pt', 'https://flagcdn.com/w20/pt.png', 'PT')">
+                            <img src="https://flagcdn.com/w20/pt.png" width="18"> Português
+                        </button>
+                        <button class="lang-option" onclick="changeLang('en', 'https://flagcdn.com/w20/gb.png', 'EN')">
+                            <img src="https://flagcdn.com/w20/gb.png" width="18"> English
+                        </button>
+                        <button class="lang-option" onclick="changeLang('es', 'https://flagcdn.com/w20/es.png', 'ES')">
+                            <img src="https://flagcdn.com/w20/es.png" width="18"> Español
+                        </button>
+                        <button class="lang-option" onclick="changeLang('fr', 'https://flagcdn.com/w20/fr.png', 'FR')">
+                            <img src="https://flagcdn.com/w20/fr.png" width="18"> Français
+                        </button>
+                    </div>
                 </div>
+
+                <!-- HAMBÚRGUER -->
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
 
         </div>
     </header>
 
+    <!-- MENU MOBILE -->
+    <nav class="mobile-menu" id="mobileMenu">
+        <?php if (!empty($servicos)): ?>
+            <a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#servicos"
+               onclick="closeMobile()">Serviços</a>
+        <?php endif; ?>
+        <?php if (!empty($portfolio)): ?>
+            <a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#portfolio"
+               onclick="closeMobile()">Portfólio</a>
+        <?php endif; ?>
+        <a href="../freebox/?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>#sobre"
+           onclick="closeMobile()">Sobre Nós</a>
+        <a href="../freebox/contato.php?url=<?= htmlspecialchars($website['url_site'] ?? ''); ?>"
+           onclick="closeMobile()">Contacto</a>
+    </nav>
+
     <script>
-        // ── Tradutor MyMemory ──────────────────────────────────────────
+        // ── Hambúrguer ──
+        const hamburger  = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+        });
+
+        function closeMobile() {
+            hamburger.classList.remove('open');
+            mobileMenu.classList.remove('open');
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+                closeMobile();
+            }
+        });
+
+        // ── Tradutor MyMemory ──
         let originalTexts = [];
         let currentLang = 'pt';
 
         function getTextNodes() {
-            const skip = ['SCRIPT', 'STYLE', 'NOSCRIPT', 'IFRAME', 'INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'];
-            const skipIds = ['langSelector'];
+            const skip = ['SCRIPT','STYLE','NOSCRIPT','IFRAME','INPUT','TEXTAREA','SELECT','BUTTON'];
             const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
                 acceptNode: function(node) {
                     if (!node.parentElement) return NodeFilter.FILTER_REJECT;
@@ -370,14 +396,11 @@
 
         async function changeLang(lang, flag, code) {
             if (lang === currentLang) return;
-
             document.getElementById('langCurrent').src = flag;
             document.getElementById('langDropdown').classList.remove('open');
-
             const btn = document.getElementById('langBtn');
             btn.style.opacity = '0.6';
             btn.style.pointerEvents = 'none';
-
             if (lang === 'pt') {
                 const nodes = getTextNodes();
                 nodes.forEach((node, i) => {
@@ -385,7 +408,6 @@
                 });
                 originalTexts = [];
                 currentLang = 'pt';
-                document.getElementById('langCurrent').src = flag;
             } else {
                 const nodes = getTextNodes();
                 if (originalTexts.length === 0) {
@@ -398,12 +420,9 @@
                 const fresh = getTextNodes();
                 const texts = fresh.map(n => n.textContent);
                 const translated = await translateBatch(texts, lang);
-                fresh.forEach((node, i) => {
-                    node.textContent = translated[i];
-                });
+                fresh.forEach((node, i) => { node.textContent = translated[i]; });
                 currentLang = lang;
             }
-
             btn.style.opacity = '1';
             btn.style.pointerEvents = 'auto';
         }
@@ -412,6 +431,7 @@
             e.stopPropagation();
             document.getElementById('langDropdown').classList.toggle('open');
         });
+
         document.addEventListener('click', function() {
             document.getElementById('langDropdown').classList.remove('open');
         });

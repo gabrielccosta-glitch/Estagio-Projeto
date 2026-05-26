@@ -1,0 +1,96 @@
+<svg width="100%" viewBox="0 0 680 520" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>FreeBox Sites — criação de websites</title>
+  <desc>Ilustração de monitor com website, elementos de UI nas cores IS4 azul e laranja</desc>
+
+  <!-- Monitor body -->
+  <rect x="80" y="40" width="520" height="330" rx="14" fill="#1a3f7a"/>
+  <!-- Screen -->
+  <rect x="96" y="56" width="488" height="298" rx="8" fill="#f0f6ff"/>
+
+  <!-- Browser bar -->
+  <rect x="96" y="56" width="488" height="28" rx="0" fill="#dde8f5"/>
+  <circle cx="118" cy="70" r="5" fill="#ef4444"/>
+  <circle cx="136" cy="70" r="5" fill="#e87722"/>
+  <circle cx="154" cy="70" r="5" fill="#22c55e"/>
+  <rect x="200" y="60" width="240" height="18" rx="9" fill="#ffffff" opacity="0.7"/>
+  <text x="320" y="73" text-anchor="middle" font-size="9" fill="#1a3f7a" font-family="Segoe UI, sans-serif" font-weight="600">freebox.pt/empresa</text>
+
+  <!-- Navbar -->
+  <rect x="96" y="84" width="488" height="26" fill="#1a3f7a"/>
+  <rect x="108" y="91" width="34" height="12" rx="3" fill="#e87722"/>
+  <rect x="150" y="93" width="28" height="8" rx="2" fill="#ffffff" opacity="0.3"/>
+  <rect x="186" y="93" width="38" height="8" rx="2" fill="#ffffff" opacity="0.3"/>
+  <rect x="232" y="93" width="32" height="8" rx="2" fill="#ffffff" opacity="0.3"/>
+  <rect x="520" y="89" width="44" height="14" rx="7" fill="#e87722"/>
+
+  <!-- Hero strip -->
+  <rect x="96" y="110" width="488" height="72" fill="#eef5ff"/>
+  <rect x="116" y="124" width="120" height="10" rx="3" fill="#1a3f7a" opacity="0.8"/>
+  <rect x="116" y="140" width="90" height="8" rx="3" fill="#1a3f7a" opacity="0.4"/>
+  <rect x="116" y="154" width="56" height="14" rx="7" fill="#e87722"/>
+  <rect x="420" y="114" width="148" height="64" rx="6" fill="#c8daf0"/>
+  <ellipse cx="460" cy="136" rx="18" ry="18" fill="#1a3f7a" opacity="0.25"/>
+  <rect x="490" y="120" width="60" height="8" rx="3" fill="#1a3f7a" opacity="0.18"/>
+  <rect x="490" y="134" width="44" height="8" rx="3" fill="#1a3f7a" opacity="0.12"/>
+  <rect x="490" y="148" width="52" height="8" rx="3" fill="#1a3f7a" opacity="0.12"/>
+
+  <!-- Cards row -->
+  <rect x="108" y="192" width="136" height="70" rx="6" fill="#ffffff" stroke="#dde8f5" stroke-width="1"/>
+  <rect x="118" y="202" width="24" height="24" rx="12" fill="#e87722"/>
+  <rect x="118" y="234" width="80" height="7" rx="3" fill="#1a3f7a" opacity="0.6"/>
+  <rect x="118" y="247" width="60" height="6" rx="3" fill="#1a3f7a" opacity="0.3"/>
+
+  <rect x="256" y="192" width="136" height="70" rx="6" fill="#ffffff" stroke="#dde8f5" stroke-width="1"/>
+  <rect x="266" y="202" width="24" height="24" rx="12" fill="#1a3f7a"/>
+  <rect x="266" y="234" width="80" height="7" rx="3" fill="#1a3f7a" opacity="0.6"/>
+  <rect x="266" y="247" width="60" height="6" rx="3" fill="#1a3f7a" opacity="0.3"/>
+
+  <rect x="404" y="192" width="136" height="70" rx="6" fill="#ffffff" stroke="#dde8f5" stroke-width="1"/>
+  <rect x="414" y="202" width="24" height="24" rx="12" fill="#e87722" opacity="0.7"/>
+  <rect x="414" y="234" width="80" height="7" rx="3" fill="#1a3f7a" opacity="0.6"/>
+  <rect x="414" y="247" width="60" height="6" rx="3" fill="#1a3f7a" opacity="0.3"/>
+
+  <!-- Footer strip -->
+  <rect x="96" y="272" width="488" height="70" fill="#0f1f3d"/>
+  <rect x="108" y="284" width="60" height="7" rx="3" fill="#ffffff" opacity="0.5"/>
+  <rect x="108" y="298" width="44" height="5" rx="2" fill="#ffffff" opacity="0.2"/>
+  <rect x="108" y="310" width="44" height="5" rx="2" fill="#ffffff" opacity="0.2"/>
+  <rect x="240" y="284" width="36" height="7" rx="3" fill="#ffffff" opacity="0.4"/>
+  <rect x="240" y="298" width="28" height="5" rx="2" fill="#ffffff" opacity="0.2"/>
+  <rect x="380" y="284" width="36" height="7" rx="3" fill="#ffffff" opacity="0.4"/>
+  <rect x="380" y="298" width="28" height="5" rx="2" fill="#ffffff" opacity="0.2"/>
+  <rect x="96" y="332" width="488" height="22" fill="#080f1e"/>
+  <rect x="136" y="338" width="100" height="5" rx="2" fill="#ffffff" opacity="0.15"/>
+  <rect x="436" y="338" width="120" height="5" rx="2" fill="#ffffff" opacity="0.15"/>
+
+  <!-- Stand -->
+  <rect x="295" y="370" width="90" height="14" rx="4" fill="#0f1f3d"/>
+  <rect x="260" y="382" width="160" height="10" rx="5" fill="#0f1f3d" opacity="0.7"/>
+
+  <!-- Floating code card -->
+  <rect x="18" y="155" width="90" height="64" rx="8" fill="#1a3f7a" opacity="0.93"/>
+  <rect x="28" y="167" width="44" height="5" rx="2" fill="#e87722"/>
+  <rect x="28" y="178" width="58" height="4" rx="2" fill="#ffffff" opacity="0.35"/>
+  <rect x="28" y="188" width="42" height="4" rx="2" fill="#ffffff" opacity="0.25"/>
+  <rect x="28" y="198" width="50" height="4" rx="2" fill="#ffffff" opacity="0.25"/>
+  <rect x="28" y="208" width="36" height="4" rx="2" fill="#e87722" opacity="0.6"/>
+
+  <!-- Badge up -->
+  <rect x="572" y="125" width="70" height="40" rx="10" fill="#e87722"/>
+  <text x="607" y="151" text-anchor="middle" font-size="20" fill="#ffffff" font-family="Segoe UI, sans-serif" font-weight="700">↑</text>
+
+  <!-- Badge check -->
+  <rect x="572" y="178" width="70" height="40" rx="10" fill="#ffffff" stroke="#1a3f7a" stroke-width="1.5"/>
+  <text x="607" y="204" text-anchor="middle" font-size="16" fill="#22c55e" font-family="Segoe UI, sans-serif" font-weight="700">✓</text>
+
+  <!-- Badge new -->
+  <rect x="572" y="232" width="70" height="28" rx="8" fill="#1a3f7a"/>
+  <text x="607" y="251" text-anchor="middle" font-size="10" fill="#ffffff" font-family="Segoe UI, sans-serif" font-weight="600">ONLINE</text>
+
+  <!-- Cursor -->
+  <polygon points="44,400 44,432 53,423 60,440 65,438 58,421 70,421" fill="#e87722"/>
+
+  <!-- Dashed connectors -->
+  <line x1="108" y1="190" x2="96" y2="182" stroke="#e87722" stroke-width="1" stroke-dasharray="4 3" opacity="0.45"/>
+  <line x1="572" y1="145" x2="584" y2="141" stroke="#1a3f7a" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+</svg>

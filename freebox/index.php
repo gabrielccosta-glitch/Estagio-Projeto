@@ -1,239 +1,343 @@
-    <?php
-    require_once '../config/database.php';
+<?php
+require_once '../config/database.php';
 
-    if (isset($_GET['url'])) {
-        $url_site = preg_replace('/[^a-zA-Z0-9\-]/', '', $_GET['url']);
-        $website_stmt = $conn->prepare("SELECT * FROM website_config WHERE url_site = ?");
-        $website_stmt->bind_param("s", $url_site);
-        $website_stmt->execute();
-        $website = $website_stmt->get_result()->fetch_assoc();
-        $website_stmt->close();
-        if (!$website) {
-            header("Location: ../index.php");
-            exit();
-        }
-        $empresa_id = $website['empresa_id'];
-    } elseif (isset($_GET['id']) && is_numeric($_GET['id'])) {
-        $empresa_id = intval($_GET['id']);
-        $website_stmt = $conn->prepare("SELECT * FROM website_config WHERE empresa_id = ?");
-        $website_stmt->bind_param("i", $empresa_id);
-        $website_stmt->execute();
-        $website = $website_stmt->get_result()->fetch_assoc();
-        $website_stmt->close();
-    } else {
-        header("Location: ../index.php");
-        exit();
-    }
-
-    $stmt = $conn->prepare("SELECT * FROM empresas WHERE id = ?");
-    $stmt->bind_param("i", $empresa_id);
-    $stmt->execute();
-    $empresa = $stmt->get_result()->fetch_assoc();
-    $stmt->close();
-
-    if (!$empresa) {
-        header("Location: ../index.php");
-        exit();
-    }
-
-    $page = $_GET['page'] ?? '';
-
-    if ($page === 'politica-privacidade') {
-        include 'politica_privacidade.php';
-        exit();
-    }
-
+if (isset($_GET['url'])) {
+    $url_site = preg_replace('/[^a-zA-Z0-9\-]/', '', $_GET['url']);
+    $website_stmt = $conn->prepare("SELECT * FROM website_config WHERE url_site = ?");
+    $website_stmt->bind_param("s", $url_site);
+    $website_stmt->execute();
+    $website = $website_stmt->get_result()->fetch_assoc();
+    $website_stmt->close();
     if (!$website) {
-        $website = [
-            'logotipo' => '',
-            'capa_empresa' => '',
-            'descricao_empresa' => '',
-            'link_facebook' => '',
-            'link_instagram' => '',
-            'link_x' => '',
-            'url_site' => ''
-        ];
+        header("Location: ../index.php");
+        exit();
     }
+    $empresa_id = $website['empresa_id'];
+} elseif (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $empresa_id = intval($_GET['id']);
+    $website_stmt = $conn->prepare("SELECT * FROM website_config WHERE empresa_id = ?");
+    $website_stmt->bind_param("i", $empresa_id);
+    $website_stmt->execute();
+    $website = $website_stmt->get_result()->fetch_assoc();
+    $website_stmt->close();
+} else {
+    header("Location: ../index.php");
+    exit();
+}
 
-    $servicos_stmt = $conn->prepare("SELECT * FROM servicos WHERE empresa_id = ?");
-    $servicos_stmt->bind_param("i", $empresa_id);
-    $servicos_stmt->execute();
-    $servicos = $servicos_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    $servicos_stmt->close();
+$stmt = $conn->prepare("SELECT * FROM empresas WHERE id = ?");
+$stmt->bind_param("i", $empresa_id);
+$stmt->execute();
+$empresa = $stmt->get_result()->fetch_assoc();
+$stmt->close();
 
-    $portfolio_stmt = $conn->prepare("SELECT * FROM portfolio WHERE empresa_id = ?");
-    $portfolio_stmt->bind_param("i", $empresa_id);
-    $portfolio_stmt->execute();
-    $portfolio = $portfolio_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    $portfolio_stmt->close();
+if (!$empresa) {
+    header("Location: ../index.php");
+    exit();
+}
 
-    $conn->close();
+$page = $_GET['page'] ?? '';
+if ($page === 'politica-privacidade') {
+    include 'politica_privacidade.php';
+    exit();
+}
 
-    $nome_empresa       = $empresa['nome_empresa'] ?? 'Empresa';
-    $descricao          = trim($website['descricao_empresa'] ?? '');
-    $logo               = trim($website['logotipo'] ?? '');
-    $capa               = trim($website['capa_empresa'] ?? '');
-    $telefone_principal = !empty($empresa['telefone']) ? $empresa['telefone'] : ($empresa['telefone_contato'] ?? '');
-    $email_principal    = !empty($empresa['email_empresa']) ? $empresa['email_empresa'] : ($empresa['email_contato'] ?? '');
-    $morada_completa    = trim(($empresa['morada'] ?? '') . ' ' . ($empresa['codigo_postal'] ?? ''));
+if (!$website) {
+    $website = ['logotipo' => '', 'capa_empresa' => '', 'descricao_empresa' => '', 'link_facebook' => '', 'link_instagram' => '', 'link_x' => '', 'url_site' => ''];
+}
 
-    $hero_style = !empty($capa) ? "background-image: url('" . htmlspecialchars($capa, ENT_QUOTES) . "');" : '';
-    $portfolio_bg = !empty($capa) ? $capa : (!empty($portfolio[0]['imagem']) ? $portfolio[0]['imagem'] : '');
-    $portfolio_style = !empty($portfolio_bg) ? "background-image: url('" . htmlspecialchars($portfolio_bg, ENT_QUOTES) . "');" : '';
+$servicos_stmt = $conn->prepare("SELECT * FROM servicos WHERE empresa_id = ?");
+$servicos_stmt->bind_param("i", $empresa_id);
+$servicos_stmt->execute();
+$servicos = $servicos_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$servicos_stmt->close();
 
-    include 'header_publico.php';
-    ?>
+$portfolio_stmt = $conn->prepare("SELECT * FROM portfolio WHERE empresa_id = ?");
+$portfolio_stmt->bind_param("i", $empresa_id);
+$portfolio_stmt->execute();
+$portfolio = $portfolio_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+$portfolio_stmt->close();
 
-    <!-- HERO -->
-    <?php
-    $tem_titulo    = !empty($website['hero_titulo']);
-    $tem_subtitulo = !empty($website['hero_subtitulo']);
-    $tem_botao     = !empty($website['hero_botao_texto']) && !empty($website['hero_botao_link']);
-    $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
-    ?>
-    <section id="inicio" class="hero <?= !empty($capa) ? 'has-image' : ''; ?>" style="<?= $hero_style; ?>">
-        <?php if ($tem_conteudo): ?>
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <?php if ($tem_titulo): ?>
-                    <h1><?= htmlspecialchars($website['hero_titulo']); ?></h1>
-                <?php endif; ?>
-                <?php if ($tem_subtitulo): ?>
-                    <p class="hero-subtitle"><?= htmlspecialchars($website['hero_subtitulo']); ?></p>
-                <?php endif; ?>
-                <?php if ($tem_botao): ?>
-                    <a href="<?= htmlspecialchars($website['hero_botao_link']); ?>" class="hero-button">
-                        <?= htmlspecialchars($website['hero_botao_texto']); ?>
-                    </a>
-                <?php endif; ?>
-            </div>
-        <?php endif; ?>
-    </section>
+$conn->close();
 
-    <!-- SOBRE NÓS -->
-    <section id="sobre" class="about-section section-padding">
+$nome_empresa       = $empresa['nome_empresa'] ?? 'Empresa';
+$descricao          = trim($website['descricao_empresa'] ?? '');
+$logo               = trim($website['logotipo'] ?? '');
+$capa               = trim($website['capa_empresa'] ?? '');
+$telefone_principal = !empty($empresa['telefone']) ? $empresa['telefone'] : ($empresa['telefone_contato'] ?? '');
+$email_principal    = !empty($empresa['email_empresa']) ? $empresa['email_empresa'] : ($empresa['email_contato'] ?? '');
+$morada_completa    = trim(($empresa['morada'] ?? '') . ' ' . ($empresa['codigo_postal'] ?? ''));
+
+$hero_style      = !empty($capa) ? "background-image: url('" . htmlspecialchars($capa, ENT_QUOTES) . "');" : '';
+
+include 'header_publico.php';
+?>
+
+<!-- HERO -->
+<?php
+$tem_titulo    = !empty($website['hero_titulo']);
+$tem_subtitulo = !empty($website['hero_subtitulo']);
+$tem_botao     = !empty($website['hero_botao_texto']) && !empty($website['hero_botao_link']);
+$tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
+?>
+<section id="inicio" class="hero <?= !empty($capa) ? 'has-image' : ''; ?>" style="<?= $hero_style; ?>">
+    <?php if ($tem_conteudo): ?>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <?php if ($tem_titulo): ?>
+                <h1><?= htmlspecialchars($website['hero_titulo']); ?></h1>
+            <?php endif; ?>
+            <?php if ($tem_subtitulo): ?>
+                <p class="hero-subtitle"><?= htmlspecialchars($website['hero_subtitulo']); ?></p>
+            <?php endif; ?>
+            <?php if ($tem_botao): ?>
+                <a href="<?= htmlspecialchars($website['hero_botao_link']); ?>" class="hero-button">
+                    <?= htmlspecialchars($website['hero_botao_texto']); ?>
+                </a>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+</section>
+
+<!-- SERVIÇOS -->
+<?php if (!empty($servicos)): ?>
+    <section id="servicos" class="services-section section-padding">
         <div class="container">
-            <h2 class="section-title">Sobre Nós</h2>
+            <h2 class="section-title">Serviços</h2>
             <div class="section-line"></div>
-            <div class="row about-grid">
-                <div class="col-lg-8">
-                    <div class="about-text-block">
-                        <div class="about-icon"><i class="fas fa-store"></i></div>
-                        <div>
-                            <h3>Empresa</h3>
-                            <p class="about-text">
-                                <?= !empty($descricao) ? nl2br(htmlspecialchars($descricao)) : 'Somos uma empresa dedicada a prestar serviços de qualidade, com foco na satisfação dos nossos clientes.'; ?>
-                            </p>
-                            <div class="about-contact-card">
-                                <?php if (!empty($morada_completa)): ?>
-                                    <p><i class="fas fa-location-dot"></i> <?= htmlspecialchars($morada_completa); ?></p>
-                                <?php endif; ?>
-                                <?php if (!empty($telefone_principal)): ?>
-                                    <p><i class="fas fa-phone"></i> <?= htmlspecialchars($telefone_principal); ?></p>
-                                <?php endif; ?>
-                                <?php if (!empty($email_principal)): ?>
-                                    <p><i class="fas fa-envelope"></i> <?= htmlspecialchars($email_principal); ?></p>
-                                <?php endif; ?>
+            <?php $servicos_chunks = array_chunk($servicos, 6);
+            $s_pages = count($servicos_chunks); ?>
+            <div class="carousel-outer mt-3">
+                <?php if ($s_pages > 1): ?>
+                    <button class="carousel-btn prev" id="svcPrev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-btn next" id="svcNext"><i class="fas fa-chevron-right"></i></button>
+                <?php endif; ?>
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="svcTrack">
+                        <?php foreach ($servicos_chunks as $chunk): ?>
+                            <div class="carousel-page">
+                                <?php foreach ($chunk as $servico): ?>
+                                    <div class="service-card">
+                                        <div class="service-icon"><i class="fas fa-screwdriver-wrench"></i></div>
+                                        <h4><?= htmlspecialchars($servico['titulo_servico'] ?: ($servico['nome_servico'] ?? '')); ?></h4>
+                                        <p><?= nl2br(htmlspecialchars($servico['descricao_servico'] ?? '')); ?></p>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <?php if (!empty($morada_completa)): ?>
-                        <div class="about-map-card">
-                            <iframe src="https://maps.google.com/maps?q=<?= urlencode($morada_completa); ?>&output=embed"
-                                allowfullscreen loading="lazy"></iframe>
-                        </div>
-                    <?php else: ?>
-                        <div class="about-map-placeholder">
-                            <i class="fas fa-map-location-dot"></i>
-                            <p>Morada não disponível.</p>
-                        </div>
-                    <?php endif; ?>
-                </div>
             </div>
+            <?php if ($s_pages > 1): ?>
+                <div class="carousel-dots" id="svcDots">
+                    <?php for ($d = 0; $d < $s_pages; $d++): ?>
+                        <button class="dot <?= $d === 0 ? 'active' : ''; ?>" data-page="<?= $d ?>"></button>
+                    <?php endfor; ?>
+                </div>
+            <?php endif; ?>
         </div>
     </section>
+<?php endif; ?>
 
-    <!-- SERVIÇOS -->
-    <?php if (!empty($servicos)): ?>
-        <section id="servicos" class="services-section section-padding">
-            <div class="container">
-                <h2 class="section-title">Serviços</h2>
-                <div class="section-line"></div>
-                <?php $servicos_chunks = array_chunk($servicos, 6);
-                $s_pages = count($servicos_chunks); ?>
-                <div class="carousel-outer mt-4">
-                    <?php if ($s_pages > 1): ?>
-                        <button class="carousel-btn prev" id="svcPrev"><i class="fas fa-chevron-left"></i></button>
-                        <button class="carousel-btn next" id="svcNext"><i class="fas fa-chevron-right"></i></button>
-                    <?php endif; ?>
-                    <div class="carousel-wrapper">
-                        <div class="carousel-track" id="svcTrack">
-                            <?php foreach ($servicos_chunks as $chunk): ?>
-                                <div class="carousel-page">
-                                    <?php foreach ($chunk as $servico): ?>
-                                        <div class="service-card">
-                                            <div class="service-icon"><i class="fas fa-screwdriver-wrench"></i></div>
-                                            <h4><?= htmlspecialchars($servico['titulo_servico'] ?: ($servico['nome_servico'] ?? '')); ?></h4>
-                                            <p><?= nl2br(htmlspecialchars($servico['descricao_servico'] ?? '')); ?></p>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                </div>
-                <?php if ($s_pages > 1): ?>
-                    <div class="carousel-dots" id="svcDots">
-                        <?php for ($d = 0; $d < $s_pages; $d++): ?>
-                            <button class="dot <?= $d === 0 ? 'active' : ''; ?>" data-page="<?= $d ?>"></button>
-                        <?php endfor; ?>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </section>
-    <?php endif; ?>
-
-    <!-- PORTFÓLIO -->
-    <?php if (!empty($portfolio)): ?>
-        <section id="portfolio" class="portfolio-section section-padding" style="<?= $portfolio_style; ?>">
-            <div class="container">
-                <h2 class="section-title">Portfólio</h2>
-                <div class="section-line"></div>
-                <?php $portfolio_chunks = array_chunk($portfolio, 6);
-                $p_pages = count($portfolio_chunks); ?>
-                <div class="carousel-outer mt-4">
-                    <?php if ($p_pages > 1): ?>
-                        <button class="carousel-btn prev" id="prtPrev"><i class="fas fa-chevron-left"></i></button>
-                        <button class="carousel-btn next" id="prtNext"><i class="fas fa-chevron-right"></i></button>
-                    <?php endif; ?>
-                    <div class="carousel-wrapper">
-                        <div class="carousel-track" id="prtTrack">
-                            <?php foreach ($portfolio_chunks as $chunkIndex => $chunk): ?>
-                                <div class="carousel-page">
-                                    <?php foreach ($chunk as $i => $item):
-                                        $globalIndex = $chunkIndex * 6 + $i; ?>
-                                        <div class="portfolio-card" data-index="<?= $globalIndex ?>">
-                                            <img src="<?= htmlspecialchars($item['imagem']); ?>"
-                                                alt="<?= htmlspecialchars($item['descricao_imagem'] ?: 'Imagem de portfólio'); ?>">
-                                            <div class="overlay"><i class="fas fa-magnifying-glass-plus"></i></div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                </div>
+<!-- PORTFÓLIO -->
+<?php if (!empty($portfolio)): ?>
+    <section id="portfolio" class="portfolio-section section-padding">
+        <div class="container">
+            <h2 class="section-title">Portfólio</h2>
+            <div class="section-line"></div>
+            <?php $portfolio_chunks = array_chunk($portfolio, 6);
+            $p_pages = count($portfolio_chunks); ?>
+            <div class="carousel-outer mt-3">
                 <?php if ($p_pages > 1): ?>
-                    <div class="carousel-dots" id="prtDots">
-                        <?php for ($d = 0; $d < $p_pages; $d++): ?>
-                            <button class="dot <?= $d === 0 ? 'active' : ''; ?>" data-page="<?= $d ?>"></button>
-                        <?php endfor; ?>
+                    <button class="carousel-btn prev" id="prtPrev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-btn next" id="prtNext"><i class="fas fa-chevron-right"></i></button>
+                <?php endif; ?>
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="prtTrack">
+                        <?php foreach ($portfolio_chunks as $chunkIndex => $chunk): ?>
+                            <div class="carousel-page">
+                                <?php foreach ($chunk as $i => $item):
+                                    $globalIndex = $chunkIndex * 6 + $i; ?>
+                                    <div class="portfolio-card" data-index="<?= $globalIndex ?>">
+                                        <img src="<?= htmlspecialchars($item['imagem']); ?>"
+                                            alt="<?= htmlspecialchars($item['descricao_imagem'] ?: 'Portfólio'); ?>">
+                                        <div class="overlay"><i class="fas fa-magnifying-glass-plus"></i></div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+            <?php if ($p_pages > 1): ?>
+                <div class="carousel-dots" id="prtDots">
+                    <?php for ($d = 0; $d < $p_pages; $d++): ?>
+                        <button class="dot <?= $d === 0 ? 'active' : ''; ?>" data-page="<?= $d ?>"></button>
+                    <?php endfor; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </section>
+<?php endif; ?>
+
+<!-- SOBRE NÓS -->
+<section id="sobre" class="about-section section-padding">
+    <div class="container">
+        <h2 class="section-title">Sobre Nós</h2>
+        <div class="section-line"></div>
+        <div class="row about-grid">
+            <div class="col-lg-8">
+                <div class="about-text-block">
+                    <div class="about-icon"><i class="fas fa-store"></i></div>
+                    <div>
+                        <h3><?= htmlspecialchars($nome_empresa); ?></h3>
+                        <p class="about-text">
+                            <?= !empty($descricao) ? nl2br(htmlspecialchars($descricao)) : 'Somos uma empresa dedicada a prestar serviços de qualidade, com foco na satisfação dos nossos clientes.'; ?>
+                        </p>
+                        <div class="about-contact-card">
+                            <?php if (!empty($morada_completa)): ?>
+                                <p><i class="fas fa-location-dot"></i> <?= htmlspecialchars($morada_completa); ?></p>
+                            <?php endif; ?>
+                            <?php if (!empty($telefone_principal)): ?>
+                                <p><i class="fas fa-phone"></i> <?= htmlspecialchars($telefone_principal); ?></p>
+                            <?php endif; ?>
+                            <?php if (!empty($email_principal)): ?>
+                                <p><i class="fas fa-envelope"></i> <?= htmlspecialchars($email_principal); ?></p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <?php if (!empty($morada_completa)): ?>
+                    <div class="about-map-card">
+                        <iframe src="https://maps.google.com/maps?q=<?= urlencode($morada_completa); ?>&output=embed"
+                            allowfullscreen loading="lazy"></iframe>
+                    </div>
+                <?php else: ?>
+                    <div class="about-map-placeholder">
+                        <i class="fas fa-map-location-dot"></i>
+                        <p>Morada não disponível.</p>
                     </div>
                 <?php endif; ?>
             </div>
-        </section>
-    <?php endif; ?>
+        </div>
+    </div>
+</section>
+<div class="lb-backdrop" id="lightbox">
+    <span class="lb-close" id="lbClose"><i class="fas fa-xmark"></i></span>
+    <button class="lb-btn prev" id="lbPrev" aria-label="Anterior">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <div class="lb-img-wrap">
+        <img src="" alt="" id="lbImg">
+    </div>
+    <button class="lb-btn next" id="lbNext" aria-label="Seguinte">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+    <div class="lb-countea" id="lbCounter"></div>
+    <div class="lb-dots" id="lbDots"></div>
+</div>
 
-    <?php include 'footer_publico.php'; ?>
+<script>
+    (function() {
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lbImg');
+        const lbDots = document.getElementById('lbDots');
+        const lbCount = document.getElementById('lbCounter');
+        let current = 0;
+        let zoomed = false;
+
+        // Recolhe todas as imagens do portfólio por ordem
+        const cards = Array.from(document.querySelectorAll('.portfolio-card'));
+        const images = cards.map(c => ({
+            src: c.querySelector('img').src,
+            alt: c.querySelector('img').alt || 'Portfólio'
+        }));
+
+        // Cria os dots
+        function buildDots() {
+            lbDots.innerHTML = images.map((_, i) =>
+                `<button class="lb-dot${i === 0 ? ' active' : ''}" data-i="${i}"></button>`
+            ).join('');
+        }
+
+        function update() {
+            lbImg.src = images[current].src;
+            lbImg.alt = images[current].alt;
+            lbImg.style.transform = 'scale(1)';
+            lbImg.classList.remove('zoomed');
+            zoomed = false;
+            lbCount.textContent = (current + 1) + ' / ' + images.length;
+            document.querySelectorAll('.lb-dot').forEach((d, i) =>
+                d.classList.toggle('active', i === current)
+            );
+        }
+
+        function openLb(idx) {
+            current = idx;
+            lb.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            update();
+        }
+
+        function closeLb() {
+            lb.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        buildDots();
+
+        // Abre ao clicar nos cards
+        cards.forEach((c, i) => c.addEventListener('click', () => openLb(i)));
+
+        // Fechar
+        document.getElementById('lbClose').addEventListener('click', closeLb);
+        lb.addEventListener('click', e => {
+            if (e.target === lb) closeLb();
+        });
+
+        // Setas
+        document.getElementById('lbPrev').addEventListener('click', () => {
+            current = (current - 1 + images.length) % images.length;
+            update();
+        });
+        document.getElementById('lbNext').addEventListener('click', () => {
+            current = (current + 1) % images.length;
+            update();
+        });
+
+        // Dots
+        lbDots.addEventListener('click', e => {
+            const d = e.target.closest('.lb-dot');
+            if (d) {
+                current = +d.dataset.i;
+                update();
+            }
+        });
+
+        // Zoom ao clicar na imagem
+        lbImg.addEventListener('click', () => {
+            zoomed = !zoomed;
+            lbImg.style.transform = zoomed ? 'scale(2)' : 'scale(1)';
+            lbImg.classList.toggle('zoomed', zoomed);
+        });
+
+        // Teclado: setas e Escape
+        document.addEventListener('keydown', e => {
+            if (!lb.classList.contains('open')) return;
+            if (e.key === 'ArrowLeft') {
+                current = (current - 1 + images.length) % images.length;
+                update();
+            }
+            if (e.key === 'ArrowRight') {
+                current = (current + 1) % images.length;
+                update();
+            }
+            if (e.key === 'Escape') closeLb();
+        });
+    })();
+</script>
+
+
+<?php include 'footer_publico.php'; ?>

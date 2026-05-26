@@ -28,6 +28,7 @@ $is_admin = isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] === 'a
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['adicionar_portfolio'])) {
 
     $descricao_imagem = $_POST['descricao_imagem'] ?? '';
+    $titulo           = $_POST['titulo'] ?? '';
 
     if (isset($_FILES['portfolio_imagem']) && $_FILES['portfolio_imagem']['error'] == UPLOAD_ERR_OK) {
 
@@ -46,17 +47,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['adicionar_portfolio'])
             exit();
         }
 
-        $upload_dir = '../imagens/' . $empresa_id . '/';
+        $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/imagens/' . $empresa_id . '/';
         if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
 
         $ext           = pathinfo($_FILES['portfolio_imagem']['name'], PATHINFO_EXTENSION);
         $filename      = uniqid() . '.' . $ext;
-        $uploaded_file = '../imagens/' . $empresa_id . '/' . $filename;
+        $uploaded_file = '/imagens/' . $empresa_id . '/' . $filename;
 
         if (move_uploaded_file($_FILES['portfolio_imagem']['tmp_name'], $upload_dir . $filename)) {
-            $insert_sql  = "INSERT INTO portfolio (empresa_id, imagem, descricao_imagem) VALUES (?, ?, ?)";
+            $insert_sql  = "INSERT INTO portfolio (empresa_id, imagem, titulo, descricao_imagem) VALUES (?, ?, ?, ?)";
             $insert_stmt = $conn->prepare($insert_sql);
-            $insert_stmt->bind_param("iss", $empresa_id, $uploaded_file, $descricao_imagem);
+            $insert_stmt->bind_param("isss", $empresa_id, $uploaded_file, $titulo, $descricao_imagem);
 
             if ($insert_stmt->execute()) {
                 $_SESSION['success_message'] = "Imagem adicionada com sucesso!";
@@ -85,7 +86,6 @@ $portfolio_stmt->close();
 
 include '../includes/header.php';
 
-// Mostrar header conforme o tipo de utilizador
 if ($is_admin) {
     include '../admin/header_admin.php';
 } else {
@@ -93,10 +93,7 @@ if ($is_admin) {
 }
 ?>
 
-
 <link rel="stylesheet" href="../css/empresa_portfolio.css">
-
-
 
 <div class="separator"></div>
 
@@ -137,6 +134,10 @@ if ($is_admin) {
                                     <input type="file" name="portfolio_imagem" class="form-control" required>
                                 </div>
                                 <div class="form-group mt-3">
+                                    <label>Título</label>
+                                    <input type="text" name="titulo" class="form-control">
+                                </div>
+                                <div class="form-group mt-3">
                                     <label>Descrição</label>
                                     <textarea name="descricao_imagem" class="form-control"></textarea>
                                 </div>
@@ -154,51 +155,39 @@ if ($is_admin) {
 
                     <!-- GALERIA -->
                     <?php if (count($portfolio_items) > 0): ?>
+                        <?php
+                        $perPage    = 5;
+                        $totalItems = count($portfolio_items);
+                        $totalPages = ceil($totalItems / $perPage);
+                        ?>
 
-                        <?php if (count($portfolio_items) <= 6): ?>
-                            <div class="portfolio-grid mt-4">
-                                <?php foreach ($portfolio_items as $i => $p): ?>
-                                    <div class="portfolio-grid-item">
+                        <div class="portfolio-list mt-4" id="portfolioList">
+                            <?php foreach ($portfolio_items as $i => $p): ?>
+                                <div class="portfolio-list-item" data-index="<?= $i ?>">
+                                    <div class="portfolio-list-img-wrap">
                                         <img src="<?= htmlspecialchars($p['imagem']); ?>"
-                                             alt="<?= htmlspecialchars($p['descricao_imagem']); ?>"
+                                             alt="<?= htmlspecialchars($p['titulo']); ?>"
                                              onclick="openLightbox(<?= $i ?>)">
-                                        <div class="desc"><?= htmlspecialchars($p['descricao_imagem']); ?></div>
-                                        <div class="portfolio-actions mt-2 text-center">
+                                    </div>
+                                    <div class="portfolio-list-info">
+                                        <div class="portfolio-list-text">
+                                            <p class="portfolio-list-titulo"><?= htmlspecialchars($p['titulo']); ?></p>
+                                            <p class="portfolio-list-desc"><?= htmlspecialchars($p['descricao_imagem']); ?></p>
+                                        </div>
+                                        <div class="portfolio-list-actions">
                                             <a href="editar_portfolio.php?id=<?= $p['id']; ?>" class="btn btn-success btn-sm">Editar</a>
-                                            <a href="eliminar_portfolio.php?id=<?= $p['id']; ?>" class="btn btn-danger btn-sm">Eliminar</a> 
+                                            <a href="eliminar_portfolio.php?id=<?= $p['id']; ?>" class="btn btn-danger btn-sm">Eliminar</a>
                                         </div>
                                     </div>
-                                <?php endforeach; ?>
-                            </div>
-
-                        <?php else: ?>
-                            <?php
-                            $perPage    = 6;
-                            $totalPages = ceil(count($portfolio_items) / $perPage);
-                            ?>
-                            <div class="carousel-wrapper mt-4">
-                                <button class="carousel-btn prev" id="carouselPrev">&#8592;</button>
-                                <div class="carousel-track" id="carouselTrack">
-                                    <?php foreach ($portfolio_items as $i => $p): ?>
-                                        <div class="carousel-slide">
-                                            <img src="<?= htmlspecialchars($p['imagem']); ?>"
-                                                 alt="<?= htmlspecialchars($p['descricao_imagem']); ?>"
-                                                 onclick="openLightbox(<?= $i ?>)">
-                                            <div class="desc"><?= htmlspecialchars($p['descricao_imagem']); ?></div>
-                                            <div class="portfolio-actions mt-2 text-center">
-                                                <a href="editar_portfolio.php?id=<?= $p['id']; ?>" class="btn btn-success btn-sm">Editar</a>
-                                                <a href="eliminar_portfolio.php?id=<?= $p['id']; ?>" class="btn btn-danger btn-sm">Eliminar</a>
-                                            </div>
-                                        </div>
-                                    <?php endforeach; ?>
                                 </div>
-                                <button class="carousel-btn next" id="carouselNext">&#8594;</button>
-                            </div>
+                            <?php endforeach; ?>
+                        </div>
 
-                            <div class="carousel-dots" id="carouselDots">
-                                <?php for ($d = 0; $d < $totalPages; $d++): ?>
-                                    <button class="dot <?= $d === 0 ? 'active' : ''; ?>" data-page="<?= $d ?>"></button>
-                                <?php endfor; ?>
+                        <?php if ($totalPages > 1): ?>
+                            <div class="portfolio-pagination mt-3" id="portfolioPagination">
+                                <button class="btn btn-outline-secondary btn-sm" id="pagePrev">&#8592; Anterior</button>
+                                <span id="pageInfo"></span>
+                                <button class="btn btn-outline-secondary btn-sm" id="pageNext">Seguinte &#8594;</button>
                             </div>
                         <?php endif; ?>
 
@@ -232,7 +221,7 @@ if ($is_admin) {
 
 <script>
     const portfolioImages = <?= json_encode(array_map(function ($p) {
-        return ['src' => $p['imagem'], 'desc' => $p['descricao_imagem']];
+        return ['src' => $p['imagem'], 'desc' => $p['descricao_imagem'], 'titulo' => $p['titulo']];
     }, $portfolio_items)); ?>;
 
     document.getElementById('mostrarFormularioPortfolio').onclick = () =>
@@ -250,8 +239,9 @@ if ($is_admin) {
     }
 
     function updateLightbox() {
-        document.getElementById('lightboxImg').src = portfolioImages[currentIndex].src;
-        document.getElementById('lightboxDesc').textContent = portfolioImages[currentIndex].desc;
+        document.getElementById('lightboxImg').src         = portfolioImages[currentIndex].src;
+        document.getElementById('lightboxDesc').textContent = portfolioImages[currentIndex].titulo
+            + (portfolioImages[currentIndex].desc ? ' — ' + portfolioImages[currentIndex].desc : '');
     }
 
     document.getElementById('lightboxClose').onclick = () =>
@@ -285,32 +275,32 @@ if ($is_admin) {
         if (e.target === this) this.classList.remove('open');
     });
 
-    const track = document.getElementById('carouselTrack');
-    if (track) {
-        const perPage    = 6;
-        const perSlide   = 3;
-        const total      = portfolioImages.length;
-        const totalPages = Math.ceil(total / perPage);
-        let currentPage  = 0;
+    const listItems = document.querySelectorAll('.portfolio-list-item');
+    if (listItems.length > 0) {
+        const perPage  = 5;
+        const total    = listItems.length;
+        const totalPgs = Math.ceil(total / perPage);
+        let currentPg  = 0;
 
-        function goToPage(page) {
-            currentPage = page;
-            const slideWidth = track.querySelector('.carousel-slide').offsetWidth;
-            track.style.transform = `translateX(-${page * perPage * slideWidth / perSlide}px)`;
-            document.querySelectorAll('.dot').forEach((d, i) => {
-                d.classList.toggle('active', i === page);
+        function showPage(page) {
+            currentPg = page;
+            listItems.forEach((item, i) => {
+                item.style.display = (i >= page * perPage && i < (page + 1) * perPage) ? 'flex' : 'none';
             });
+            const info = document.getElementById('pageInfo');
+            if (info) info.textContent = `Página ${page + 1} de ${totalPgs}`;
+            const prev = document.getElementById('pagePrev');
+            const next = document.getElementById('pageNext');
+            if (prev) prev.disabled = page === 0;
+            if (next) next.disabled = page === totalPgs - 1;
         }
 
-        document.getElementById('carouselPrev').onclick = () =>
-            goToPage((currentPage - 1 + totalPages) % totalPages);
+        const prevBtn = document.getElementById('pagePrev');
+        const nextBtn = document.getElementById('pageNext');
+        if (prevBtn) prevBtn.onclick = () => showPage(currentPg - 1);
+        if (nextBtn) nextBtn.onclick = () => showPage(currentPg + 1);
 
-        document.getElementById('carouselNext').onclick = () =>
-            goToPage((currentPage + 1) % totalPages);
-
-        document.querySelectorAll('.dot').forEach(dot => {
-            dot.addEventListener('click', () => goToPage(parseInt(dot.dataset.page)));
-        });
+        showPage(0);
     }
 
     document.addEventListener("DOMContentLoaded", function() {

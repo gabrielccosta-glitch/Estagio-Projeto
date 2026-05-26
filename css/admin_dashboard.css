@@ -1,29 +1,52 @@
+/* ── VARIÁVEIS IS4 ── */
+:root {
+    --is4-blue:        #1a3a5c;
+    --is4-blue-mid:    #1e4976;
+    --is4-blue-light:  #2d6aa0;
+    --is4-orange:      #e87722;
+    --is4-orange-dark: #c96310;
+    --is4-white:       #ffffff;
+    --is4-bg:          #f0f4f8;
+    --is4-border:      #cdd8e3;
+    --is4-text:        #1a2e42;
+    --is4-muted:       #5a7089;
+}
+
+/* ── LOGO ── */
 .admin-logo {
     height: 62px;
 }
 
+/* ── TOOLBAR ── */
 .dashboard-toolbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     flex-wrap: wrap;
 }
 
+/* ── SEARCH BOX ── */
 .search-box {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #ffffff;
-    border: 1px solid #dbe5f0;
-    border-radius: 10px;
-    padding: 8px 12px;
+    background: var(--is4-white);
+    border: 1.5px solid var(--is4-border);
+    border-radius: 8px;
+    padding: 8px 14px;
     min-width: 260px;
+    transition: border-color 0.2s;
+}
+
+.search-box:focus-within {
+    border-color: var(--is4-blue-light);
 }
 
 .search-box svg {
-    color: #5a7089;
+    color: var(--is4-muted);
+    flex-shrink: 0;
 }
 
 .search-box input {
@@ -32,20 +55,27 @@
     width: 100%;
     font-size: 14px;
     background: transparent;
+    color: var(--is4-text);
 }
 
+.search-box input::placeholder {
+    color: #9ab0c4;
+}
+
+/* ── SEM RESULTADOS ── */
 .sem-resultados {
     display: none;
     text-align: center;
-    padding: 20px;
-    color: #5a7089;
+    padding: 24px;
+    color: var(--is4-muted);
     font-size: 0.9rem;
 }
 
+/* ── MODAL ACTIONS ── */
 .modal-actions {
     display: flex;
-    gap: 8px;
-    margin-top: 12px;
+    gap: 10px;
+    margin-top: 16px;
     justify-content: center;
 }
 
@@ -53,109 +83,154 @@
     margin-top: 16px;
 }
 
-/* ----------------------------- */
-/* 🔥 MODAL DE ELIMINAÇÃO CORRIGIDO */
-/* ----------------------------- */
-
+/* ── MODAL ELIMINAÇÃO ── */
 #modalConfirm {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.45);
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(10, 25, 47, 0.55);
     justify-content: center;
     align-items: center;
     z-index: 9999;
 }
 
 #modalConfirm .modal-content {
-    background: white;
-    padding: 25px;
+    background: var(--is4-white);
+    padding: 30px 28px;
     border-radius: 10px;
     max-width: 420px;
     width: 90%;
     text-align: center;
+    border-top: 4px solid var(--is4-orange);
+    box-shadow: 0 8px 32px rgba(26, 58, 92, 0.18);
 }
 
-/* Modal de mensagens */
+/* ── MODAL MENSAGENS ── */
 #messageModal {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.45);
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(10, 25, 47, 0.55);
     justify-content: center;
     align-items: center;
     z-index: 9999;
 }
 
 #messageModal .modal-content {
-    background: white;
-    padding: 25px;
+    background: var(--is4-white);
+    padding: 30px 28px;
     border-radius: 10px;
     max-width: 420px;
     width: 90%;
     text-align: center;
+    border-top: 4px solid var(--is4-blue);
+    box-shadow: 0 8px 32px rgba(26, 58, 92, 0.18);
 }
 
-/* ----------------------------- */
-/* 🎯 BOTÕES UNIFORMES (TODOS IGUAIS) */
-/* ----------------------------- */
+/* ── BOTÕES DE AÇÃO — TAMANHO UNIFORME ── */
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
 
 .action-buttons .btn-sm {
-    padding: 6px 12px !important;
+    padding: 5px 13px !important;
     font-size: 0.78rem !important;
     border-radius: 6px !important;
     line-height: 1 !important;
-    height: 32px !important;
+    height: 30px !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
+    font-weight: 500 !important;
+    border: none !important;
+    transition: background 0.18s, transform 0.1s !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
 }
 
-/* Cores */
+.action-buttons .btn-sm:active {
+    transform: scale(0.97) !important;
+}
+
+/* ── CORES DOS BOTÕES ── */
 .btn-success {
-    background: #16a34a !important;
+    background: #1e7e4a !important;
     color: #fff !important;
+}
+.btn-success:hover {
+    background: #176039 !important;
 }
 
 .btn-info {
-    background: #0891b2 !important;
+    background: var(--is4-blue-light) !important;
     color: #fff !important;
+}
+.btn-info:hover {
+    background: var(--is4-blue-mid) !important;
 }
 
 .btn-danger {
-    background: #dc2626 !important;
+    background: #c0392b !important;
     color: #fff !important;
+}
+.btn-danger:hover {
+    background: #a93226 !important;
 }
 
 .btn-secondary {
-    background: #e5e7eb !important;
-    color: #111 !important;
+    background: #dde4ec !important;
+    color: var(--is4-text) !important;
+    border: 1px solid var(--is4-border) !important;
+}
+.btn-secondary:hover {
+    background: #c8d4e0 !important;
 }
 
+/* Botão principal IS4 — laranja do logo */
 .btn-freebox-blue {
-    background-color: #007bff !important;
-    color: white !important;
+    background: var(--is4-orange) !important;
+    color: var(--is4-white) !important;
 }
-
-/* Hover */
-.btn-success:hover {
-    background: #15803d !important;
-}
-
-.btn-info:hover {
-    background: #0e7490 !important;
-}
-
-.btn-danger:hover {
-    background: #b91c1c !important;
-}
-
 .btn-freebox-blue:hover {
-    background-color: #0069d9 !important;
+    background: var(--is4-orange-dark) !important;
+}
+
+/* ── TABELA ── */
+.table thead th {
+    background: var(--is4-blue) !important;
+    color: var(--is4-white) !important;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    border: none !important;
+    padding: 12px 16px;
+}
+
+.table tbody tr:hover {
+    background: #eaf1f8 !important;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+    background: #f7fafc;
+}
+
+.table td {
+    vertical-align: middle;
+    font-size: 0.875rem;
+    color: var(--is4-text);
+    padding: 10px 16px;
+}
+
+/* ── CONTAINER DO DASHBOARD ── */
+.dashboard-container {
+    background: var(--is4-white);
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(26, 58, 92, 0.08);
+    border: 1px solid var(--is4-border);
 }

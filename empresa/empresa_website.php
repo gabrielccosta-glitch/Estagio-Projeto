@@ -32,8 +32,17 @@ $website_stmt->execute();
 $website = $website_stmt->get_result()->fetch_assoc();
 $website_stmt->close();
 
-$url_ja_definido = !empty($website['url_site']);
-$cliente_pode_definir_url = !$is_admin && !$url_ja_definido;
+$url_ja_definido          = !empty($website['url_site']);
+$logotipo_ja_definido     = !empty($website['logotipo']);
+$botao_texto_ja_definido  = !empty($website['hero_botao_texto']);
+$botao_link_ja_definido   = !empty($website['hero_botao_link']);
+$email_ja_definido        = !empty($website['email_formulario']);
+
+$cliente_pode_definir_url         = !$is_admin && !$url_ja_definido;
+$cliente_pode_definir_logotipo    = !$is_admin && !$logotipo_ja_definido;
+$cliente_pode_definir_botao_texto = !$is_admin && !$botao_texto_ja_definido;
+$cliente_pode_definir_botao_link  = !$is_admin && !$botao_link_ja_definido;
+$cliente_pode_definir_email       = !$is_admin && !$email_ja_definido;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -43,71 +52,86 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $link_x            = trim($_POST['link_x'] ?? '');
     $hero_titulo       = trim($_POST['hero_titulo'] ?? '');
     $hero_subtitulo    = trim($_POST['hero_subtitulo'] ?? '');
-    $hero_botao_texto  = trim($_POST['hero_botao_texto'] ?? '');
-    $hero_botao_link   = trim($_POST['hero_botao_link'] ?? '');
 
+    // URL do site
     if ($is_admin) {
         $url_site = trim($_POST['url_site'] ?? '');
-        $url_site = preg_replace('/[^a-zA-Z0-9\-]/', '', $url_site);
-        $url_site = strtolower($url_site);
+        $url_site = strtolower(preg_replace('/[^a-zA-Z0-9\-]/', '', $url_site));
     } elseif ($cliente_pode_definir_url) {
         $url_site = trim($_POST['url_site'] ?? '');
-        $url_site = preg_replace('/[^a-zA-Z0-9\-]/', '', $url_site);
-        $url_site = strtolower($url_site);
+        $url_site = strtolower(preg_replace('/[^a-zA-Z0-9\-]/', '', $url_site));
     } else {
         $url_site = $website['url_site'] ?? '';
     }
 
-    if ($is_admin) {
+    // Logotipo
+    $logotipo = $website['logotipo'] ?? '';
+    if ($is_admin || $cliente_pode_definir_logotipo) {
+        if (!empty($_FILES['logotipo']['tmp_name'])) {
+            $allowed   = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            $file_type = mime_content_type($_FILES['logotipo']['tmp_name']);
+            if (in_array($file_type, $allowed) && $_FILES['logotipo']['size'] <= 2 * 1024 * 1024) {
+                $upload_dir = '../imagens/' . $empresa_id . '/';
+                if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
+                $ext      = pathinfo($_FILES['logotipo']['name'], PATHINFO_EXTENSION);
+                $logotipo = '../imagens/' . $empresa_id . '/logotipo.' . $ext;
+                move_uploaded_file($_FILES['logotipo']['tmp_name'], $upload_dir . 'logotipo.' . $ext);
+            } else {
+                $_SESSION['error_message'] = "Logotipo inválido. Use JPG, PNG, GIF ou WEBP até 2MB.";
+                header("Location: empresa_website.php?id=$empresa_id&show_message=1");
+                exit();
+            }
+        }
+    }
+
+    // Texto do botão
+    if ($is_admin || $cliente_pode_definir_botao_texto) {
+        $hero_botao_texto = trim($_POST['hero_botao_texto'] ?? '');
+    } else {
+        $hero_botao_texto = $website['hero_botao_texto'] ?? '';
+    }
+
+    // Link do botão
+    if ($is_admin || $cliente_pode_definir_botao_link) {
+        $hero_botao_link = trim($_POST['hero_botao_link'] ?? '');
+    } else {
+        $hero_botao_link = $website['hero_botao_link'] ?? '';
+    }
+
+    // Email — admin sempre, cliente só uma vez
+    if ($is_admin || $cliente_pode_definir_email) {
         $email_formulario = trim($_POST['email_formulario'] ?? '');
     } else {
         $email_formulario = $website['email_formulario'] ?? '';
     }
 
-    if (!empty($url_site) && ($is_admin || $cliente_pode_definir_url)) {
-        $check_sql  = "SELECT id FROM website_config WHERE url_site = ? AND empresa_id != ?";
-        $check_stmt = $conn->prepare($check_sql);
-        $check_stmt->bind_param("si", $url_site, $empresa_id);
-        $check_stmt->execute();
-        $check_result = $check_stmt->get_result();
-        $check_stmt->close();
-
-        if ($check_result->num_rows > 0) {
-            $_SESSION['error_message'] = "Este endereço já está em uso por outra empresa. Escolha outro.";
-            header("Location: empresa_website.php?id=$empresa_id&show_message=1");
-            exit();
-        }
-    }
-
-    $logotipo     = $website['logotipo'] ?? '';
+    // Capa
     $capa_empresa = $website['capa_empresa'] ?? '';
-
-    $upload_dir = '../imagens/' . $empresa_id . '/';
-    if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
-
-    if (!empty($_FILES['logotipo']['tmp_name'])) {
-        $allowed   = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        $file_type = mime_content_type($_FILES['logotipo']['tmp_name']);
-        if (in_array($file_type, $allowed) && $_FILES['logotipo']['size'] <= 2 * 1024 * 1024) {
-            $ext      = pathinfo($_FILES['logotipo']['name'], PATHINFO_EXTENSION);
-            $logotipo = '../imagens/' . $empresa_id . '/logotipo.' . $ext;
-            move_uploaded_file($_FILES['logotipo']['tmp_name'], $upload_dir . 'logotipo.' . $ext);
-        } else {
-            $_SESSION['error_message'] = "Logotipo inválido. Use JPG, PNG, GIF ou WEBP até 2MB.";
-            header("Location: empresa_website.php?id=$empresa_id&show_message=1");
-            exit();
-        }
-    }
-
     if (!empty($_FILES['capa_empresa']['tmp_name'])) {
         $allowed   = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
         $file_type = mime_content_type($_FILES['capa_empresa']['tmp_name']);
         if (in_array($file_type, $allowed) && $_FILES['capa_empresa']['size'] <= 5 * 1024 * 1024) {
+            $upload_dir = '../imagens/' . $empresa_id . '/';
+            if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
             $ext          = pathinfo($_FILES['capa_empresa']['name'], PATHINFO_EXTENSION);
             $capa_empresa = '../imagens/' . $empresa_id . '/capa.' . $ext;
             move_uploaded_file($_FILES['capa_empresa']['tmp_name'], $upload_dir . 'capa.' . $ext);
         } else {
             $_SESSION['error_message'] = "Capa inválida. Use JPG, PNG, GIF ou WEBP até 5MB.";
+            header("Location: empresa_website.php?id=$empresa_id&show_message=1");
+            exit();
+        }
+    }
+
+    // Verificar URL duplicado
+    if (!empty($url_site) && ($is_admin || $cliente_pode_definir_url)) {
+        $check_stmt = $conn->prepare("SELECT id FROM website_config WHERE url_site = ? AND empresa_id != ?");
+        $check_stmt->bind_param("si", $url_site, $empresa_id);
+        $check_stmt->execute();
+        $check_result = $check_stmt->get_result();
+        $check_stmt->close();
+        if ($check_result->num_rows > 0) {
+            $_SESSION['error_message'] = "Este endereço já está em uso por outra empresa. Escolha outro.";
             header("Location: empresa_website.php?id=$empresa_id&show_message=1");
             exit();
         }
@@ -131,7 +155,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         email_formulario  = VALUES(email_formulario)";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("issssssssssss", $empresa_id, $descricao_empresa, $logotipo, $capa_empresa, $hero_titulo, $hero_subtitulo, $hero_botao_texto, $hero_botao_link, $link_facebook, $link_instagram, $link_x, $url_site, $email_formulario);
+    $stmt->bind_param("issssssssssss",
+        $empresa_id, $descricao_empresa, $logotipo, $capa_empresa,
+        $hero_titulo, $hero_subtitulo, $hero_botao_texto, $hero_botao_link,
+        $link_facebook, $link_instagram, $link_x, $url_site, $email_formulario
+    );
 
     if ($stmt->execute()) {
         $_SESSION['success_message'] = "Guardado com sucesso!";
@@ -197,7 +225,7 @@ if ($is_admin) {
         white-space: nowrap;
         color: #495057;
     }
-    .url-definido-info {
+    .field-locked {
         display: flex;
         align-items: center;
         gap: 10px;
@@ -209,9 +237,7 @@ if ($is_admin) {
         color: #2d6a4f;
         font-weight: 600;
     }
-    .url-definido-info i {
-        color: #28a745;
-    }
+    .field-locked i { color: #28a745; }
 </style>
 
 <div class="separator"></div>
@@ -241,7 +267,6 @@ if ($is_admin) {
 
                         <!-- URL DO SITE -->
                         <label class="mt-3"><i class="fas fa-link"></i> Endereço do seu site</label>
-
                         <?php if ($is_admin): ?>
                             <div class="url-group">
                                 <span class="url-prefix">http://freebox/</span>
@@ -250,30 +275,23 @@ if ($is_admin) {
                                     value="<?= htmlspecialchars($website['url_site'] ?? '') ?>"
                                     maxlength="100">
                             </div>
-                            <small class="text-muted">
-                                Apenas letras, números e hífens. Ex: <?= htmlspecialchars(strtolower(preg_replace('/[^a-zA-Z0-9\-]/', '-', $empresa['nome_empresa']))); ?>
-                            </small>
-
+                            <small class="text-muted">Apenas letras, números e hífens.</small>
                         <?php elseif ($cliente_pode_definir_url): ?>
                             <div class="url-group">
                                 <span class="url-prefix">http://freebox/</span>
                                 <input type="text" name="url_site" class="form-control"
-                                    placeholder="nome-do-seu-site"
-                                    value=""
-                                    maxlength="100">
+                                    placeholder="nome-do-seu-site" value="" maxlength="100">
                             </div>
                             <small class="text-muted">
                                 <i class="fas fa-exclamation-triangle text-warning"></i>
                                 Atenção: só pode definir este endereço <strong>uma vez</strong>. Após guardar, não poderá alterá-lo.
                             </small>
-
                         <?php else: ?>
-                            <div class="url-definido-info">
+                            <div class="field-locked">
                                 <i class="fas fa-lock"></i>
                                 <span>http://freebox/<?= htmlspecialchars($website['url_site']) ?></span>
                             </div>
                             <small class="text-muted">O endereço do site já foi definido e não pode ser alterado.</small>
-
                         <?php endif; ?>
 
                         <?php if (!empty($website['url_site'])): ?>
@@ -287,9 +305,22 @@ if ($is_admin) {
 
                         <!-- LOGOTIPO -->
                         <label class="mt-4"><i class="fas fa-image"></i> Logotipo</label>
-                        <input type="file" name="logotipo" class="form-control"
-                            accept="image/jpeg,image/png,image/gif,image/webp">
-                        <small class="text-muted">JPG, PNG, GIF ou WEBP. Máx. 2MB.</small>
+                        <?php if ($is_admin || $cliente_pode_definir_logotipo): ?>
+                            <input type="file" name="logotipo" class="form-control"
+                                accept="image/jpeg,image/png,image/gif,image/webp">
+                            <small class="text-muted">
+                                JPG, PNG, GIF ou WEBP. Máx. 2MB.
+                                <?php if ($cliente_pode_definir_logotipo): ?>
+                                    <br><i class="fas fa-exclamation-triangle text-warning"></i>
+                                    Atenção: só pode definir o logotipo <strong>uma vez</strong>. Após guardar, não poderá alterá-lo.
+                                <?php endif; ?>
+                            </small>
+                        <?php else: ?>
+                            <div class="field-locked">
+                                <i class="fas fa-lock"></i>
+                                <span>Logotipo já definido — apenas o administrador pode alterar.</span>
+                            </div>
+                        <?php endif; ?>
                         <?php if (!empty($website['logotipo'])): ?>
                             <img src="<?= htmlspecialchars($website['logotipo']); ?>"
                                 alt="Logotipo atual" class="preview-img mt-2">
@@ -321,18 +352,49 @@ if ($is_admin) {
                             value="<?= htmlspecialchars($website['hero_subtitulo'] ?? '') ?>"
                             maxlength="255">
 
+                        <!-- TEXTO DO BOTÃO -->
                         <label class="mt-3"><i class="fas fa-mouse-pointer"></i> Texto do botão</label>
-                        <input type="text" name="hero_botao_texto" class="form-control"
-                            placeholder="Ex: Contacte-nos"
-                            value="<?= htmlspecialchars($website['hero_botao_texto'] ?? '') ?>"
-                            maxlength="100">
+                        <?php if ($is_admin || $cliente_pode_definir_botao_texto): ?>
+                            <input type="text" name="hero_botao_texto" class="form-control"
+                                placeholder="Ex: Contacte-nos"
+                                value="<?= htmlspecialchars($website['hero_botao_texto'] ?? '') ?>"
+                                maxlength="100">
+                            <?php if ($cliente_pode_definir_botao_texto): ?>
+                                <small class="text-muted">
+                                    <i class="fas fa-exclamation-triangle text-warning"></i>
+                                    Atenção: só pode definir o texto do botão <strong>uma vez</strong>.
+                                </small>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <div class="field-locked">
+                                <i class="fas fa-lock"></i>
+                                <span><?= htmlspecialchars($website['hero_botao_texto']) ?></span>
+                            </div>
+                            <small class="text-muted">Apenas o administrador pode alterar.</small>
+                        <?php endif; ?>
 
+                        <!-- LINK DO BOTÃO -->
                         <label class="mt-3"><i class="fas fa-link"></i> Link do botão</label>
-                        <input type="text" name="hero_botao_link" class="form-control"
-                            placeholder="Ex: https://... ou #contactos"
-                            value="<?= htmlspecialchars($website['hero_botao_link'] ?? '') ?>"
-                            maxlength="255">
-                        <small class="text-muted">Se deixar tudo em branco, a imagem fica limpa sem texto.</small>
+                        <?php if ($is_admin || $cliente_pode_definir_botao_link): ?>
+                            <input type="text" name="hero_botao_link" class="form-control"
+                                placeholder="Ex: https://... ou #contactos"
+                                value="<?= htmlspecialchars($website['hero_botao_link'] ?? '') ?>"
+                                maxlength="255">
+                            <?php if ($cliente_pode_definir_botao_link): ?>
+                                <small class="text-muted">
+                                    <i class="fas fa-exclamation-triangle text-warning"></i>
+                                    Atenção: só pode definir o link do botão <strong>uma vez</strong>.
+                                </small>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <div class="field-locked">
+                                <i class="fas fa-lock"></i>
+                                <span><?= htmlspecialchars($website['hero_botao_link']) ?></span>
+                            </div>
+                            <small class="text-muted">Apenas o administrador pode alterar.</small>
+                        <?php endif; ?>
+
+                        <small class="text-muted d-block mt-1">Se deixar tudo em branco, a imagem fica limpa sem texto.</small>
                         <hr>
 
                         <!-- DESCRIÇÃO -->
@@ -340,18 +402,24 @@ if ($is_admin) {
                         <textarea name="descricao_empresa" class="form-control" rows="4"><?= htmlspecialchars($website['descricao_empresa'] ?? '') ?></textarea>
 
                         <!-- EMAIL FORMULÁRIO -->
-                        <label class="mt-4">
-                            <i class="fas fa-envelope"></i> Email para receber formulários do site
-                        </label>
-
-                        <?php if ($is_admin): ?>
+                        <label class="mt-4"><i class="fas fa-envelope"></i> Email para receber formulários do site</label>
+                        <?php if ($is_admin || $cliente_pode_definir_email): ?>
                             <input type="email" name="email_formulario" class="form-control"
                                 placeholder="empresa@email.com"
                                 value="<?= htmlspecialchars($website['email_formulario'] ?? '') ?>">
-                            <small class="text-muted">O formulário do site vai enviar as mensagens para este email.</small>
+                            <?php if ($cliente_pode_definir_email): ?>
+                                <small class="text-muted">
+                                    <i class="fas fa-exclamation-triangle text-warning"></i>
+                                    Atenção: só pode definir o email <strong>uma vez</strong>. Após guardar, não poderá alterá-lo.
+                                </small>
+                            <?php else: ?>
+                                <small class="text-muted">O formulário do site vai enviar as mensagens para este email.</small>
+                            <?php endif; ?>
                         <?php else: ?>
-                            <input type="email" class="form-control"
-                                value="<?= htmlspecialchars($website['email_formulario'] ?? '') ?>" disabled>
+                            <div class="field-locked">
+                                <i class="fas fa-lock"></i>
+                                <span><?= htmlspecialchars($website['email_formulario']) ?></span>
+                            </div>
                             <small class="text-muted">Apenas o administrador pode alterar este email.</small>
                         <?php endif; ?>
 
