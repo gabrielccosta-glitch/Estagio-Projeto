@@ -169,9 +169,6 @@ include 'header_publico.php';
             <h2>Partilha de dados</h2>
 
             <p>
-            <div class="footer-brand-name" style="font-size: 6rem; letter-spacing: 3px;">
-                A <?= htmlspecialchars($nome_empresa); ?>
-            </div>
             não partilha dados pessoais com terceiros,
             exceto quando exigido por lei.
             </p>

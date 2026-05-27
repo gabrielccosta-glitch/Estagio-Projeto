@@ -27,7 +27,7 @@ $stmt->close();
 $nome_empresa = $empresa['nome_empresa'] ?? 'Empresa';
 $url_site     = $empresa['url_site'] ?? '';
 
-$link_sistema = 'http://' . ($_SERVER['HTTP_HOST'] ?? '') . '/empresa/';
+$link_sistema = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? '') . '/projeto';
 
 
 ?>

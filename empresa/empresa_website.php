@@ -383,7 +383,7 @@ if ($is_admin) {
                                     value="<?= htmlspecialchars($website['cor_primaria'] ?? '#1a1a1a') ?>" 
                                     style="height: 48px; padding: 4px; cursor: pointer;"
                                     title="Escolha a cor primária">
-                                <small class="text-muted">Usada para títulos, botões principais e destaques.</small>
+                                
                             </div>
                             <div class="col-md-6">
                                 <label><i class="fas fa-circle text-secondary"></i> Cor Secundária</label>
@@ -391,7 +391,7 @@ if ($is_admin) {
                                     value="<?= htmlspecialchars($website['cor_secundaria'] ?? '#555555') ?>" 
                                     style="height: 48px; padding: 4px; cursor: pointer;"
                                     title="Escolha a cor secundária">
-                                <small class="text-muted">Usada para elementos de hover, gradientes e detalhes.</small>
+                                
                             </div>
                         </div>
 

@@ -1,19 +1,20 @@
 <?php
-// config/database.php - Configuração da conexão com o banco de dados
+// Configurações da Base de Dados - WAMPServer
+$host = 'localhost'; // No servidor, isto pode ser um IP ou 'localhost'
+$db = 'siteinstitucional'; // O nome da base de dados que no wampserver
+$user = 'root'; // O utilizador que definiu na base de dados do wanpserver
+$pass = ''; // A senha que definiu na base de dados do wanpserver
 
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');         // Usuário padrão do WampServer
-define('DB_PASS', '');             // Senha em branco por padrão no WampServer
-define('DB_NAME', 'siteInstitucional');
+// Configurações da Base de Dados - freebox.is4.pt
+//$host = 'localhost'; // No servidor, isto pode ser um IP ou 'localhost'
+//$db   = 'is4pt_siteinstitucional'; // O nome da base de dados que criou no servidor
+//$user = 'is4pt_siteinstitucional'; // O utilizador da BD no servidor
+//$pass = 'is4pt_siteinstitucional'; // A senha que definiu no cPanel
 
-// Criando a conexão
-$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-// Verificando a conexão
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+try {
+    $conn = new mysqli($host, $user, $pass, $db);
+    $conn->set_charset("utf8mb4");
+} catch (Exception $e) {
+    die("Erro na ligação à base de dados: " . $e->getMessage());
 }
-
-// Definindo o charset para utf8
-$conn->set_charset("utf8");
-?>

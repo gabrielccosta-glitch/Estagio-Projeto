@@ -99,9 +99,6 @@
     </div>
 
     <!-- NOME -->
-    <div class="footer-brand-name" style="font-size: 4.5rem; letter-spacing: 3px;">
-        <?= htmlspecialchars($empresa['nome_empresa'] ?? 'FREEBOX'); ?>
-    </div>
 
     <!-- BOTTOM -->
     <div class="footer-bottom">
