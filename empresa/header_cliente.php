@@ -12,7 +12,7 @@
 
 <div class="cliente-header">
     <div class="cliente-header-left">
-        <img src="../imagens/Logotipo_freebox.png" alt="Logo" class="cliente-logo">
+        <img src="../imagens/logotipo_freebox.png" alt="Logo" class="cliente-logo">
         <div class="cliente-header-title">
             <h3><?= htmlspecialchars($empresa['nome_empresa'] ?? 'Empresa'); ?></h3>
             <span>Painel da Empresa</span>

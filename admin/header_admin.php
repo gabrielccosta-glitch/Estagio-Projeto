@@ -4,8 +4,8 @@
 
     <div class="cliente-header-left">
 
-        <img src="../imagens/Logotipo_freebox.png"
-             alt="Logo"
+        <img src="../imagens/logotipo_freebox.png"
+             alt="logo"
              class="cliente-logo">
 
         <div class="cliente-header-title">

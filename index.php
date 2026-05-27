@@ -31,7 +31,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 
         <div class="navbar-left">
             <a href="./" class="brand">
-                <img src="./imagens/Logotipo_freebox.png" alt="FreeBox Sites">
+                <img src="./imagens/logotipo_freebox.png" alt="FreeBox Sites">
             
             </a>
 
