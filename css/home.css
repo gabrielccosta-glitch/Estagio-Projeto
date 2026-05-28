@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 
-/* ══════════════════════════════════════════
-   VARIÁVEIS
-══════════════════════════════════════════ */
 :root {
     --primary: #1a6ff4;
     --primary-dark: #1458cc;
@@ -23,9 +20,6 @@
     --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ══════════════════════════════════════════
-   RESET & BASE
-══════════════════════════════════════════ */
 *,
 *::before,
 *::after {
@@ -45,9 +39,6 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* ══════════════════════════════════════════
-   BOTÕES GLOBAIS
-══════════════════════════════════════════ */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -106,9 +97,7 @@ body {
     text-decoration: none;
 }
 
-/* ══════════════════════════════════════════
-   NAVBAR
-══════════════════════════════════════════ */
+/* NAVBAR */
 .main-navbar {
     position: sticky;
     top: 0;
@@ -134,16 +123,17 @@ body {
 .navbar-left {
     display: flex;
     align-items: center;
-    gap: 40px;
+    flex-shrink: 0;
 }
 
 .navbar-right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    justify-content: flex-end;
+    gap: 28px;
+    margin-left: auto;
 }
 
-/* Brand */
 .brand {
     text-decoration: none;
     display: flex;
@@ -156,7 +146,6 @@ body {
     display: block;
 }
 
-/* Nav links */
 .nav-menu {
     display: flex;
     align-items: center;
@@ -192,14 +181,12 @@ body {
     width: 100%;
 }
 
-/* Nav actions */
 .nav-actions {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-/* ── Language selector ── */
 .lang-selector {
     position: relative;
 }
@@ -282,7 +269,6 @@ body {
     color: var(--primary);
 }
 
-/* ── Hamburger ── */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -322,7 +308,6 @@ body {
     transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ── Mobile nav ── */
 .mobile-nav {
     display: none;
     flex-direction: column;
@@ -354,9 +339,7 @@ body {
     color: var(--primary);
 }
 
-/* ══════════════════════════════════════════
-   HERO
-══════════════════════════════════════════ */
+/* HERO */
 .hero-section {
     background: linear-gradient(135deg, #e8f1ff 0%, #f0f6ff 50%, #fff7f0 100%);
     padding: 80px 0 60px;
@@ -453,9 +436,7 @@ body {
     filter: drop-shadow(0 20px 40px rgba(26, 111, 244, 0.15));
 }
 
-/* ══════════════════════════════════════════
-   SECTION PADDING & TÍTULOS
-══════════════════════════════════════════ */
+/* SECTIONS */
 .section-padding {
     padding: 88px 0;
 }
@@ -494,9 +475,6 @@ body {
     margin: 0 auto;
 }
 
-/* ══════════════════════════════════════════
-   SOBRE
-══════════════════════════════════════════ */
 .about-section {
     background: var(--surface);
     border-top: 1px solid var(--border);
@@ -588,9 +566,6 @@ body {
     flex-shrink: 0;
 }
 
-/* ══════════════════════════════════════════
-   FUNCIONALIDADES
-══════════════════════════════════════════ */
 .features-section {
     background: var(--bg);
 }
@@ -665,9 +640,6 @@ body {
     line-height: 1.7;
 }
 
-/* ══════════════════════════════════════════
-   COMO FUNCIONA
-══════════════════════════════════════════ */
 .steps-section {
     background: var(--surface);
     border-top: 1px solid var(--border);
@@ -727,9 +699,7 @@ body {
     line-height: 1.75;
 }
 
-/* ══════════════════════════════════════════
-   FOOTER
-══════════════════════════════════════════ */
+/* FOOTER */
 .main-footer {
     background: var(--text);
     color: rgba(255, 255, 255, 0.55);
@@ -739,11 +709,14 @@ body {
 .footer-grid {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 28px;
+    padding: 0 28px 48px;
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
     gap: 40px;
-    padding-bottom: 48px;
+}
+
+.footer-about {
+    max-width: 420px;
 }
 
 .footer-grid h5 {
@@ -751,7 +724,7 @@ body {
     font-weight: 700;
     letter-spacing: 1.2px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.88);
     margin-bottom: 18px;
 }
 
@@ -759,6 +732,7 @@ body {
     font-size: 0.875rem;
     line-height: 1.75;
     color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 22px;
 }
 
 .footer-grid a {
@@ -767,12 +741,13 @@ body {
     text-decoration: none;
     font-size: 0.875rem;
     margin-bottom: 10px;
-    transition: color var(--transition);
+    transition: color var(--transition), transform var(--transition);
 }
 
 .footer-grid a:hover {
-    color: rgba(255, 255, 255, 0.90);
+    color: rgba(255, 255, 255, 0.92);
     text-decoration: none;
+    transform: translateX(3px);
 }
 
 .footer-bottom {
@@ -801,9 +776,6 @@ body {
     color: var(--accent);
 }
 
-/* ══════════════════════════════════════════
-   BACK TO TOP
-══════════════════════════════════════════ */
 .back-to-top {
     position: fixed;
     right: 24px;
@@ -830,18 +802,33 @@ body {
     color: #fff;
 }
 
-/* ══════════════════════════════════════════
-   RESPONSIVO
-══════════════════════════════════════════ */
+/* RESPONSIVO */
 @media (max-width: 1024px) {
+    .navbar-right {
+        gap: 22px;
+    }
+
+    .nav-menu {
+        gap: 24px;
+    }
+
     .hero-image-side {
         flex: 0 0 360px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1.4fr 1fr 1fr 1fr;
+        gap: 32px;
     }
 }
 
 @media (max-width: 768px) {
     .navbar-shell {
         padding: 0 16px;
+    }
+
+    .navbar-right {
+        gap: 12px;
     }
 
     .nav-menu {
@@ -886,7 +873,7 @@ body {
     .footer-grid {
         grid-template-columns: 1fr 1fr;
         padding: 0 16px 40px;
-        gap: 28px;
+        gap: 32px 28px;
     }
 
     .footer-bottom {
@@ -919,5 +906,14 @@ body {
 
     .about-text {
         flex-direction: column;
+    }
+
+    .navbar-right {
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 10px 18px;
+        font-size: 0.82rem;
     }
 }

@@ -21,6 +21,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <link rel="stylesheet" href="./css/home.css?v=<?= time(); ?>">
 </head>
 <body>
@@ -32,53 +33,50 @@ if ($esta_logado && $tipo_usuario === 'admin') {
         <div class="navbar-left">
             <a href="./" class="brand">
                 <img src="./imagens/logotipo_freebox.png" alt="FreeBox Sites">
-            
             </a>
+        </div>
 
+        <div class="navbar-right">
             <nav class="nav-menu">
                 <a href="#sobre">Sobre</a>
                 <a href="#funcionalidades">Funcionalidades</a>
                 <a href="#como-funciona">Como funciona</a>
                 <a href="#contacto">Contacto</a>
             </nav>
-        </div>
 
-        <div class="navbar-right">
             <div class="nav-actions">
                 <?php if ($esta_logado): ?>
                     <a href="<?= htmlspecialchars($dashboard_url); ?>" class="btn btn-outline-main">
-                        ver empresa
+                        Ver empresa
                     </a>
                 <?php else: ?>
                     <a href="login.php" class="btn btn-outline-main">Login</a>
-                    <a href="register.php" class="btn btn-main">Criar Site</a>
                 <?php endif; ?>
             </div>
 
             <div class="lang-selector" id="langSelector">
-                <button class="lang-btn" id="langBtn">
+                <button class="lang-btn" id="langBtn" type="button">
                     <img id="langCurrent" src="https://flagcdn.com/w20/pt.png" width="20" alt="PT">
                     <i class="fas fa-chevron-down"></i>
                 </button>
 
                 <div class="lang-dropdown" id="langDropdown">
-                    <button class="lang-option" onclick="changeLang('pt', 'https://flagcdn.com/w20/pt.png', 'PT')">
-                        <img src="https://flagcdn.com/w20/pt.png" width="20"> Português
+                    <button class="lang-option" type="button" onclick="changeLang('pt', 'https://flagcdn.com/w20/pt.png', 'PT')">
+                        <img src="https://flagcdn.com/w20/pt.png" width="20" alt="PT"> Português
                     </button>
-                    <button class="lang-option" onclick="changeLang('en', 'https://flagcdn.com/w20/gb.png', 'EN')">
-                        <img src="https://flagcdn.com/w20/gb.png" width="20"> English
+                    <button class="lang-option" type="button" onclick="changeLang('en', 'https://flagcdn.com/w20/gb.png', 'EN')">
+                        <img src="https://flagcdn.com/w20/gb.png" width="20" alt="EN"> English
                     </button>
-                    <button class="lang-option" onclick="changeLang('es', 'https://flagcdn.com/w20/es.png', 'ES')">
-                        <img src="https://flagcdn.com/w20/es.png" width="20"> Español
+                    <button class="lang-option" type="button" onclick="changeLang('es', 'https://flagcdn.com/w20/es.png', 'ES')">
+                        <img src="https://flagcdn.com/w20/es.png" width="20" alt="ES"> Español
                     </button>
-                    <button class="lang-option" onclick="changeLang('fr', 'https://flagcdn.com/w20/fr.png', 'FR')">
-                        <img src="https://flagcdn.com/w20/fr.png" width="20"> Français
+                    <button class="lang-option" type="button" onclick="changeLang('fr', 'https://flagcdn.com/w20/fr.png', 'FR')">
+                        <img src="https://flagcdn.com/w20/fr.png" width="20" alt="FR"> Français
                     </button>
                 </div>
             </div>
 
-            <!-- Hamburger (tablet + mobile) -->
-            <button class="hamburger" id="hamburger" aria-label="Abrir menu">
+            <button class="hamburger" id="hamburger" type="button" aria-label="Abrir menu">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -87,21 +85,18 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 
     </div>
 
-    <!-- Menu mobile drawer -->
     <nav class="mobile-nav" id="mobileNav">
         <a href="#sobre" class="mobile-link">Sobre</a>
         <a href="#funcionalidades" class="mobile-link">Funcionalidades</a>
         <a href="#como-funciona" class="mobile-link">Como funciona</a>
         <a href="#contacto" class="mobile-link">Contacto</a>
     </nav>
-
 </header>
 
 <!-- HERO -->
 <section id="inicio" class="hero-section">
     <div class="hero-inner">
 
-        <!-- Conteúdo à esquerda, dentro de um card -->
         <div class="hero-content-box">
             <span class="hero-label">
                 <i class="fas fa-wand-magic-sparkles"></i>
@@ -122,7 +117,6 @@ if ($esta_logado && $tipo_usuario === 'admin') {
             </div>
         </div>
 
-        <!-- Imagem à direita -->
         <div class="hero-image-side">
             <img src="./imagens/hero.svg" alt="FreeBox Sites — criação de websites">
         </div>
@@ -269,7 +263,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 <footer id="contacto" class="main-footer">
     <div class="container footer-grid">
 
-        <div>
+        <div class="footer-about">
             <h5>FreeBox Sites</h5>
             <p>Projeto de criação automática de websites institucionais.</p>
         </div>
@@ -279,12 +273,20 @@ if ($esta_logado && $tipo_usuario === 'admin') {
             <a href="#sobre">Sobre</a>
             <a href="#funcionalidades">Funcionalidades</a>
             <a href="#como-funciona">Como funciona</a>
+            <a href="#contacto">Contacto</a>
         </div>
 
         <div>
-            <h5>Acesso</h5>
-            <a href="login.php">Login</a>
-            <a href="register.php">Criar site</a>
+            <h5>Legal</h5>
+            <a href="politica_privacidade_freebox.php">Política de Privacidade</a>
+            <a href="#" target="_blank" rel="noopener">Livro de Reclamações</a>
+        </div>
+
+        <div>
+            <h5>Sociais</h5>
+            <a href="#" target="_blank" rel="noopener">Facebook</a>
+            <a href="#" target="_blank" rel="noopener">Instagram</a>
+            <a href="#" target="_blank" rel="noopener">X / Twitter</a>
         </div>
 
     </div>
@@ -292,7 +294,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
     <div class="footer-bottom">
         <p>&copy; <?= date('Y'); ?> FreeBox Sites — Todos os direitos reservados</p>
         <a href="https://webdesigner.is4.pt/" target="_blank" rel="noopener">
-            Desenvolvido por IS4 Web Designer
+            Desenvolvido por IS4
         </a>
     </div>
 </footer>
@@ -320,8 +322,12 @@ function getTextNodes() {
             return NodeFilter.FILTER_ACCEPT;
         }
     });
+
     const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
+    while (walker.nextNode()) {
+        nodes.push(walker.currentNode);
+    }
+
     return nodes;
 }
 
@@ -356,13 +362,13 @@ async function changeLang(lang, flag) {
 
     const nodes = getTextNodes();
 
-    /* guardar originais na primeira vez */
     if (originalTexts.length === 0) {
         originalTexts = nodes.map(n => n.textContent);
     } else {
-        /* repor textos originais antes de nova tradução */
         nodes.forEach((node, i) => {
-            if (originalTexts[i] !== undefined) node.textContent = originalTexts[i];
+            if (originalTexts[i] !== undefined) {
+                node.textContent = originalTexts[i];
+            }
         });
     }
 
@@ -377,12 +383,12 @@ async function changeLang(lang, flag) {
 
     currentLang = lang;
 
-    /* traduzir em lotes de 5 para não sobrecarregar a API */
     const freshNodes = getTextNodes();
     const batchSize = 5;
 
     for (let i = 0; i < freshNodes.length; i += batchSize) {
         const batch = freshNodes.slice(i, i + batchSize);
+
         await Promise.all(batch.map(async (node, j) => {
             const original = originalTexts[i + j] || node.textContent;
             if (original.trim().length < 2) return;
@@ -404,7 +410,6 @@ document.addEventListener('click', function() {
     document.getElementById('langDropdown').classList.remove('open');
 });
 
-/* Hamburger */
 const hamburger = document.getElementById('hamburger');
 const mobileNav = document.getElementById('mobileNav');
 
@@ -414,7 +419,6 @@ hamburger.addEventListener('click', function(e) {
     mobileNav.classList.toggle('open');
 });
 
-/* Fechar menu ao clicar num link */
 document.querySelectorAll('.mobile-link').forEach(function(link) {
     link.addEventListener('click', function() {
         hamburger.classList.remove('open');
@@ -422,7 +426,6 @@ document.querySelectorAll('.mobile-link').forEach(function(link) {
     });
 });
 
-/* Fechar menu ao clicar fora */
 document.addEventListener('click', function(e) {
     if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
         hamburger.classList.remove('open');
