@@ -16,13 +16,7 @@ if (!isset($empresa_id)) {
 
     <ul class="nav flex-column">
 
-        <li class="nav-item">
-            <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : ''; ?>"
-                href="../empresa/dashboard.php">
-                <span class="nav-icon"><i class="fas fa-house"></i></span>
-                Dashboard
-            </a>
-        </li>
+       
 
         <li class="nav-item"><div class="nav-divider"></div></li>
 
