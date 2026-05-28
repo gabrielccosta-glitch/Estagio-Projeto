@@ -310,24 +310,27 @@ if ($esta_logado && $tipo_usuario === 'admin') {
             <div>
                 <h5>Legal</h5>
                 <a href="politica_privacidade_freebox.php">Política de Privacidade</a>
-                <a href="#" target="_blank" rel="noopener">Livro de Reclamações</a>
+                <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener">Livro de
+                    Reclamações</a>
             </div>
 
             <div>
                 <h5>Sociais</h5>
-                <a href="#" target="_blank" rel="noopener">Facebook</a>
-                <a href="#" target="_blank" rel="noopener">Instagram</a>
-                <a href="#" target="_blank" rel="noopener">X / Twitter</a>
+                <a href="https://www.facebook.com/people/Is4-Inform%C3%A1tica/100057189652028/?sk=following"
+                    target="_blank" rel="noopener">Facebook</a>
+                <!--
+            <a href="#" target="_blank" rel="noopener">Instagram</a>
+            <a href="#" target="_blank" rel="noopener">X / Twitter</a>
+            -->
             </div>
 
         </div>
 
         <div class="footer-bottom">
             <p>&copy; <?= date('Y'); ?> FreeBox Sites — Todos os direitos reservados</p>
-            <a href="https://webdesigner.is4.pt/" target="_blank" rel="noopener">
-                Desenvolvido por IS4
-            </a>
+            <p>Desenvolvido por:  <a href="https://webdesigner.is4.pt/ " target="_blank" rel="noopener">IS4</a></p>
         </div>
+
     </footer>
 
     <a href="#inicio" class="back-to-top">
