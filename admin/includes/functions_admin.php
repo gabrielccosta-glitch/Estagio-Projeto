@@ -11,10 +11,13 @@ function gerarScriptEmpresasAdmin() {
         const confirmText = document.getElementById('confirmText');
         const btnConfirm = document.getElementById('btnConfirm');
         const btnCancel = document.getElementById('btnCancel');
+        const modal = document.getElementById('messageModal');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalOkButton = document.getElementById('modalOkButton');
 
         window.confirmarExclusao = function(id, nomeEmpresa) {
             empresaIdParaEliminar = id;
-            modalConfirm.style.display = 'block';
+            modalConfirm.style.display = 'flex';
             confirmText.value = '';
             nomeEmpresaEliminar.textContent = nomeEmpresa;
         }
@@ -31,25 +34,13 @@ function gerarScriptEmpresasAdmin() {
             }
         });
 
-        window.onclick = function(event) {
-            if (event.target == modalConfirm) {
-                modalConfirm.style.display = "none";
-            }
-        }
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('messageModal');
-        const modalMessage = document.getElementById('modalMessage');
-        const modalOkButton = document.getElementById('modalOkButton');
-
         <?php if (isset($_SESSION['success'])) : ?>
             modalMessage.textContent = "<?php echo addslashes($_SESSION['success']); ?>";
-            modal.style.display = "block";
+            modal.style.display = "flex";
             <?php unset($_SESSION['success']); ?>
         <?php elseif (isset($_SESSION['error'])) : ?>
             modalMessage.textContent = "<?php echo addslashes($_SESSION['error']); ?>";
-            modal.style.display = "block";
+            modal.style.display = "flex";
             <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
 
@@ -61,6 +52,9 @@ function gerarScriptEmpresasAdmin() {
         }
 
         window.onclick = function(event) {
+            if (event.target == modalConfirm) {
+                modalConfirm.style.display = "none";
+            }
             if (event.target == modal) {
                 modal.style.display = "none";
                 location.reload();
