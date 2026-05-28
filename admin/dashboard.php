@@ -37,7 +37,7 @@ if ($is_admin) {
 
         <!-- Toolbar: Adicionar + Pesquisa -->
         <div class="dashboard-toolbar">
-            <a href="../register.php" class="btn btn-freebox-blue">
+            <a href="../register.php" class="btn btn-green">
                 + Adicionar Empresa
             </a>
 
@@ -88,7 +88,7 @@ if ($is_admin) {
                                     </a>
 
                                     <a href="../empresa/empresa_informacoes.php?id=<?php echo $row['id']; ?>"
-                                        class="btn btn-sm btn-freebox-blue">
+                                        class="btn btn-sm btn-blue">
                                         Configurar
                                     </a>
 
@@ -106,7 +106,7 @@ if ($is_admin) {
 
                                     <?php if (!empty($url_site)): ?>
                                         <a href="<?php echo htmlspecialchars(obterUrlEmpresa($url_site)); ?>"
-                                            class="btn btn-sm btn-info"
+                                            class="btn btn-sm btn-orange"
                                             target="_blank">
                                             Ver Website
                                         </a>
@@ -184,7 +184,7 @@ if ($is_admin) {
         <p id="modalMessage"></p>
 
         <button id="modalOkButton"
-            class="btn btn-freebox-blue modal-ok-button">
+            class="btn btn-green modal-ok-button">
             OK
         </button>
 

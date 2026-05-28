@@ -138,11 +138,12 @@
 }
 
 .action-buttons .btn-sm {
-    padding: 5px 13px !important;
+    padding: 5px 0 !important;
     font-size: 0.78rem !important;
     border-radius: 6px !important;
     line-height: 1 !important;
     height: 30px !important;
+    width: 90px !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -151,6 +152,7 @@
     transition: background 0.18s, transform 0.1s !important;
     box-shadow: none !important;
     text-decoration: none !important;
+    white-space: nowrap !important;
 }
 
 .action-buttons .btn-sm:active {
@@ -158,22 +160,40 @@
 }
 
 /* ── CORES DOS BOTÕES ── */
-.btn-success {
+
+/* Verde — Editar + Adicionar Empresa + OK modal */
+.btn-success,
+.btn-green {
     background: #1e7e4a !important;
     color: #fff !important;
 }
-.btn-success:hover {
+.btn-success:hover,
+.btn-green:hover {
     background: #176039 !important;
-}
-
-.btn-info {
-    background: var(--is4-blue-light) !important;
     color: #fff !important;
 }
-.btn-info:hover {
+
+/* Azul — Configurar */
+.btn-blue {
     background: var(--is4-blue-mid) !important;
+    color: #fff !important;
+}
+.btn-blue:hover {
+    background: var(--is4-blue) !important;
+    color: #fff !important;
 }
 
+/* Laranja — Ver Website */
+.btn-orange {
+    background: var(--is4-orange) !important;
+    color: #fff !important;
+}
+.btn-orange:hover {
+    background: var(--is4-orange-dark) !important;
+    color: #fff !important;
+}
+
+/* Vermelho — Eliminar */
 .btn-danger {
     background: #c0392b !important;
     color: #fff !important;
@@ -182,6 +202,7 @@
     background: #a93226 !important;
 }
 
+/* Cinza — Sem Website / Cancelar */
 .btn-secondary {
     background: #dde4ec !important;
     color: var(--is4-text) !important;
@@ -189,15 +210,6 @@
 }
 .btn-secondary:hover {
     background: #c8d4e0 !important;
-}
-
-/* Botão principal IS4 — laranja do logo */
-.btn-freebox-blue {
-    background: var(--is4-orange) !important;
-    color: var(--is4-white) !important;
-}
-.btn-freebox-blue:hover {
-    background: var(--is4-orange-dark) !important;
 }
 
 /* ── TABELA ── */
