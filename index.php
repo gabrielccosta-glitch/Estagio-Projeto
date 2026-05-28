@@ -59,7 +59,8 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 
             <div class="navbar-left">
                 <a href="./" class="brand">
-                    <img src="./imagens/logotipo_freebox.png" alt="FreeBox Sites">
+                    <img src="./imagens/logotipo_freebox.png" alt="FreeBox Sites"
+                        style="height: 100px; width: auto; max-height: 100%; display: block;">
                 </a>
             </div>
 
@@ -328,7 +329,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 
         <div class="footer-bottom">
             <p>&copy; <?= date('Y'); ?> FreeBox Sites — Todos os direitos reservados</p>
-            <p>Desenvolvido por:  <a href="https://webdesigner.is4.pt/ " target="_blank" rel="noopener">IS4</a></p>
+            <p>Desenvolvido por: <a href="https://webdesigner.is4.pt/ " target="_blank" rel="noopener">IS4</a></p>
         </div>
 
     </footer>
