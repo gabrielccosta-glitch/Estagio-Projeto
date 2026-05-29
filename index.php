@@ -60,7 +60,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
             <div class="navbar-left">
                 <a href="./" class="brand">
                     <img src="./imagens/logotipo_freebox.png" alt="FreeBox Sites"
-                        style="height: 100px; width: auto; max-height: 100%; display: block;">
+                        style="height: 70px; width: 70px; max-height: 100%; display: block;">
                 </a>
             </div>
 
