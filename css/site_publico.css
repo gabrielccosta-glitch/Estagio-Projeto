@@ -345,13 +345,32 @@ body {
 }
 
 .about-grid {
-    align-items: center;
+    align-items: stretch;
     gap: 40px 0;
+}
+
+.about-grid > [class*="col-"] {
+    min-width: 0;
+}
+
+.about-grid > .col-lg-8,
+.about-grid > .col-lg-4 {
+    display: flex;
 }
 
 .about-text-block {
     display: flex;
     gap: 28px;
+    width: 100%;
+    min-width: 0;
+}
+
+.about-text-block > div:last-child {
+    min-width: 0;
+    width: 100%;
+    max-height: 386px;
+    display: flex;
+    flex-direction: column;
 }
 
 .about-icon {
@@ -373,7 +392,17 @@ body {
     font-size: 1.05rem;
     color: var(--text);
     line-height: 1.8;
-    text-align: justify;
+    text-align: left;
+    max-width: 100%;
+    max-height: 145px;
+    margin-bottom: 22px;
+    padding-right: 8px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    box-sizing: border-box;
 }
 
 .about-contact-card {
@@ -409,6 +438,9 @@ body {
     color: var(--text);
     text-decoration: none;
     transition: var(--transition);
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .about-contact-card p a:hover {
@@ -425,6 +457,7 @@ body {
 /* MAP & PLACEHOLDER WRAPPERS */
 .about-map-card-wrapper,
 .about-map-placeholder-wrapper {
+    width: 100%;
     position: relative;
     padding: 12px;
     background: var(--bg-white);
@@ -845,6 +878,110 @@ body {
     border-radius: 3px;
 }
 
+
+.lb-panel {
+    width: min(760px, calc(100vw - 120px));
+    max-height: calc(100vh - 96px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 28px;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.98);
+    color: #1f2937;
+    box-shadow: var(--shadow-lg);
+}
+
+.lb-panel .lb-img-wrap {
+    order: 2;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0;
+    border-radius: var(--radius-sm);
+    background: #f8fafc;
+}
+
+.lb-panel .lb-img-wrap img {
+    width: 100%;
+    max-width: 100%;
+    max-height: min(52vh, 520px);
+    object-fit: contain;
+    display: block;
+    border-radius: var(--radius-sm);
+    box-shadow: none;
+}
+
+.lb-info {
+    display: contents;
+}
+
+.lb-kicker {
+    display: none;
+}
+
+.lb-title {
+    order: 1;
+    margin: 0 0 18px;
+    color: #111827;
+    font-size: 1.55rem;
+    line-height: 1.25;
+    font-weight: 700;
+    text-align: center;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.lb-description {
+    order: 3;
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: min(26vh, 220px);
+    width: 100%;
+    margin-top: 18px;
+    padding-right: 8px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    color: #475569;
+    font-size: 0.98rem;
+    line-height: 1.7;
+    text-align: left;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    box-sizing: border-box;
+}
+
+.lb-description.is-empty {
+    color: #94a3b8;
+    font-style: italic;
+}
+
+@media (max-width: 900px) {
+    .lb-panel {
+        width: calc(100vw - 40px);
+        max-height: calc(100vh - 88px);
+        padding: 20px;
+    }
+
+    .lb-title {
+        margin-bottom: 14px;
+        font-size: 1.25rem;
+    }
+
+    .lb-panel .lb-img-wrap img {
+        max-height: 42vh;
+    }
+
+    .lb-description {
+        max-height: 30vh;
+        margin-top: 14px;
+        font-size: 0.95rem;
+    }
+}
+
 /* ==========================================================================
    CONTACTOS
    ========================================================================== */
@@ -1232,5 +1369,61 @@ body {
 
     .carousel-outer {
         padding: 0 40px;
+    }
+}
+/* Ajuste final da secao Sobre Nos: texto e contactos limitados ao mapa */
+.about-text-block > div:last-child {
+    max-height: 386px;
+    overflow: hidden;
+}
+
+.about-text {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: 145px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.about-contact-card {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-top: auto;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.about-contact-card p {
+    align-items: flex-start;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.about-contact-card p span,
+.about-contact-card p a {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+@media (max-width: 991px) {
+    .about-text-block > div:last-child {
+        max-height: none;
+        overflow: visible;
+    }
+
+    .about-text {
+        max-height: 220px;
+    }
+
+    .about-contact-card {
+        margin-top: 20px;
     }
 }

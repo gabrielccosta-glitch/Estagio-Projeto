@@ -1,91 +1,261 @@
-    <?php
-    session_start();
-    require_once '../config/database.php';
-    require_once '../includes/functions.php';
+﻿<?php
+session_start();
+require_once '../config/database.php';
+require_once '../includes/functions.php';
 
-    // Verificar se o usuário é admin
-    if (!eAdmin()) {
-        header("Location: ../login.php");
-        exit;
+if (!eAdmin()) {
+    header("Location: ../login.php");
+    exit;
+}
+
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    $_SESSION['error'] = "ID de empresa invalido.";
+    header("Location: dashboard.php");
+    exit;
+}
+
+function limparNomeBackup($nome)
+{
+    $nome = mb_strtolower((string) $nome, 'UTF-8');
+    $nome = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $nome);
+    $nome = preg_replace('/[^a-z0-9\-]+/', '-', $nome);
+    $nome = trim($nome, '-');
+
+    return $nome !== '' ? $nome : 'empresa';
+}
+
+function gerarNomePastaBackup($nome)
+{
+    $nome = mb_strtolower((string) $nome, 'UTF-8');
+    $nome = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $nome);
+    $nome = preg_replace('/[^a-z0-9]+/', '-', $nome);
+    $nome = trim($nome, '-');
+
+    return $nome !== '' ? $nome : 'empresa';
+}
+
+function caminhoDentroDaRaiz($caminho, $raiz)
+{
+    $realCaminho = realpath($caminho);
+    $realRaiz = realpath($raiz);
+
+    if ($realCaminho === false || $realRaiz === false) {
+        return false;
     }
 
-    // Verificar se o ID da empresa foi fornecido
-    if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-        $_SESSION['error'] = "ID de empresa inválido.";
-        header("Location: dashboard.php");
-        exit;
+    $realCaminho = strtolower(rtrim($realCaminho, DIRECTORY_SEPARATOR));
+    $realRaiz = strtolower(rtrim($realRaiz, DIRECTORY_SEPARATOR));
+
+    return $realCaminho !== $realRaiz
+        && strpos($realCaminho, $realRaiz . DIRECTORY_SEPARATOR) === 0;
+}
+
+function criarPastaBackup($projetoRoot, $urlSite, $empresaId)
+{
+    $base = $projetoRoot . DIRECTORY_SEPARATOR . 'backup' . DIRECTORY_SEPARATOR . 'empresas_eliminadas';
+
+    if (!is_dir($base) && !mkdir($base, 0755, true)) {
+        throw new Exception("Nao foi possivel criar a pasta de backup.");
     }
 
-    $empresa_id = intval($_GET['id']);
+    $nome = limparNomeBackup($urlSite ?: 'empresa') . '_id' . $empresaId . '_' . date('Ymd_His');
+    $destino = $base . DIRECTORY_SEPARATOR . $nome;
+    $tentativa = 1;
 
-    // Iniciar transação
+    while (file_exists($destino)) {
+        $destino = $base . DIRECTORY_SEPARATOR . $nome . '_' . $tentativa;
+        $tentativa++;
+    }
+
+    if (!mkdir($destino, 0755, true)) {
+        throw new Exception("Nao foi possivel criar a pasta de backup da empresa.");
+    }
+
+    return $destino;
+}
+
+function moverPastaParaBackup($origem, $backupDir, $nomeDestino, $raizPermitida, &$movidos)
+{
+    if (!is_dir($origem)) {
+        return;
+    }
+
+    if (!caminhoDentroDaRaiz($origem, $raizPermitida)) {
+        throw new Exception("Caminho de ficheiros fora da zona permitida.");
+    }
+
+    $realOrigem = realpath($origem);
+    $nomeDestino = limparNomeBackup($nomeDestino);
+    $destino = $backupDir . DIRECTORY_SEPARATOR . $nomeDestino;
+    $tentativa = 1;
+
+    while (file_exists($destino)) {
+        $destino = $backupDir . DIRECTORY_SEPARATOR . $nomeDestino . '_' . $tentativa;
+        $tentativa++;
+    }
+
+    if (!rename($realOrigem, $destino)) {
+        throw new Exception("Nao foi possivel mover " . basename($realOrigem) . " para backup.");
+    }
+
+    $movidos[] = $destino;
+}
+
+function apagarTabelaEmpresa($conn, $tabela, $empresaId)
+{
+    $tabelaEscapada = $conn->real_escape_string($tabela);
+    $existe = $conn->query("SHOW TABLES LIKE '{$tabelaEscapada}'");
+
+    if (!$existe || $existe->num_rows === 0) {
+        return;
+    }
+
+    $stmt = $conn->prepare("DELETE FROM `{$tabela}` WHERE empresa_id = ?");
+    $stmt->bind_param("i", $empresaId);
+    $stmt->execute();
+    $stmt->close();
+}
+
+$empresaId = (int) $_GET['id'];
+$transacaoAtiva = false;
+$baseDadosEliminada = false;
+$empresa = null;
+
+try {
+    $stmt = $conn->prepare("
+        SELECT e.id, e.usuario_id, e.nome_empresa, wc.url_site
+        FROM empresas e
+        LEFT JOIN website_config wc ON wc.empresa_id = e.id
+        WHERE e.id = ?
+        LIMIT 1
+    ");
+    $stmt->bind_param("i", $empresaId);
+    $stmt->execute();
+    $empresa = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if (!$empresa) {
+        throw new Exception("Empresa nao encontrada.");
+    }
+
+    $usuarioId = (int) $empresa['usuario_id'];
+    $nomeEmpresa = $empresa['nome_empresa'] ?? 'empresa';
+    $urlSite = trim($empresa['url_site'] ?? '');
+
     $conn->begin_transaction();
+    $transacaoAtiva = true;
 
-    try {
-        // Obter o url_site associado para saber se há diretório dinâmico
-        $url_stmt = $conn->prepare("SELECT url_site FROM website_config WHERE empresa_id = ?");
-        $url_stmt->bind_param("i", $empresa_id);
-        $url_stmt->execute();
-        $url_row = $url_stmt->get_result()->fetch_assoc();
-        $url_stmt->close();
-        $url_site = $url_row['url_site'] ?? '';
+    apagarTabelaEmpresa($conn, 'portfolio', $empresaId);
+    apagarTabelaEmpresa($conn, 'servicos', $empresaId);
+    apagarTabelaEmpresa($conn, 'website', $empresaId);
+    apagarTabelaEmpresa($conn, 'website_config', $empresaId);
 
-        // Primeiro, obter o usuario_id associado à empresa
-        $stmt = $conn->prepare("SELECT usuario_id FROM empresas WHERE id = ?");
-        $stmt->bind_param("i", $empresa_id);
+    $stmt = $conn->prepare("DELETE FROM empresas WHERE id = ?");
+    $stmt->bind_param("i", $empresaId);
+    $stmt->execute();
+    $stmt->close();
+
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM empresas WHERE usuario_id = ?");
+    $stmt->bind_param("i", $usuarioId);
+    $stmt->execute();
+    $totalEmpresasUsuario = (int) $stmt->get_result()->fetch_assoc()['total'];
+    $stmt->close();
+
+    if ($totalEmpresasUsuario === 0) {
+        $stmt = $conn->prepare("DELETE FROM usuarios WHERE id = ? AND tipo = 'cliente'");
+        $stmt->bind_param("i", $usuarioId);
         $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows === 0) {
-            throw new Exception("Empresa não encontrada.");
+        $stmt->close();
+    }
+
+    $conn->commit();
+    $transacaoAtiva = false;
+    $baseDadosEliminada = true;
+
+    $movidos = [];
+    $backupRelativo = '';
+    $projetoRoot = realpath(dirname(__DIR__));
+
+    if ($projetoRoot !== false) {
+        $backupDir = criarPastaBackup($projetoRoot, $urlSite, $empresaId);
+
+        if ($urlSite !== '' && strtolower($urlSite) !== 'freebox' && preg_match('/^[a-z0-9\-]+$/i', $urlSite)) {
+            moverPastaParaBackup(
+                $projetoRoot . DIRECTORY_SEPARATOR . $urlSite,
+                $backupDir,
+                'site-' . $urlSite,
+                $projetoRoot,
+                $movidos
+            );
         }
-        
-        $row = $result->fetch_assoc();
-        $usuario_id = $row['usuario_id'];
-    
-        // Eliminar o protfolio associado á empresa
-        $stmt = $conn->prepare("DELETE FROM portfolio WHERE empresa_id = ?");
-        $stmt->bind_param("i", $empresa_id);
-        $stmt->execute();
-    
-        // Eliminar os serviços associados á empresa
-        $stmt = $conn->prepare("DELETE FROM servicos WHERE empresa_id = ?");
-        $stmt->bind_param("i", $empresa_id);
-        $stmt->execute();
 
-        // Eliminar a empresa
-        $stmt = $conn->prepare("DELETE FROM empresas WHERE id = ?");
-        $stmt->bind_param("i", $empresa_id);
-        $stmt->execute();
+        $nomePasta = gerarNomePastaBackup($nomeEmpresa);
+        $pastasImagens = [];
 
-        // Eliminar o usuário associado
-        $stmt = $conn->prepare("DELETE FROM usuarios WHERE id = ?");
-        $stmt->bind_param("i", $usuario_id);
-        $stmt->execute();
+        foreach (['Imagens', 'imagens'] as $pastaBase) {
+            foreach ([$nomePasta, $urlSite] as $subPasta) {
+                if ($subPasta === '') {
+                    continue;
+                }
 
-        // Se chegou até aqui sem erros, commit da transação
-        $conn->commit();
+                $caminho = $projetoRoot . DIRECTORY_SEPARATOR . $pastaBase . DIRECTORY_SEPARATOR . $subPasta;
+                $real = realpath($caminho);
 
-        // Eliminar a pasta física do website do cliente, se existir
-        if (!empty($url_site)) {
-            $projeto_root = dirname(__DIR__);
-            $diretorio_cliente = $projeto_root . '/' . $url_site;
-            if (is_dir($diretorio_cliente) && $url_site !== 'freebox') {
-                eliminarDiretorio($diretorio_cliente);
+                if ($real !== false && !isset($pastasImagens[strtolower($real)])) {
+                    $pastasImagens[strtolower($real)] = $real;
+                }
             }
         }
 
-        $_SESSION['success'] = "Empresa e serviços associados eliminados com sucesso.";
-    } catch (Exception $e) {
-        // Se ocorreu algum erro, faz rollback da transação
-        $conn->rollback();
-        $_SESSION['error'] = "Erro ao eliminar empresa e serviços: " . $e->getMessage();
+        foreach ($pastasImagens as $caminho) {
+            moverPastaParaBackup(
+                $caminho,
+                $backupDir,
+                'imagens-' . basename($caminho),
+                $projetoRoot,
+                $movidos
+            );
+        }
+
+        $wwwRoot = realpath($_SERVER['DOCUMENT_ROOT'] ?? dirname($projetoRoot));
+
+        if ($wwwRoot !== false) {
+            moverPastaParaBackup(
+                $wwwRoot . DIRECTORY_SEPARATOR . 'imagens' . DIRECTORY_SEPARATOR . $empresaId,
+                $backupDir,
+                'portfolio-imagens-' . $empresaId,
+                $wwwRoot,
+                $movidos
+            );
+        }
+
+        if (empty($movidos)) {
+            @rmdir($backupDir);
+        } else {
+            $backupRelativo = 'backup/empresas_eliminadas/' . basename($backupDir);
+        }
     }
 
-    // Fechar a conexão
-    $conn->close();
+    $_SESSION['success'] = "Empresa eliminada da base de dados.";
 
-    // Redirecionar de volta para o dashboard
-    header("Location: dashboard.php");
-    exit;
-    ?>
+    if ($backupRelativo !== '') {
+        $_SESSION['success'] .= " Ficheiros guardados em: " . $backupRelativo . ".";
+    } else {
+        $_SESSION['success'] .= " Nao havia pastas de ficheiros para mover.";
+    }
+} catch (Exception $e) {
+    if ($transacaoAtiva) {
+        $conn->rollback();
+    }
+
+    if ($baseDadosEliminada) {
+        $_SESSION['error'] = "Empresa eliminada da base de dados, mas houve erro ao mover ficheiros para backup: " . $e->getMessage();
+    } else {
+        $_SESSION['error'] = "Erro ao eliminar empresa: " . $e->getMessage();
+    }
+}
+
+$conn->close();
+
+header("Location: dashboard.php");
+exit;

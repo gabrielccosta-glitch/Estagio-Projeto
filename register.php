@@ -358,20 +358,6 @@ include 'includes/header.php';
                     </div>
 
                 </div>
-                <!-- CONFIRMAR -->
-                <div class="mb-3">
-
-                    <label for="confirmar_senha" class="form-label">
-
-                        <i class="fas fa-check"></i>
-
-                        Confirmar Senha:
-
-                    </label>
-
-                    <input type="password" class="form-control" id="confirmar_senha" name="confirmar_senha" required>
-
-                </div>
 
                 <!-- POLITICA -->
                 <div class="mb-4 form-check">
