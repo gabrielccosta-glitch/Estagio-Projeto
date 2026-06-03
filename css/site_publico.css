@@ -75,7 +75,7 @@ body {
 }
 
 .public-navbar .navbar-inner {
-    min-height: 70px;
+    min-height: 74px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -89,8 +89,8 @@ body {
 }
 
 .public-navbar .brand-logo {
-    max-height: 44px;
-    max-width: 200px;
+    max-height: 56px;
+    max-width: 240px;
     object-fit: contain;
     transition: var(--transition);
 }

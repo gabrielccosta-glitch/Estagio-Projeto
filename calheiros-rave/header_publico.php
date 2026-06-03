@@ -153,7 +153,7 @@ if ($is_tenant) {
             background: white;
             box-shadow: 0 1px 8px rgba(0,0,0,0.07);
             padding: 0 20px;
-            height: 60px;
+            height: 74px;
             display: flex;
             align-items: center;
         }
@@ -172,7 +172,9 @@ if ($is_tenant) {
         }
 
         .brand-logo {
-            height: 40px;
+            height: 56px;
+            max-height: 56px;
+            max-width: 240px;
             object-fit: contain;
         }
 
@@ -226,7 +228,7 @@ if ($is_tenant) {
         .mobile-menu {
             display: none;
             position: fixed;
-            top: 60px;
+            top: 74px;
             left: 0;
             width: 100%;
             background: white;
