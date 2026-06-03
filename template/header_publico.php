@@ -1,5 +1,5 @@
 <?php
-$is_tenant = (basename(__DIR__) !== 'freebox');
+$is_tenant = (basename(__DIR__) !== 'template');
 if ($is_tenant) {
     $link_home = "./";
     $link_servicos = "./#servicos";
@@ -10,13 +10,13 @@ if ($is_tenant) {
     $link_politica = "politica-privacidade";
 } else {
     $url_param = htmlspecialchars($website['url_site'] ?? '');
-    $link_home = "../freebox/?url=" . $url_param;
-    $link_servicos = "../freebox/?url=" . $url_param . "#servicos";
-    $link_portfolio = "../freebox/?url=" . $url_param . "#portfolio";
-    $link_sobre = "../freebox/?url=" . $url_param . "#sobre";
-    $link_contato = "../freebox/contato.php?url=" . $url_param;
-    $link_formulario = "../freebox/formulario.php?url=" . $url_param;
-    $link_politica = "../freebox/" . $url_param . "/politica-privacidade";
+    $link_home = "../template/?url=" . $url_param;
+    $link_servicos = "../template/?url=" . $url_param . "#servicos";
+    $link_portfolio = "../template/?url=" . $url_param . "#portfolio";
+    $link_sobre = "../template/?url=" . $url_param . "#sobre";
+    $link_contato = "../template/contato.php?url=" . $url_param;
+    $link_formulario = "../template/formulario.php?url=" . $url_param;
+    $link_politica = "../template/" . $url_param . "/politica-privacidade";
 }
 ?>
 <!DOCTYPE html>

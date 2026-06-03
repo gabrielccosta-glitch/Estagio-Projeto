@@ -9,6 +9,6 @@ RewriteRule ^([a-zA-Z0-9\-]+)/politica-privacidade$ politica_privacidade.php?url
 # Página principal
 RewriteRule ^([a-zA-Z0-9\-]+)$ index.php?url=$1 [L,QSA]
 
-# Bloquear acesso direto à pasta freebox sem parâmetro url
+# Bloquear acesso direto à pasta template sem parâmetro url
 RewriteCond %{QUERY_STRING} !url=
 RewriteRule ^$ - [F,L]

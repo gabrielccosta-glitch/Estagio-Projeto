@@ -185,11 +185,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!empty($url_site)) {
             $projeto_root     = dirname(__DIR__);
             $novo_diretorio   = $projeto_root . '/' . $url_site;
-            $diretorio_origem = $projeto_root . '/freebox';
+            $diretorio_origem = $projeto_root . '/template';
 
             if (!empty($old_url_site) && $old_url_site !== $url_site) {
                 $antigo_diretorio = $projeto_root . '/' . $old_url_site;
-                if (is_dir($antigo_diretorio) && $old_url_site !== 'freebox') {
+                if (is_dir($antigo_diretorio) && !in_array($old_url_site, ['freebox', 'template'], true)) {
                     rename($antigo_diretorio, $novo_diretorio);
                 }
             }

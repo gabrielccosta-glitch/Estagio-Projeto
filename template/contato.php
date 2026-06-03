@@ -2,7 +2,7 @@
 require_once '../config/database.php';
 
 $dir_name = basename(__DIR__);
-$is_tenant_dir = ($dir_name !== 'freebox');
+$is_tenant_dir = ($dir_name !== 'template');
 
 if ($is_tenant_dir) {
     $url_site = $dir_name;

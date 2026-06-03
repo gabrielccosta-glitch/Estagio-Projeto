@@ -125,7 +125,7 @@ function obterUrlEmpresa($url_site, $root_prefix = '../')
         return $root_prefix . $url_site . '/';
     }
 
-    return $root_prefix . 'freebox/?url=' . $url_site;
+    return $root_prefix . 'template/?url=' . $url_site;
 }
 
 function copiarDiretorioRecursivo($origem, $destino)

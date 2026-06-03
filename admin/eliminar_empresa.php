@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 session_start();
 require_once '../config/database.php';
 require_once '../includes/functions.php';
@@ -179,7 +179,7 @@ try {
     if ($projetoRoot !== false) {
         $backupDir = criarPastaBackup($projetoRoot, $urlSite, $empresaId);
 
-        if ($urlSite !== '' && strtolower($urlSite) !== 'freebox' && preg_match('/^[a-z0-9\-]+$/i', $urlSite)) {
+        if ($urlSite !== '' && !in_array(strtolower($urlSite), ['freebox', 'template'], true) && preg_match('/^[a-z0-9\-]+$/i', $urlSite)) {
             moverPastaParaBackup(
                 $projetoRoot . DIRECTORY_SEPARATOR . $urlSite,
                 $backupDir,

@@ -2,7 +2,7 @@
 require_once '../config/database.php';
 
 $dir_name = basename(__DIR__);
-$is_tenant_dir = ($dir_name !== 'freebox');
+$is_tenant_dir = ($dir_name !== 'template');
 
 if ($is_tenant_dir) {
     $url_site = $dir_name;
@@ -68,10 +68,10 @@ $morada_completa = trim(($empresa['morada'] ?? '') . ' ' . ($empresa['codigo_pos
 // Corrige caminhos relativos se for o diretório de preview original
 if (!$is_tenant_dir) {
     if (!empty($logo)) {
-        $logo = '../freebox/' . ltrim(preg_replace('#^\./#', '', $logo), '/');
+        $logo = '../template/' . ltrim(preg_replace('#^\./#', '', $logo), '/');
     }
     if (!empty($capa)) {
-        $capa = '../freebox/' . ltrim(preg_replace('#^\./#', '', $capa), '/');
+        $capa = '../template/' . ltrim(preg_replace('#^\./#', '', $capa), '/');
     }
 }
 
