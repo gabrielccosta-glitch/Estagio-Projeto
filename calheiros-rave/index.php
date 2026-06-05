@@ -140,9 +140,6 @@ $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
                             <div class="carousel-page">
                                 <?php foreach ($chunk as $servico): ?>
                                     <div class="service-card">
-                                        <div class="service-icon">
-                                            <i class="fas fa-screwdriver-wrench"></i>
-                                        </div>
                                         <h4><?= htmlspecialchars($servico['titulo_servico'] ?: ($servico['nome_servico'] ?? '')); ?></h4>
                                         <p><?= nl2br(htmlspecialchars($servico['descricao_servico'] ?? '')); ?></p>
                                     </div>
