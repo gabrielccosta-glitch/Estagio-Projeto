@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../css/footer_cliente.css?v=<?= time(); ?>">
+﻿<link rel="stylesheet" href="../css/footer_cliente.css?v=<?= time(); ?>">
 <link rel="stylesheet" href="../css/empresa_politica_privacidade.css?v=<?= time(); ?>">
 <footer class="public-footer">
     <div class="footer-top">
@@ -123,23 +123,6 @@
         </div>
     </div>
 </footer>
-
-<a href="#top" class="back-to-top">
-    <i class="fas fa-chevron-up"></i>
-</a>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    document.querySelector('.back-to-top').addEventListener('click', function(e) {
-        e.preventDefault();
-
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-</script>
-
 </body>
 </html>

@@ -1,4 +1,4 @@
-
+﻿
 <link rel="stylesheet" href="../css/footer_cliente.css?v=<?= time(); ?>">
 
 <footer class="public-footer">
@@ -60,26 +60,7 @@
         </div>
     </div>
 </footer>
-
-<a href="#top" class="back-to-top">
-    <i class="fas fa-chevron-up"></i>
-</a>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    // Smooth scroll para o topo
-    document.querySelector('.back-to-top').addEventListener('click', function(e) {
-
-        e.preventDefault();
-
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-
-    });
-</script>
 <link rel="stylesheet" href="css/footer_admin.css?v=<?= time(); ?>">
 </body>
 </html>

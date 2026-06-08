@@ -1,3 +1,5 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
 /* ==========================================================================
    MODERN & FUTURISTIC CYBER DESIGN SYSTEM
    ========================================================================== */
@@ -1097,34 +1099,40 @@ body {
 }
 
 /* ==========================================================================
-   FOOTER (PRIMARY COLOR BACKGROUND)
+   FOOTER (FIXED FREEBOX BACKGROUND)
    ========================================================================== */
 .public-footer {
-    background: var(--primary);
-    border-top: 1px solid var(--footer-border);
-    color: var(--footer-text);
+    background: #1a2332 !important;
+    background-color: #1a2332 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.55);
+    font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif !important;
     margin-top: 0;
 }
 
+.public-footer * {
+    font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif !important;
+}
+
 .footer-top {
-    padding: 80px 0 40px;
-    border-bottom: 1px solid var(--footer-border);
+    padding: 60px 0 48px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer-cols {
     display: grid;
-    grid-template-columns: 1.8fr 1fr 1fr 1fr;
-    gap: 48px;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 40px;
     align-items: start;
 }
 
 .footer-col-title {
     font-size: 0.8rem;
-    font-weight: 800;
-    letter-spacing: 2px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
-    color: var(--footer-title);
-    margin-bottom: 24px;
+    color: rgba(255, 255, 255, 0.88);
+    margin: 0 0 18px;
 }
 
 .footer-col ul {
@@ -1133,22 +1141,23 @@ body {
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
 .footer-col ul li a,
 .footer-col ul li span {
-    color: var(--footer-text);
+    color: rgba(255, 255, 255, 0.50);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 400;
+    line-height: 1.75;
     transition: var(--transition);
     display: inline-block;
 }
 
 .footer-col ul li a:hover {
-    color: var(--secondary);
-    transform: translateX(4px);
+    color: rgba(255, 255, 255, 0.92);
+    transform: translateX(3px);
 }
 
 .footer-brand-name {
@@ -1156,31 +1165,46 @@ body {
 }
 
 .footer-bottom {
-    border-top: 1px solid var(--footer-border);
-    padding: 24px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 20px 0;
 }
 
 .footer-bottom-inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.85rem;
-    color: var(--footer-muted);
+    gap: 12px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.40);
+}
+
+.footer-bottom h6 {
+    margin: 0;
+    color: inherit;
+    font-size: inherit;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.footer-bottom h6 span {
+    color: inherit;
+    font-size: inherit;
+    font-weight: 400;
 }
 
 .footer-bottom a,
 .made-by {
-    color: var(--footer-muted);
+    color: rgba(255, 255, 255, 0.40);
     text-decoration: none;
-    font-weight: 600;
-    transition: var(--transition);
+    font-size: inherit;
+    font-weight: 400;
+    transition: color var(--transition);
 }
 
 .footer-bottom a:hover,
 .made-by:hover {
-    color: var(--secondary);
+    color: rgba(255, 255, 255, 0.92);
 }
-
 /* ==========================================================================
    BACK TO TOP BUTTON
    ========================================================================== */

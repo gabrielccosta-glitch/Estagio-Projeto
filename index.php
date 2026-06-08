@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 
 $esta_logado = isset($_SESSION['usuario_id']);
@@ -329,16 +329,11 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 
         <div class="footer-bottom">
             <p>&copy; <?= date('Y'); ?> FreeBox Sites — Todos os direitos reservados</p>
-            <p>Desenvolvido por: <a href="https://webdesigner.is4.pt/ " target="_blank" rel="noopener">IS4</a></p>
+            <p>Desenvolvido por: <a href="https://webdesigner.is4.pt/ " target="_blank" rel="noopener">IS4 Web Designer</a></p>
         </div>
 
     </footer>
-
-    <a href="#inicio" class="back-to-top">
-        <i class="fas fa-chevron-up"></i>
-    </a>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         let originalTexts = [];

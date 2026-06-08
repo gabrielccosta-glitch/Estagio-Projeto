@@ -13,7 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $nome = limparDados($_POST['nome'] ?? '');
 
-    $email = limparDados($_POST['email']);
+    $email = strtolower(trim($_POST['email'] ?? ''));
+
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
     $senha = $_POST['senha'];
 
@@ -40,6 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $erro = "Por favor, preencha os campos obrigatórios.";
 
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+        $erro = "Introduza um e-mail valido.";
+
     } elseif ($senha !== $confirmar_senha) {
 
         $erro = "As senhas não coincidem.";
@@ -54,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     } else {
 
-        $sql = "SELECT id FROM usuarios WHERE email = ?";
+        $sql = "SELECT id FROM usuarios WHERE LOWER(TRIM(email)) = LOWER(TRIM(?)) LIMIT 1";
 
         $stmt = $conn->prepare($sql);
 
