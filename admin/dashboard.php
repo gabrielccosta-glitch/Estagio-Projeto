@@ -37,7 +37,7 @@ if ($is_admin) {
 
         <!-- Toolbar: Adicionar + Pesquisa -->
         <div class="dashboard-toolbar">
-            <a href="../register.php" class="btn btn-green">
+            <a href="../register.php" class="btn btn-success">
                 + Adicionar Empresa
             </a>
 

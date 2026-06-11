@@ -142,7 +142,7 @@
                     </div>
 
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary btn-lg">
+                        <button type="submit" class="btn btn-success btn-lg">
                             <i class="fas fa-sign-in-alt"></i> Entrar
                         </button>
                     </div>

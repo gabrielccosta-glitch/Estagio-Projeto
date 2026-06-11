@@ -39,16 +39,14 @@
     font-weight: 600;
 }
 
+/* SEPARADOR */
 .cliente-separator {
     width: 100%;
     height: 4px;
-    background: linear-gradient(to right,
-            #2563eb,
-            #1d4ed8);
+    background: linear-gradient(to right, #2563eb, #1d4ed8);
 }
 
 /* RESPONSIVO */
-
 @media (max-width: 768px) {
 
     .cliente-header {
@@ -61,7 +59,41 @@
     .cliente-header-left {
         flex-direction: column;
     }
+}
 
+/* ───────────────────────────────
+   BOTÃO SUCCESS (SEM BRILHO)
+─────────────────────────────── */
+.btn-success {
+    background: #16a34a !important;
+    border: none !important;
+
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+
+    background-image: none !important;
+    transition: all 0.2s ease !important;
+}
+
+/* hover sem brilho */
+.btn-success:hover {
+    background: #15803d !important;
+    box-shadow: none !important;
+    filter: none !important;
+}
+
+/* clique */
+.btn-success:active {
+    background: #166534 !important;
+    box-shadow: none !important;
+}
+
+/* focus (remove glow azul do bootstrap) */
+.btn-success:focus,
+.btn-success:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 /* ── Layout de página ─────────────────────────────────────────────────────── */

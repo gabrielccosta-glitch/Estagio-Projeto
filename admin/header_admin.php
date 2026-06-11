@@ -25,7 +25,7 @@
     <div class="cliente-header-right">
 
         <a href="../admin/editar_admin.php"
-           class="btn btn-primary me-2">
+           class="btn btn-success me-2">
             Editar Admin
         </a>
 

@@ -297,7 +297,7 @@ if ($is_admin) {
                         <div class="text-end mt-4">
 
                             <button type="submit"
-                                    class="btn btn-primary custom-btn">
+                                    class="btn btn-success custom-btn">
                                 Guardar Informações
                             </button>
 

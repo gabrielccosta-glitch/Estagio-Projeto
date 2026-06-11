@@ -72,7 +72,7 @@ if ($is_admin) {
                     </div>
 
                     <div class="mt-4">
-                        <button id="mostrarFormularioServico" class="btn btn-primary">
+                        <button id="mostrarFormularioServico" class="btn btn-success">
                             Adicionar Serviço
                         </button>
                     </div>

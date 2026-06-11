@@ -119,7 +119,7 @@ if ($is_admin) {
                     </div>
 
                     <div class="mt-4">
-                        <button id="mostrarFormularioPortfolio" class="btn btn-primary">
+                        <button id="mostrarFormularioPortfolio" class="btn btn-success">
                             Adicionar Imagem
                         </button>
                     </div>
