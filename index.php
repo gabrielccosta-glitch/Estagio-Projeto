@@ -73,6 +73,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
                 </nav>
 
                 <div class="nav-actions">
+                    <a href="sites.php" class="btn btn-main">Sites</a>
                     <?php if ($esta_logado): ?>
                         <a href="<?= htmlspecialchars($dashboard_url); ?>" class="btn btn-outline-main">
                             Ver empresa
@@ -121,6 +122,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
             <a href="#sobre" class="mobile-link">Sobre</a>
             <a href="#funcionalidades" class="mobile-link">Funcionalidades</a>
             <a href="#como-funciona" class="mobile-link">Como funciona</a>
+            <a href="sites.php" class="mobile-link">Sites</a>
             <a href="contato.php" class="mobile-link">Contacto</a>
         </nav>
     </header>
@@ -305,6 +307,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
                 <a href="#sobre">Sobre</a>
                 <a href="#funcionalidades">Funcionalidades</a>
                 <a href="#como-funciona">Como funciona</a>
+                <a href="sites.php">Sites</a>
                 <a href="contato.php">Contacto</a>
             </div>
 

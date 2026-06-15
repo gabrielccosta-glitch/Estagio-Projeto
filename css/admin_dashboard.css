@@ -1,4 +1,4 @@
-/* ── VARIÁVEIS IS4 ── */
+﻿/* ── VARIÁVEIS IS4 ── */
 :root {
     --is4-blue:        #1a3a5c;
     --is4-blue-mid:    #1e4976;
@@ -164,52 +164,52 @@
 /* Verde — Editar + Adicionar Empresa + OK modal */
 .btn-success,
 .btn-green {
-    background: #1e7e4a !important;
+    background: #16a34a !important;
     color: #fff !important;
 }
 .btn-success:hover,
 .btn-green:hover {
-    background: #176039 !important;
+    background: #15803d !important;
     color: #fff !important;
 }
 
 /* Azul — Configurar */
 .btn-blue {
-    background: var(--is4-blue-mid) !important;
+    background: #1a6ff4 !important;
     color: #fff !important;
 }
 .btn-blue:hover {
-    background: var(--is4-blue) !important;
+    background: #1458cc !important;
     color: #fff !important;
 }
 
 /* Laranja — Ver Website */
 .btn-orange {
-    background: var(--is4-orange) !important;
+    background: #f97316 !important;
     color: #fff !important;
 }
 .btn-orange:hover {
-    background: var(--is4-orange-dark) !important;
+    background: #ea6c0a !important;
     color: #fff !important;
 }
 
 /* Vermelho — Eliminar */
 .btn-danger {
-    background: #c0392b !important;
+    background: #dc2626 !important;
     color: #fff !important;
 }
 .btn-danger:hover {
-    background: #a93226 !important;
+    background: #b91c1c !important;
 }
 
 /* Cinza — Sem Website / Cancelar */
 .btn-secondary {
-    background: #dde4ec !important;
+    background: #f7f9fc !important;
     color: var(--is4-text) !important;
     border: 1px solid var(--is4-border) !important;
 }
 .btn-secondary:hover {
-    background: #c8d4e0 !important;
+    background: #e4eaf2 !important;
 }
 
 /* ── TABELA ── */

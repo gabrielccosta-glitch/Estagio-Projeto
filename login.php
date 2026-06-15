@@ -1,4 +1,4 @@
-    <?php
+﻿    <?php
     // login.php - Página de login do sistema
 
     require_once 'config/database.php';
@@ -88,8 +88,8 @@
             padding: 12px 18px;
             margin-top: 14px;
             border-radius: 8px;
-            border: 2px solid #315f9b;
-            color: #315f9b;
+            border: 2px solid #1a6ff4;
+            color: #1a6ff4;
             background: #ffffff;
             text-decoration: none;
             font-weight: 600;
@@ -97,7 +97,7 @@
         }
 
         .login-back-btn:hover {
-            background: #315f9b;
+            background: #1458cc;
             color: #ffffff;
             text-decoration: none;
         }

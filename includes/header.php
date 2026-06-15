@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // includes/header.php - Cabeçalho comum para todas as páginas
 
 // Iniciar a sessão se ainda não estiver iniciada
@@ -38,12 +38,38 @@ if (session_status() == PHP_SESSION_NONE) {
             border-radius: 10px 10px 0 0;
         }
         .btn-primary {
-            background-color: #377E47;
-            border-color: #377E47;
+            background-color: #1a6ff4;
+            border-color: #1a6ff4;
         }
         .btn-primary:hover {
-            background-color:rgb(35, 94, 49);
-            border-color: rgb(35, 94, 49);
+            background-color: #1458cc;
+            border-color: #1458cc;
+        }
+            /* PALETA UNIFICADA DOS BOTOES */
+        .btn-success {
+            background-color: #16a34a !important;
+            border-color: #16a34a !important;
+            color: #fff !important;
+        }
+        .btn-success:hover {
+            background-color: #15803d !important;
+            border-color: #15803d !important;
+            color: #fff !important;
+        }
+        .btn-danger {
+            background-color: #dc2626 !important;
+            border-color: #dc2626 !important;
+            color: #fff !important;
+        }
+        .btn-danger:hover {
+            background-color: #b91c1c !important;
+            border-color: #b91c1c !important;
+            color: #fff !important;
+        }
+        .btn-secondary {
+            background-color: #f7f9fc !important;
+            border-color: #e4eaf2 !important;
+            color: #1a2332 !important;
         }
     </style>
 </head>

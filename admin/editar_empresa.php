@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 
 require_once '../config/database.php';
@@ -104,14 +104,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $stmt_senha->close();
         }
-
         $conn->commit();
 
-        $mensagem =
-            "Informações da empresa atualizadas com sucesso!";
-
-        // Atualizar valor mostrado no input depois de guardar
-        $empresa['usuario_email'] = $email_usuario;
+        header("Location: dashboard.php?sucesso=empresa_atualizada");
+        exit;
 
     } catch (Exception $e) {
 

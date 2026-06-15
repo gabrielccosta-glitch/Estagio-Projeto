@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // register.php - Página de registo de novos usuários
 
 require_once 'config/database.php';
@@ -155,9 +155,9 @@ include 'includes/header.php';
 
         border-radius: 8px;
 
-        border: 2px solid #315f9b;
+        border: 2px solid #1a6ff4;
 
-        color: #315f9b;
+        color: #1a6ff4;
 
         background: #ffffff;
 
@@ -170,7 +170,7 @@ include 'includes/header.php';
 
     .register-back-btn:hover {
 
-        background: #315f9b;
+        background: #1a6ff4;
 
         color: #ffffff;
 
