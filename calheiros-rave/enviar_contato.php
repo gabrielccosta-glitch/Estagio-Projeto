@@ -44,13 +44,13 @@ $assunto = "Nova mensagem de contacto - " . $nome_empresa;
 $corpo = "
 <html>
 <body style='font-family: Segoe UI, sans-serif; color: #1f2937;'>
-    <h2 style='color:#1f5b9d;'>Nova mensagem de contacto</h2>
+    <h2 style='color:#356096;'>Nova mensagem de contacto</h2>
     <p><strong>Nome:</strong> " . htmlspecialchars($nome) . "</p>
     <p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>
     " . (!empty($telefone) ? "<p><strong>Telefone:</strong> " . htmlspecialchars($telefone) . "</p>" : "") . "
     <hr style='border:1px solid #eee;'>
     <p><strong>Mensagem:</strong></p>
-    <p style='background:#f4f8fd; padding:16px; border-radius:8px; border-left:4px solid #1f5b9d;'>"
+    <p style='background:#f4f8fd; padding:16px; border-radius:8px; border-left:4px solid #356096;'>"
         . nl2br(htmlspecialchars($mensagem)) . "
     </p>
     <p style='color:#aaa; font-size:0.85rem; margin-top:30px;'>Mensagem enviada através do site de " . htmlspecialchars($nome_empresa) . "</p>

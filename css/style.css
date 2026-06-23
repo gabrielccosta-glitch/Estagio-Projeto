@@ -1,16 +1,16 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 :root {
     --bg: #ebf4fd;
     --surface: #ffffff;
     --surface-2: #f7f9fc;
     --border: #e4eaf2;
-    --primary: #1a6ff4;
-    --primary-dark: #1458cc;
+    --primary: #356096;
+    --primary-dark: #356096;
     --primary-light: #e8f0fe;
     --success: #16a34a;
     --danger: #dc2626;
-    --info: #0891b2;
+    --info: #356096;
     --text: #1a2332;
     --text-muted: #64748b;
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
@@ -227,7 +227,7 @@ body {
 .btn-freebox-blue {
     background: var(--primary);
     color: #fff !important;
-    box-shadow: 0 2px 8px rgba(26,111,244,0.25);
+    box-shadow: 0 2px 8px rgba(53, 96, 150,0.25);
 }
 .btn-primary:hover,
 .btn-sm.btn-primary:hover,
@@ -235,7 +235,7 @@ body {
 .btn-freebox-blue:hover {
     background: var(--primary-dark);
     color: #fff !important;
-    box-shadow: 0 4px 14px rgba(26,111,244,0.35);
+    box-shadow: 0 4px 14px rgba(53, 96, 150,0.35);
 }
 
 .btn-success,
@@ -261,7 +261,7 @@ body {
 }
 .btn-info:hover,
 .btn-sm.btn-info:hover {
-    background: #0e7490 !important;
+    background: #356096 !important;
     color: #fff !important;
     box-shadow: 0 4px 12px rgba(8,145,178,0.3);
 }
@@ -294,17 +294,17 @@ body {
 .btn-warning,
 .btn-sm.btn-warning,
 .btn-orange {
-    background: var(--accent, #f97316) !important;
+    background: var(--accent, #ef7f1a) !important;
     color: #fff !important;
-    box-shadow: 0 2px 6px rgba(249,115,22,0.2);
+    box-shadow: 0 2px 6px rgba(239, 127, 26,0.2);
     border: none !important;
 }
 .btn-warning:hover,
 .btn-sm.btn-warning:hover,
 .btn-orange:hover {
-    background: #ea6c0a !important;
+    background: #ef7f1a !important;
     color: #fff !important;
-    box-shadow: 0 4px 12px rgba(249,115,22,0.3);
+    box-shadow: 0 4px 12px rgba(239, 127, 26,0.3);
 }
 
 /* header buttons sizing */
@@ -424,7 +424,7 @@ input[type="tel"] {
 .form-control:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(26,111,244,0.12);
+    box-shadow: 0 0 0 3px rgba(53, 96, 150,0.12);
 }
 
 .form-group { margin-bottom: 18px; }
@@ -465,7 +465,7 @@ input[type="tel"] {
 }
 .nav-link:hover, .nav-link.active,
 .nav-link_2:hover, .nav-link_2.active {
-    color: #004080;
+    color: #356096;
     background-color: var(--primary-light);
 }
 

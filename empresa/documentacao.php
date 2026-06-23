@@ -44,7 +44,7 @@ include '../includes/header.php';
     height: 32px;
     min-width: 32px;
     border-radius: 50%;
-    background: #1565C0;
+    background: #356096;
     color: #fff;
     display: flex;
     align-items: center;
@@ -66,7 +66,7 @@ include '../includes/header.php';
 
 .doc-item-icon {
     width: 22px;
-    color: #1565C0;
+    color: #356096;
     font-size: 14px;
     margin-top: 2px;
     flex-shrink: 0;
@@ -96,7 +96,7 @@ include '../includes/header.php';
 .doc-badge {
     display: inline-block;
     background: #DBEAFE;
-    color: #1D4ED8;
+    color: #356096;
     font-size: 11px;
     font-weight: 600;
     border-radius: 20px;
@@ -108,7 +108,7 @@ include '../includes/header.php';
 .faq-question {
     font-size: 14px;
     font-weight: 700;
-    color: #1565C0;
+    color: #356096;
     cursor: pointer;
     padding: 12px 0;
     border-bottom: 1px solid #dce6f0;
@@ -580,7 +580,7 @@ include '../includes/header.php';
 
                             <a href="formulario_suporte.php"
                                style="
-                                    color:#1565C0;
+                                    color:#356096;
                                     font-weight:600;
                                ">
                                 Contacta o suporte

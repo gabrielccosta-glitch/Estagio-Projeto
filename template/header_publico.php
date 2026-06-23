@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $is_tenant = (basename(__DIR__) !== 'template');
 if ($is_tenant) {
     $link_home = "./";
@@ -181,7 +181,7 @@ if ($is_tenant) {
         .brand-name {
             font-size: 1.1rem;
             font-weight: 500;
-            color: #1a3a5c;
+            color: #356096;
         }
 
         .nav-links {
@@ -198,7 +198,7 @@ if ($is_tenant) {
             transition: color 0.2s;
         }
 
-        .nav-links a:hover { color: #1a3a5c; }
+        .nav-links a:hover { color: #356096; }
 
         /* ── MENU HAMBÚRGUER ── */
         .hamburger {
@@ -251,7 +251,7 @@ if ($is_tenant) {
         }
 
         .mobile-menu a:last-child { border-bottom: none; }
-        .mobile-menu a:hover { color: #1a3a5c; }
+        .mobile-menu a:hover { color: #356096; }
 
         /* ── SELETOR DE LÍNGUA ── */
         .lang-selector { position: relative; }
@@ -272,7 +272,7 @@ if ($is_tenant) {
             white-space: nowrap;
         }
 
-        .lang-btn:hover { border-color: #1a3a5c; color: #1a3a5c; }
+        .lang-btn:hover { border-color: #356096; color: #356096; }
         .lang-btn i { font-size: 0.65rem; }
 
         .lang-dropdown {
@@ -306,7 +306,7 @@ if ($is_tenant) {
             text-align: left;
         }
 
-        .lang-option:hover { background: #f4f7fb; color: #1a3a5c; }
+        .lang-option:hover { background: #f4f7fb; color: #356096; }
 
         /* ── RESPONSIVO ── */
         @media (max-width: 1024px) {

@@ -37,7 +37,7 @@ include '../includes/header.php';
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold">
-                                <i class="fas fa-user me-2" style="color:#1565C0;"></i>Nome
+                                <i class="fas fa-user me-2" style="color:#356096;"></i>Nome
                             </label>
                             <input type="text" name="nome" class="form-control"
                                    placeholder="O seu nome"
@@ -47,7 +47,7 @@ include '../includes/header.php';
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold">
-                                <i class="fas fa-envelope me-2" style="color:#1565C0;"></i>Email
+                                <i class="fas fa-envelope me-2" style="color:#356096;"></i>Email
                             </label>
                             <input type="email" name="email" class="form-control"
                                    placeholder="O seu email"
@@ -57,7 +57,7 @@ include '../includes/header.php';
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold">
-                                <i class="fas fa-tag me-2" style="color:#1565C0;"></i>Assunto
+                                <i class="fas fa-tag me-2" style="color:#356096;"></i>Assunto
                             </label>
                             <select name="assunto" class="form-select" required>
                                 <option value="" disabled selected>Seleciona o assunto</option>
@@ -71,7 +71,7 @@ include '../includes/header.php';
 
                         <div class="mb-4">
                             <label class="form-label fw-semibold">
-                                <i class="fas fa-message me-2" style="color:#1565C0;"></i>Mensagem
+                                <i class="fas fa-message me-2" style="color:#356096;"></i>Mensagem
                             </label>
                             <textarea name="mensagem" class="form-control" rows="5"
                                       placeholder="Descreve o teu problema ou dúvida..."

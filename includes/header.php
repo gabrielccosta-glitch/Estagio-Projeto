@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // includes/header.php - Cabeçalho comum para todas as páginas
 
 // Iniciar a sessão se ainda não estiver iniciada
@@ -38,12 +38,12 @@ if (session_status() == PHP_SESSION_NONE) {
             border-radius: 10px 10px 0 0;
         }
         .btn-primary {
-            background-color: #1a6ff4;
-            border-color: #1a6ff4;
+            background-color: #356096;
+            border-color: #356096;
         }
         .btn-primary:hover {
-            background-color: #1458cc;
-            border-color: #1458cc;
+            background-color: #356096;
+            border-color: #356096;
         }
             /* PALETA UNIFICADA DOS BOTOES */
         .btn-success {

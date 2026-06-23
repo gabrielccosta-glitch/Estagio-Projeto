@@ -1,10 +1,10 @@
-﻿/* ── VARIÁVEIS IS4 ── */
+/* ── VARIÁVEIS IS4 ── */
 :root {
-    --is4-blue:        #1a3a5c;
-    --is4-blue-mid:    #1e4976;
-    --is4-blue-light:  #2d6aa0;
-    --is4-orange:      #e87722;
-    --is4-orange-dark: #c96310;
+    --is4-blue:        #356096;
+    --is4-blue-mid:    #356096;
+    --is4-blue-light:  #356096;
+    --is4-orange:      #ef7f1a;
+    --is4-orange-dark: #ef7f1a;
     --is4-white:       #ffffff;
     --is4-bg:          #f0f4f8;
     --is4-border:      #cdd8e3;
@@ -175,21 +175,21 @@
 
 /* Azul — Configurar */
 .btn-blue {
-    background: #1a6ff4 !important;
+    background: #356096 !important;
     color: #fff !important;
 }
 .btn-blue:hover {
-    background: #1458cc !important;
+    background: #356096 !important;
     color: #fff !important;
 }
 
 /* Laranja — Ver Website */
 .btn-orange {
-    background: #f97316 !important;
+    background: #ef7f1a !important;
     color: #fff !important;
 }
 .btn-orange:hover {
-    background: #ea6c0a !important;
+    background: #ef7f1a !important;
     color: #fff !important;
 }
 

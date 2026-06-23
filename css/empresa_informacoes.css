@@ -16,8 +16,8 @@
 }
 
 .custom-card .form-control:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
+    border-color: #356096;
+    box-shadow: 0 0 0 2px rgba(53, 96, 150,0.15);
 }
 
 .custom-card .form-control:disabled {
@@ -39,7 +39,7 @@
 
 .custom-card label i {
     margin-right: 6px;
-    color: #3b82f6;
+    color: #356096;
 }
 
 /* ── Botão guardar ────────────────────────────────────────────────────────── */

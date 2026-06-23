@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // register.php - Página de registo de novos usuários
 
 require_once 'config/database.php';
@@ -8,8 +8,28 @@ iniciarSessao();
 
 $erro = '';
 
+$dados_formulario = [
+    'nome_empresa' => '',
+    'morada' => '',
+    'codigo_postal' => '',
+    'email' => '',
+    'nome' => '',
+    'telefone' => '',
+    'senha' => ''
+];
+
 // Processar formulário de registo
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $dados_formulario = [
+        'nome_empresa' => trim($_POST['nome_empresa'] ?? ''),
+        'morada' => trim($_POST['morada'] ?? ''),
+        'codigo_postal' => trim($_POST['codigo_postal'] ?? ''),
+        'email' => trim($_POST['email'] ?? ''),
+        'nome' => trim($_POST['nome'] ?? ''),
+        'telefone' => trim($_POST['telefone'] ?? ''),
+        'senha' => $_POST['senha'] ?? ''
+    ];
 
     $nome = limparDados($_POST['nome'] ?? '');
 
@@ -17,15 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
-    $senha = $_POST['senha'];
+    $senha = $_POST['senha'] ?? '';
 
-    $confirmar_senha = $_POST['confirmar_senha'];
+    $confirmar_senha = $_POST['confirmar_senha'] ?? '';
 
-    $nome_empresa = limparDados($_POST['nome_empresa']);
+    $nome_empresa = limparDados($_POST['nome_empresa'] ?? '');
 
-    $morada = limparDados($_POST['morada']);
+    $morada = limparDados($_POST['morada'] ?? '');
 
-    $codigo_postal = limparDados($_POST['codigo_postal']);
+    $codigo_postal = limparDados($_POST['codigo_postal'] ?? '');
 
     $telefone = limparDados($_POST['telefone'] ?? '');
 
@@ -155,9 +175,9 @@ include 'includes/header.php';
 
         border-radius: 8px;
 
-        border: 2px solid #1a6ff4;
+        border: 2px solid #356096;
 
-        color: #1a6ff4;
+        color: #356096;
 
         background: #ffffff;
 
@@ -170,7 +190,7 @@ include 'includes/header.php';
 
     .register-back-btn:hover {
 
-        background: #1a6ff4;
+        background: #356096;
 
         color: #ffffff;
 
@@ -227,7 +247,7 @@ include 'includes/header.php';
 
                     </label>
 
-                    <input type="text" class="form-control" id="nome_empresa" name="nome_empresa" required>
+                    <input type="text" class="form-control" id="nome_empresa" name="nome_empresa" value="<?= htmlspecialchars($dados_formulario['nome_empresa'], ENT_QUOTES, 'UTF-8'); ?>" required>
 
                 </div>
 
@@ -242,7 +262,7 @@ include 'includes/header.php';
 
                     </label>
 
-                    <input type="text" class="form-control" id="morada" name="morada" required>
+                    <input type="text" class="form-control" id="morada" name="morada" value="<?= htmlspecialchars($dados_formulario['morada'], ENT_QUOTES, 'UTF-8'); ?>" required>
 
                 </div>
 
@@ -257,7 +277,7 @@ include 'includes/header.php';
 
                     </label>
 
-                    <input type="text" class="form-control" id="codigo_postal" name="codigo_postal" required>
+                    <input type="text" class="form-control" id="codigo_postal" name="codigo_postal" value="<?= htmlspecialchars($dados_formulario['codigo_postal'], ENT_QUOTES, 'UTF-8'); ?>" required>
 
                 </div>
 
@@ -272,7 +292,7 @@ include 'includes/header.php';
 
                     </label>
 
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($dados_formulario['email'], ENT_QUOTES, 'UTF-8'); ?>" required>
 
                 </div>
 
@@ -287,7 +307,7 @@ include 'includes/header.php';
 
                     </label>
 
-                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Opcional">
+                    <input type="text" class="form-control" id="nome" name="nome" value="<?= htmlspecialchars($dados_formulario['nome'], ENT_QUOTES, 'UTF-8'); ?>" placeholder="Opcional">
 
                 </div>
 
@@ -302,7 +322,7 @@ include 'includes/header.php';
 
                     </label>
 
-                    <input type="tel" id="telefone" name="telefone" class="form-control" placeholder="Opcional">
+                    <input type="tel" id="telefone" name="telefone" class="form-control" value="<?= htmlspecialchars($dados_formulario['telefone'], ENT_QUOTES, 'UTF-8'); ?>" placeholder="Opcional">
 
                 </div>
 
@@ -320,7 +340,7 @@ include 'includes/header.php';
 
                     <div class="input-group">
 
-                        <input type="password" class="form-control" id="senha" name="senha" required>
+                        <input type="password" class="form-control" id="senha" name="senha" value="<?= htmlspecialchars($dados_formulario['senha'], ENT_QUOTES, 'UTF-8'); ?>" required>
 
                         <button type="button" class="btn btn-outline-secondary" onclick="toggleSenha('senha', this)">
 

@@ -1,6 +1,6 @@
 /* Configuração Principal do Footer */
 .public-footer {
-    background: linear-gradient(135deg, #0d1f3c 0%, #1a3a6b 50%, #1f5b9d 100%) !important;
+    background: #1a2332 !important;
     color: rgba(255, 255, 255, 0.55) !important;
     margin-top: 60px !important;
     padding: 0 !important;
@@ -86,7 +86,7 @@
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background: #1f5b9d;
+    background: #356096;
     color: white;
     width: 40px;
     height: 40px;
@@ -103,5 +103,5 @@
 .back-to-top:hover {
     background: white;
     /* Corrigido de #white */
-    color: #0d1f3c;
+    color: #356096;
 }

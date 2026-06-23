@@ -104,28 +104,28 @@ include 'header_publico.php';
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold">
-                                <i class="fas fa-user me-2" style="color:#0066cc;"></i>Nome
+                                <i class="fas fa-user me-2" style="color:#356096;"></i>Nome
                             </label>
                             <input type="text" name="nome" class="form-control" placeholder="O seu nome" required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold">
-                                <i class="fas fa-phone me-2" style="color:#0066cc;"></i>Telefone
+                                <i class="fas fa-phone me-2" style="color:#356096;"></i>Telefone
                             </label>
                             <input type="tel" name="telefone" class="form-control" placeholder="O seu telefone">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold">
-                                <i class="fas fa-envelope me-2" style="color:#0066cc;"></i>Email
+                                <i class="fas fa-envelope me-2" style="color:#356096;"></i>Email
                             </label>
                             <input type="email" name="email" class="form-control" placeholder="O seu email" required>
                         </div>
 
                         <div class="mb-4">
                             <label class="form-label fw-semibold">
-                                <i class="fas fa-message me-2" style="color:#0066cc;"></i>Mensagem
+                                <i class="fas fa-message me-2" style="color:#356096;"></i>Mensagem
                             </label>
                             <textarea name="mensagem" class="form-control" rows="5" placeholder="Escreva a sua mensagem..." required></textarea>
                         </div>
