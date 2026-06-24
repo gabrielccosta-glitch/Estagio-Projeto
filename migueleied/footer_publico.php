@@ -2,7 +2,16 @@
         <div class="footer-top">
             <div class="container">
                 <div class="footer-cols">
-                    <?php if (!isset($nome_empresa)) $nome_empresa = 'Empresa'; ?>
+                    <?php
+    if (!isset($nome_empresa)) $nome_empresa = 'Empresa';
+    $footer_empresa = is_array($empresa ?? null) ? $empresa : [];
+    $footer_morada = trim($footer_empresa['morada'] ?? ($morada ?? ''));
+    $footer_codigo_postal = trim($footer_empresa['codigo_postal'] ?? ($codigo_postal ?? ''));
+
+    if ($footer_morada === '' && $footer_codigo_postal === '' && !empty($morada_completa)) {
+        $footer_morada = trim($morada_completa);
+    }
+?>
 
                     <!-- CONTACTO -->
                     <div class="footer-col">
@@ -14,8 +23,15 @@
                             <?php if (!empty($telefone_principal)): ?>
                                 <li><a href="tel:<?= htmlspecialchars($telefone_principal); ?>"><?= htmlspecialchars($telefone_principal); ?></a></li>
                             <?php endif; ?>
-                            <?php if (!empty($morada_completa)): ?>
-                                <li><span><?= htmlspecialchars($morada_completa); ?></span></li>
+                            <?php if ($footer_morada !== '' || $footer_codigo_postal !== ''): ?>
+                                <li class="footer-address">
+                                    <?php if ($footer_morada !== ''): ?>
+                                        <span class="footer-address-street"><?= htmlspecialchars($footer_morada); ?></span>
+                                    <?php endif; ?>
+                                    <?php if ($footer_codigo_postal !== ''): ?>
+                                        <span class="footer-address-postcode"><?= htmlspecialchars($footer_codigo_postal); ?></span>
+                                    <?php endif; ?>
+                                </li>
                             <?php endif; ?>
                             <li><a href="<?= $link_formulario; ?>">Enviar Mensagem</a></li>
                         </ul>

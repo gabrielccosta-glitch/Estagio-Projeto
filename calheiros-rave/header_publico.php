@@ -29,7 +29,8 @@ if ($is_tenant) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/site_publico.css?v=20260608-footer-typography">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/site_publico.css?v=20260623-footer-address">
     <?php
     $cor_primaria = $website['cor_primaria'] ?? '#1a1a1a';
     $cor_secundaria = $website['cor_secundaria'] ?? '#555555';
@@ -143,22 +144,25 @@ if ($is_tenant) {
             background: currentColor;
             transform: scale(1.4);
         }
-
-
-        /* ── NAVBAR ── */
+        /* NAVBAR */
         .public-navbar {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: white;
-            box-shadow: 0 1px 8px rgba(0,0,0,0.07);
-            padding: 0 20px;
-            height: 74px;
-            display: flex;
-            align-items: center;
+            background: rgba(255, 255, 255, 0.90);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid #e2eaf5;
+            box-shadow: 0 1px 4px rgba(53, 96, 150, 0.07);
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', 'DM Sans', 'Segoe UI', sans-serif;
         }
 
         .navbar-inner {
+            max-width: 1200px;
+            min-height: 76px;
+            margin: 0 auto;
+            padding: 0 28px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -168,37 +172,188 @@ if ($is_tenant) {
         .brand {
             display: flex;
             align-items: center;
+            flex-shrink: 0;
             text-decoration: none;
         }
 
         .brand-logo {
-            height: 56px;
-            max-height: 56px;
-            max-width: 240px;
+            display: block;
+            width: auto;
+            height: 70px;
+            max-width: 180px;
+            max-height: 70px;
             object-fit: contain;
         }
 
         .brand-name {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #356096;
+            color: #1a2332;
+            font-size: 1.05rem;
+            font-weight: 700;
         }
 
         .nav-links {
             display: flex;
-            gap: 28px;
             align-items: center;
+            gap: 32px;
+            margin-left: auto;
+            margin-right: 28px;
         }
 
         .nav-links a {
+            position: relative;
+            color: #64748b;
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0;
+            text-transform: none !important;
             text-decoration: none;
-            color: #444;
-            font-weight: 400;
-            font-size: 0.9rem;
-            transition: color 0.2s;
+            transition: color 0.25s ease;
         }
 
-        .nav-links a:hover { color: #356096; }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            border-radius: 2px;
+            background: #356096;
+            transition: width 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: #356096;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 5px;
+            width: 36px;
+            height: 36px;
+            padding: 5px;
+            background: transparent;
+            border: 1px solid #e2eaf5;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            border-radius: 2px;
+            background: #1a2332;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger:hover {
+            border-color: #356096;
+        }
+
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 76px;
+            left: 0;
+            width: 100%;
+            padding: 16px 24px 20px;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 16px rgba(53, 96, 150, 0.10);
+            flex-direction: column;
+            gap: 0;
+            z-index: 999;
+        }
+
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu a {
+            color: #64748b;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2eaf5;
+        }
+
+        .mobile-menu a:last-child { border-bottom: none; }
+        .mobile-menu a:hover { color: #356096; }
+
+        /* LANGUAGE SELECTOR */
+        .lang-selector { position: relative; }
+
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 11px;
+            background: #f7f9fc;
+            border: 1px solid #e2eaf5;
+            border-radius: 8px;
+            color: #64748b;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8rem;
+            transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .lang-btn:hover {
+            background: #e8f1ff;
+            border-color: #356096;
+            color: #356096;
+        }
+
+        .lang-btn i { font-size: 0.65rem; }
+
+        .lang-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            z-index: 9999;
+            min-width: 150px;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #e2eaf5;
+            border-radius: 14px;
+            box-shadow: 0 12px 48px rgba(53, 96, 150, 0.13);
+        }
+
+        .lang-dropdown.open { display: block; }
+
+        .lang-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px 16px;
+            background: none;
+            border: none;
+            color: #1a2332;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85rem;
+            text-align: left;
+            transition: background 0.25s ease, color 0.25s ease;
+        }
+
+        .lang-option:hover {
+            background: #f7f9fc;
+            color: #356096;
+        }
 
         /* ── MENU HAMBÚRGUER ── */
         .hamburger {
@@ -433,8 +588,16 @@ if ($is_tenant) {
                 acceptNode: function(node) {
                     if (!node.parentElement) return NodeFilter.FILTER_REJECT;
                     if (skip.includes(node.parentElement.tagName)) return NodeFilter.FILTER_REJECT;
-                    if (node.parentElement.closest('#langSelector')) return NodeFilter.FILTER_REJECT;
-                    if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
+                    const protectedSelector = '#langSelector, .notranslate, [translate="no"], a[href^="mailto:"], a[href^="tel:"], .about-contact-card, .footer-address';
+                    if (node.parentElement.closest(protectedSelector)) return NodeFilter.FILTER_REJECT;
+
+                    const text = node.textContent.trim();
+                    if (!text) return NodeFilter.FILTER_REJECT;
+
+                    const isEmail = /\b[^\s@]+@[^\s@]+\.[^\s@]+\b/.test(text);
+                    const isPhoneOrPostalCode = /^[+\d\s().-]{5,}$/.test(text);
+                    if (isEmail || isPhoneOrPostalCode) return NodeFilter.FILTER_REJECT;
+
                     return NodeFilter.FILTER_ACCEPT;
                 }
             });

@@ -111,9 +111,23 @@ function assetHomeUrl($path)
                         <img id="langCurrent" src="https://flagcdn.com/w20/pt.png" width="20" alt="PT">
                         <i class="fas fa-chevron-down"></i>
                     </button>
+
                     <div class="lang-dropdown" id="langDropdown">
-                        <button class="lang-option" type="button">
+                        <button class="lang-option" type="button"
+                            onclick="changeLang('pt', 'https://flagcdn.com/w20/pt.png')">
                             <img src="https://flagcdn.com/w20/pt.png" width="20" alt="PT"> Portugu&ecirc;s
+                        </button>
+                        <button class="lang-option" type="button"
+                            onclick="changeLang('en', 'https://flagcdn.com/w20/gb.png')">
+                            <img src="https://flagcdn.com/w20/gb.png" width="20" alt="EN"> English
+                        </button>
+                        <button class="lang-option" type="button"
+                            onclick="changeLang('es', 'https://flagcdn.com/w20/es.png')">
+                            <img src="https://flagcdn.com/w20/es.png" width="20" alt="ES"> Espa&ntilde;ol
+                        </button>
+                        <button class="lang-option" type="button"
+                            onclick="changeLang('fr', 'https://flagcdn.com/w20/fr.png')">
+                            <img src="https://flagcdn.com/w20/fr.png" width="20" alt="FR"> Fran&ccedil;ais
                         </button>
                     </div>
                 </div>
@@ -135,7 +149,7 @@ function assetHomeUrl($path)
         </nav>
     </header>
 
-    <main class="sites-page">ZZZZZZZZZZZZ
+    <main class="sites-page">
         <section class="sites-hero">
             <div class="container sites-hero-inner">
                 <h1>Empresas com site Online</h1>
@@ -211,18 +225,104 @@ function assetHomeUrl($path)
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        let originalTexts = [];
+        let currentLang = 'pt';
+        const translationCache = {};
+        const skipTags = ['SCRIPT', 'STYLE', 'NOSCRIPT', 'IFRAME', 'INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'];
+
         const langBtn = document.getElementById('langBtn');
         const langDropdown = document.getElementById('langDropdown');
         const hamburger = document.getElementById('hamburger');
         const mobileNav = document.getElementById('mobileNav');
 
-        langBtn.addEventListener('click', function (e) {
-            e.stopPropagation();
+        function getTextNodes() {
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+                acceptNode: function (node) {
+                    if (!node.parentElement) return NodeFilter.FILTER_REJECT;
+                    if (skipTags.includes(node.parentElement.tagName)) return NodeFilter.FILTER_REJECT;
+                    if (node.parentElement.closest('.no-translate, .lang-selector')) return NodeFilter.FILTER_REJECT;
+                    if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            });
+
+            const nodes = [];
+            while (walker.nextNode()) nodes.push(walker.currentNode);
+            return nodes;
+        }
+
+        async function translateText(text, targetLang) {
+            const cacheKey = targetLang + '|' + text;
+            if (translationCache[cacheKey]) return translationCache[cacheKey];
+
+            try {
+                const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=pt|${targetLang}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                const translated = data?.responseData?.translatedText || text;
+                translationCache[cacheKey] = translated;
+                return translated;
+            } catch (error) {
+                return text;
+            }
+        }
+
+        async function changeLang(lang, flag) {
+            if (lang === currentLang) {
+                langDropdown.classList.remove('open');
+                return;
+            }
+
+            const currentFlag = document.getElementById('langCurrent');
+            currentFlag.src = flag;
+            langDropdown.classList.remove('open');
+            langBtn.style.opacity = '0.5';
+            langBtn.style.pointerEvents = 'none';
+            langBtn.querySelector('i').className = 'fas fa-spinner fa-spin';
+
+            const nodes = getTextNodes();
+            if (originalTexts.length === 0) {
+                originalTexts = nodes.map(node => node.textContent);
+            } else {
+                nodes.forEach((node, index) => {
+                    if (originalTexts[index] !== undefined) node.textContent = originalTexts[index];
+                });
+            }
+
+            if (lang === 'pt') {
+                originalTexts = [];
+                currentLang = 'pt';
+                langBtn.style.opacity = '1';
+                langBtn.style.pointerEvents = 'auto';
+                langBtn.querySelector('i').className = 'fas fa-chevron-down';
+                return;
+            }
+
+            currentLang = lang;
+            const freshNodes = getTextNodes();
+            const batchSize = 5;
+
+            for (let index = 0; index < freshNodes.length; index += batchSize) {
+                const batch = freshNodes.slice(index, index + batchSize);
+                await Promise.all(batch.map(async (node, batchIndex) => {
+                    const original = originalTexts[index + batchIndex] || node.textContent;
+                    if (original.trim().length < 2) return;
+                    node.textContent = await translateText(original.trim(), lang);
+                }));
+            }
+
+            langBtn.style.opacity = '1';
+            langBtn.style.pointerEvents = 'auto';
+            langBtn.querySelector('i').className = 'fas fa-chevron-down';
+        }
+
+        langBtn.addEventListener('click', function (event) {
+            event.stopPropagation();
             langDropdown.classList.toggle('open');
         });
 
-        hamburger.addEventListener('click', function (e) {
-            e.stopPropagation();
+        hamburger.addEventListener('click', function (event) {
+            event.stopPropagation();
             hamburger.classList.toggle('open');
             mobileNav.classList.toggle('open');
         });
@@ -234,10 +334,9 @@ function assetHomeUrl($path)
             });
         });
 
-        document.addEventListener('click', function (e) {
+        document.addEventListener('click', function (event) {
             langDropdown.classList.remove('open');
-
-            if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+            if (!hamburger.contains(event.target) && !mobileNav.contains(event.target)) {
                 hamburger.classList.remove('open');
                 mobileNav.classList.remove('open');
             }

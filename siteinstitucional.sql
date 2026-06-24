@@ -90,7 +90,6 @@ DROP TABLE IF EXISTS `servicos`;
 CREATE TABLE IF NOT EXISTS `servicos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `empresa_id` int NOT NULL,
-  `nome_servico` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `titulo_servico` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `descricao_servico` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   PRIMARY KEY (`id`),
@@ -101,13 +100,13 @@ CREATE TABLE IF NOT EXISTS `servicos` (
 -- Extraindo dados da tabela `servicos`
 --
 
-INSERT INTO `servicos` (`id`, `empresa_id`, `nome_servico`, `titulo_servico`, `descricao_servico`) VALUES
-(65, 35, 'sfsf', 'sdgfsdg', 'dgdg'),
-(59, 36, 'sadsf', 'asfdsff', 'sfsfdsf'),
-(62, 35, 'sdgf', 'dgdg', 'dgdg'),
-(61, 35, 'Sobre Nós', 'Sobre Nós', 'dgdhdfhf\r\ndhdh\r\ndg\r\ndg'),
-(64, 36, 'qwqe', 'qweqwe', 'qweq'),
-(66, 39, 'teste1', 'Serviço de teste', 'teste');
+INSERT INTO `servicos` (`id`, `empresa_id`, `titulo_servico`, `descricao_servico`) VALUES
+(65, 35, 'sdgfsdg', 'dgdg'),
+(59, 36, 'asfdsff', 'sfsfdsf'),
+(62, 35, 'dgdg', 'dgdg'),
+(61, 35, 'Sobre Nós', 'dgdhdfhf\r\ndhdh\r\ndg\r\ndg'),
+(64, 36, 'qweqwe', 'qweq'),
+(66, 39, 'Serviço de teste', 'teste');
 
 -- --------------------------------------------------------
 

@@ -112,9 +112,6 @@ if (!$servico) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $nome_servico =
-        $_POST['nome_servico'];
-
     $titulo_servico =
         $_POST['titulo_servico'];
 
@@ -124,7 +121,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $update_sql = "
         UPDATE servicos
         SET
-            nome_servico = ?,
             titulo_servico = ?,
             descricao_servico = ?
         WHERE id = ?
@@ -134,8 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->prepare($update_sql);
 
     $update_stmt->bind_param(
-        "sssi",
-        $nome_servico,
+        "ssi",
         $titulo_servico,
         $descricao_servico,
         $servico_id
@@ -205,23 +200,7 @@ if ($_SESSION['tipo_usuario'] == 'admin') {
 
                 <form method="POST"
                       action="editar_servico.php?id=<?php echo $servico_id; ?>">
-
-                    <div class="form-group mt-4">
-
-                        <label for="nome_servico">
-                            Nome do Serviço
-                        </label>
-
-                        <input type="text"
-                               class="form-control"
-                               id="nome_servico"
-                               name="nome_servico"
-                               value="<?php echo htmlspecialchars($servico['nome_servico']); ?>"
-                               required>
-
-                    </div>
-
-                    <div class="form-group mt-4">
+<div class="form-group mt-4">
 
                         <label for="titulo_servico">
                             Título do Serviço

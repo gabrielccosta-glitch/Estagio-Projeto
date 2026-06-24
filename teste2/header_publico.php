@@ -29,7 +29,7 @@ if ($is_tenant) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/site_publico.css?v=20260608-footer-typography">
+    <link rel="stylesheet" href="../css/site_publico.css?v=20260623-footer-address">
     <?php
     $cor_primaria = $website['cor_primaria'] ?? '#1a1a1a';
     $cor_secundaria = $website['cor_secundaria'] ?? '#555555';
@@ -433,8 +433,16 @@ if ($is_tenant) {
                 acceptNode: function(node) {
                     if (!node.parentElement) return NodeFilter.FILTER_REJECT;
                     if (skip.includes(node.parentElement.tagName)) return NodeFilter.FILTER_REJECT;
-                    if (node.parentElement.closest('#langSelector')) return NodeFilter.FILTER_REJECT;
-                    if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
+                    const protectedSelector = '#langSelector, .notranslate, [translate="no"], a[href^="mailto:"], a[href^="tel:"], .about-contact-card, .footer-address';
+                    if (node.parentElement.closest(protectedSelector)) return NodeFilter.FILTER_REJECT;
+
+                    const text = node.textContent.trim();
+                    if (!text) return NodeFilter.FILTER_REJECT;
+
+                    const isEmail = /\b[^\s@]+@[^\s@]+\.[^\s@]+\b/.test(text);
+                    const isPhoneOrPostalCode = /^[+\d\s().-]{5,}$/.test(text);
+                    if (isEmail || isPhoneOrPostalCode) return NodeFilter.FILTER_REJECT;
+
                     return NodeFilter.FILTER_ACCEPT;
                 }
             });

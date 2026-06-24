@@ -85,14 +85,7 @@ if ($is_admin) {
                             <form method="POST" action="adicionar_servico.php">
 
                                 <input type="hidden" name="empresa_id" value="<?= $empresa_id; ?>">
-
-                                <input type="text"
-                                       name="nome_servico"
-                                       class="form-control mt-2"
-                                       placeholder="Nome"
-                                       required>
-
-                                <input type="text"
+<input type="text"
                                        name="titulo_servico"
                                        class="form-control mt-2"
                                        placeholder="Título"
@@ -140,7 +133,7 @@ if ($is_admin) {
                                 <div class="card-body d-flex justify-content-between align-items-center">
 
                                     <span>
-                                        <?= htmlspecialchars($s['nome_servico']); ?>
+                                        <?= htmlspecialchars($s['titulo_servico']); ?>
                                     </span>
 
                                     <div>

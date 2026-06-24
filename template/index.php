@@ -83,7 +83,9 @@ $logo               = trim($website['logotipo'] ?? '');
 $capa               = trim($website['capa_empresa'] ?? '');
 $telefone_principal = !empty($empresa['telefone']) ? $empresa['telefone'] : ($empresa['telefone_contato'] ?? '');
 $email_principal    = !empty($empresa['email_empresa']) ? $empresa['email_empresa'] : ($empresa['email_contato'] ?? '');
-$morada_completa    = trim(($empresa['morada'] ?? '') . ' ' . ($empresa['codigo_postal'] ?? ''));
+$morada             = trim($empresa['morada'] ?? '');
+$codigo_postal      = trim($empresa['codigo_postal'] ?? '');
+$morada_completa    = trim($morada . ' ' . $codigo_postal);
 
 $hero_style      = !empty($capa) ? "background-image: url('" . htmlspecialchars($capa, ENT_QUOTES) . "');" : '';
 
@@ -140,7 +142,7 @@ $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
                             <div class="carousel-page">
                                 <?php foreach ($chunk as $servico): ?>
                                     <div class="service-card">
-                                        <h4><?= htmlspecialchars($servico['titulo_servico'] ?: ($servico['nome_servico'] ?? '')); ?></h4>
+                                        <h4><?= htmlspecialchars($servico['titulo_servico'] ?? ''); ?></h4>
                                         <p><?= nl2br(htmlspecialchars($servico['descricao_servico'] ?? '')); ?></p>
                                     </div>
                                 <?php endforeach; ?>
@@ -230,8 +232,18 @@ $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
                             <?= !empty($descricao) ? nl2br(htmlspecialchars($descricao)) : 'Somos uma empresa dedicada a prestar serviços de qualidade, com foco na satisfação dos nossos clientes.'; ?>
                         </p>
                         <div class="about-contact-card">
-                            <?php if (!empty($morada_completa)): ?>
-                                <p><i class="fas fa-location-dot"></i> <span><?= htmlspecialchars($morada_completa); ?></span></p>
+                            <?php if ($morada !== '' || $codigo_postal !== ''): ?>
+                                <p class="about-address">
+                                    <i class="fas fa-location-dot"></i>
+                                    <span class="about-address-details">
+                                        <?php if ($morada !== ''): ?>
+                                            <span class="about-address-street"><?= htmlspecialchars($morada); ?></span>
+                                        <?php endif; ?>
+                                        <?php if ($codigo_postal !== ''): ?>
+                                            <span class="about-address-postcode"><?= htmlspecialchars($codigo_postal); ?></span>
+                                        <?php endif; ?>
+                                    </span>
+                                </p>
                             <?php endif; ?>
                             <?php if (!empty($telefone_principal)): ?>
                                 <p><i class="fas fa-phone"></i> <span><?= htmlspecialchars($telefone_principal); ?></span></p>
@@ -341,6 +353,18 @@ $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
                 d.classList.toggle('active', i === current)
             );
         }
+        function showWithSlide(index, direction) {
+            current = index;
+            update();
+
+            const panel = lb.querySelector('.lb-panel');
+            const animationClass = direction === 'next' ? 'slide-next' : 'slide-prev';
+            panel.classList.remove('slide-next', 'slide-prev');
+            void panel.offsetWidth;
+            panel.classList.add(animationClass);
+
+            window.setTimeout(() => panel.classList.remove(animationClass), 280);
+        }
 
         function openLb(idx) {
             current = idx;
@@ -386,10 +410,46 @@ $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
 
         // Zoom ao clicar na imagem
         lbImg.addEventListener('click', () => {
+            if (swipeFinished) {
+                swipeFinished = false;
+                return;
+            }
+
             zoomed = !zoomed;
             lbImg.style.transform = zoomed ? 'scale(2)' : 'scale(1)';
             lbImg.classList.toggle('zoomed', zoomed);
         });
+
+        // Swipe horizontal no popup: esquerda avanca, direita recua.
+        const swipeArea = lb.querySelector('.lb-panel');
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let swipeFinished = false;
+
+        swipeArea.addEventListener('touchstart', event => {
+            if (event.touches.length !== 1) return;
+            touchStartX = event.touches[0].clientX;
+            touchStartY = event.touches[0].clientY;
+            swipeFinished = false;
+        }, { passive: true });
+
+        swipeArea.addEventListener('touchend', event => {
+            if (images.length < 2) return;
+
+            const deltaX = event.changedTouches[0].clientX - touchStartX;
+            const deltaY = event.changedTouches[0].clientY - touchStartY;
+            const minimumSwipe = 48;
+
+            if (Math.abs(deltaX) < minimumSwipe || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+
+            swipeFinished = true;
+            showWithSlide(
+                deltaX < 0
+                    ? (current + 1) % images.length
+                    : (current - 1 + images.length) % images.length,
+                deltaX < 0 ? 'next' : 'prev'
+            );
+        }, { passive: true });
 
         // Teclado: setas e Escape
         document.addEventListener('keydown', e => {
