@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 04-Maio-2026 às 13:48
--- Versão do servidor: 9.1.0
--- versão do PHP: 8.3.14
+-- Tempo de geração: 25-Jun-2026 às 10:48
+-- Versão do servidor: 8.4.7
+-- versão do PHP: 8.3.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `siteinstitucional`
+-- Base de dados: `siteinstitucional`
 --
 
 -- --------------------------------------------------------
@@ -41,16 +41,15 @@ CREATE TABLE IF NOT EXISTS `empresas` (
   `email_contato` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `empresas`
 --
 
 INSERT INTO `empresas` (`id`, `usuario_id`, `nome_empresa`, `morada`, `codigo_postal`, `telefone`, `email_empresa`, `nome_contato`, `telefone_contato`, `email_contato`) VALUES
-(35, 36, 'empresa 2', 'morada 2', 'postal2', 'AQSDD', 'ad@adad', 'adarwerwt ghg', 'dadfrwewe', 'adad@ASadsdfdgddsf'),
-(36, 37, 'IS4 - Informática e Serviços, Lda', 'Rua Acácio lino, 354', '4600-045 Amarante', '255431324', 'geral@is4.pt', 'Francisco Silva', '932537560', 'is4.francisco@gmail.com'),
-(39, 40, 'teste2', 'porto', '23348394920', '23282932032', 'goncalo.dinis.cs@gmail.com', 'teste2', '23282932032', 'goncalo.dinis.cs@gmail.com');
+(51, 52, 'is4', 'R. Acácio Lino 354', '4600-045', '255 431 324', '', '', '', ''),
+(50, 51, 'Calheiros Rave', 'caminho cimo de lajes', '4600-641', 'gabriel@gmail.com', '', 'Gabriel', '913852368', 'Calheiros-comercial@estagio.com');
 
 -- --------------------------------------------------------
 
@@ -63,22 +62,21 @@ CREATE TABLE IF NOT EXISTS `portfolio` (
   `id` int NOT NULL AUTO_INCREMENT,
   `empresa_id` int DEFAULT NULL,
   `imagem` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `titulo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `descricao_imagem` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   PRIMARY KEY (`id`),
   KEY `empresa_id` (`empresa_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `portfolio`
 --
 
-INSERT INTO `portfolio` (`id`, `empresa_id`, `imagem`, `descricao_imagem`) VALUES
-(30, 36, 'imagens/IS4 - Informática e Serviços, Lda/Imagem_Assist_tecnica.jpg', ''),
-(34, 36, 'imagens/IS4 - Informática e Serviços, Lda/279_800x800.png', ''),
-(36, 35, 'imagens/empresa 2/281_800x800.png', 'gege'),
-(32, 35, 'imagens/empresa 2/281_800x800.png', 'awedar'),
-(33, 36, 'imagens/IS4 - Informática e Serviços, Lda/275_800x800.png', 'pos'),
-(26, 35, 'imagens/empresa 2/azeitonas.jpg', '');
+INSERT INTO `portfolio` (`id`, `empresa_id`, `imagem`, `titulo`, `descricao_imagem`) VALUES
+(45, 40, '/projeto/imagens/40/69f9efefa8bd8.png', 'tese3', 'dfdfjlkasjflkassadf'),
+(56, 40, '/imagens/40/6a1417dad94af.png', '22323', '2323233232323'),
+(57, 50, '/imagens/50/6a1d90f9e2d97.png', 'titulo 2', 'DescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescrição'),
+(58, 50, '/imagens/50/6a1d910f7edd8.png', 'titulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotitulotit', 'DescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescrição');
 
 -- --------------------------------------------------------
 
@@ -94,19 +92,19 @@ CREATE TABLE IF NOT EXISTS `servicos` (
   `descricao_servico` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   PRIMARY KEY (`id`),
   KEY `empresa_id` (`empresa_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `servicos`
 --
 
 INSERT INTO `servicos` (`id`, `empresa_id`, `titulo_servico`, `descricao_servico`) VALUES
-(65, 35, 'sdgfsdg', 'dgdg'),
-(59, 36, 'asfdsff', 'sfsfdsf'),
-(62, 35, 'dgdg', 'dgdg'),
-(61, 35, 'Sobre Nós', 'dgdhdfhf\r\ndhdh\r\ndg\r\ndg'),
-(64, 36, 'qweqwe', 'qweq'),
-(66, 39, 'Serviço de teste', 'teste');
+(69, 40, 'WebDesigner', 'Fazemos o seu site, a sua escolha.'),
+(71, 40, 'Construção de Computador', 'Pede as peças e nos montamos!'),
+(72, 40, 'Impressora', 'Qualquer duvida que tenha com uma deles, pergunte a nós que resolvemos'),
+(90, 40, 'asdfasdfadf', 'dasdf'),
+(106, 50, 'Troca1', ''),
+(107, 50, 'Troca', 'dwergthhkljiuyt');
 
 -- --------------------------------------------------------
 
@@ -124,17 +122,42 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `data_registro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Extraindo dados da tabela `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `tipo`, `data_registro`) VALUES
-(1, 'Estagiario', 'is4.estagio@gmail.com', '$2y$10$tmdSpIgdD8enIfe7T326Ae/F.4XLe7CfSrnxgTzTaH4rsSc7ujkee', 'admin', '2025-05-02 15:12:36'),
-(36, 'francisco', 'empresa@gmail.com', '$2y$10$c4A6ef23XVvSmS5camvXq./Xs5P/7yMviJTL/Ix5H3Ss6R4T/i2WS', 'cliente', '2025-06-06 14:39:56'),
-(37, 'Francisco Silva', 'geral@is4.pt', '$2y$10$V8tjG0nsh.BSzxHuPDzTNOWlsyuQvUP8cQalgiQhvtQWIGnqS4rqG', 'cliente', '2025-06-06 14:47:18'),
-(40, 'teste2', 'goncalo.dinis.cs@gmail.com', '$2y$10$GN6POOnTcL3G3xolZQAMZ.tFRUxIDIkRQ0wb1u2p9N3qIpESvY3mm', 'cliente', '2026-04-15 09:06:09');
+(52, 'Estagiario', 'is4.estagio@gmail.com', '$2y$10$ft6Y1cAg4eQUftaEV8bysuS0Co20YxykG4nZAAct87BMNscNnO7k6', 'admin', '2026-06-05 16:09:59'),
+(50, 'teste9', 'xtnanqq@gmail.com', '$2y$10$Wm.uHUTwlAhMTVGfMDi5P.2bD.pLHZPFLnMpNUSk/GeEfoR/D735S', 'cliente', '2026-05-26 13:50:40'),
+(41, 'Francisco Silva', 'xtnanq@gmail.com', '$2y$10$ICMyrBg0Q4fsfpWP5Wz8WOCRuld9qm37Cw21B.xJLwrRxjdiH4/rS', 'cliente', '2026-05-05 09:47:39'),
+(49, 'Miguel Faria', 'miguelleonardo07777@gmail.com', '$2y$10$l7hv5Hxro5d.OKuDcWh/pOG/qhFXqiqcbfKM/CtzLCzx3CWyAv9Ti', 'cliente', '2026-05-26 10:33:07'),
+(44, 'asdfasdfas', 'xt@gmail.com', '$2y$10$mUCfzK9y4.mV434220uxdehBh1XnXtk76r6vuV1cd9350PY81Ghui', 'cliente', '2026-05-05 15:49:39'),
+(47, 'Faria', 'iiisss@gmail.com', '$2y$10$6L6NmI3hpASjCCtRUUwkf.Kf4BRl2e2jFdJaOH3d4XH.7xfiQ2ZeS', 'cliente', '2026-05-19 13:56:45'),
+(51, 'Gabriel Costa', 'gabriel@gmail.com', '$2y$10$5/uAhhQ2j8BsHC6qHHua3eWhKzoHN4zQniYcfyLqxeO1Cl0pJrtVi', 'cliente', '2026-06-01 14:01:23');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `website`
+--
+
+DROP TABLE IF EXISTS `website`;
+CREATE TABLE IF NOT EXISTS `website` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `empresa_id` int NOT NULL,
+  `descricao_empresa` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `logotipo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `capa_empresa` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `link_facebook` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `link_instagram` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `link_x` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `empresa_id` (`empresa_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -148,13 +171,29 @@ CREATE TABLE IF NOT EXISTS `website_config` (
   `empresa_id` int NOT NULL,
   `logotipo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `capa_empresa` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `hero_titulo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '',
+  `hero_subtitulo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '',
+  `hero_botao_texto` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '',
+  `hero_botao_link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '',
   `descricao_empresa` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `link_facebook` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `link_instagram` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `link_x` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `url_site` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email_formulario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `cor_primaria` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '#1a1a1a',
+  `cor_secundaria` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '#555555',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_empresa` (`empresa_id`),
   KEY `empresa_id` (`empresa_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `website_config`
+--
+
+INSERT INTO `website_config` (`id`, `empresa_id`, `logotipo`, `capa_empresa`, `hero_titulo`, `hero_subtitulo`, `hero_botao_texto`, `hero_botao_link`, `descricao_empresa`, `link_facebook`, `link_instagram`, `link_x`, `url_site`, `email_formulario`, `cor_primaria`, `cor_secundaria`) VALUES
+(11, 50, '../imagens/calheiros-rave/logotipo.jpeg', '../imagens/calheiros-rave/capa.png', 'Bem-vindo á nossa empresa', 'operacional desde 2010', '', '', 'DescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescriçãoDescrição', '', '', '', 'calheiros-rave', 'geral.gabriel@gmail.com', '#0040ff', '#ff9500');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
