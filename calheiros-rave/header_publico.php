@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $is_tenant = (basename(__DIR__) !== 'template');
 if ($is_tenant) {
     $link_home = "./";
@@ -30,7 +30,7 @@ if ($is_tenant) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/site_publico.css?v=20260623-footer-address">
+    <link rel="stylesheet" href="../css/site_publico.css?v=20260625-scrollbar-normal">
     <?php
     $cor_primaria = $website['cor_primaria'] ?? '#1a1a1a';
     $cor_secundaria = $website['cor_secundaria'] ?? '#555555';
