@@ -124,6 +124,7 @@ body {
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    transform: translateX(-18px);
 }
 
 .navbar-right {
@@ -459,8 +460,8 @@ body {
     padding: 5px 16px;
     font-size: 0.78rem;
     font-weight: 700;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
+    letter-spacing: 0;
+    text-transform: none;
     margin-bottom: 14px;
 }
 
@@ -849,8 +850,8 @@ body {
 .footer-grid h5 {
     font-size: 0.8rem;
     font-weight: 700;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
+    letter-spacing: 0.2px;
+    text-transform: none;
     color: rgba(255, 255, 255, 0.88);
     margin-bottom: 18px;
 }
@@ -950,6 +951,10 @@ body {
 }
 
 @media (max-width: 768px) {
+    .navbar-left {
+        transform: translateX(-8px);
+    }
+
     .navbar-shell {
         padding: 0 16px;
     }

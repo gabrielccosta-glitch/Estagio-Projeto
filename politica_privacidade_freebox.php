@@ -10,7 +10,7 @@ $link_site = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Política de Privacidade - FreeBox</title>
+    <title>Política de privacidade - FreeBox</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -47,7 +47,7 @@ $link_site = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://
             <div class="privacy-container">
 
                 <h1 class="privacy-title">
-                    Política de Privacidade
+                    Política de privacidade
                 </h1>
 
                 <p class="privacy-subtitle">
@@ -165,7 +165,7 @@ $link_site = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://
                     <h2>9. Alterações desta política</h2>
 
                     <p>
-                        A presente Política de Privacidade poderá ser atualizada periodicamente,
+                        A presente Política de privacidade poderá ser atualizada periodicamente,
                         sem necessidade de aviso prévio, de forma a refletir melhorias,
                         alterações legais ou novas funcionalidades da plataforma.
                     </p>

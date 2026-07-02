@@ -187,15 +187,19 @@ $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
                                     $portfolioTitulo = trim($item['titulo'] ?? '');
                                     $portfolioDescricao = trim($item['descricao_imagem'] ?? '');
                                     $portfolioAlt = $portfolioTitulo !== '' ? $portfolioTitulo : ($portfolioDescricao !== '' ? $portfolioDescricao : 'Portfolio');
+                                    $portfolioCardTitulo = $portfolioTitulo !== '' ? $portfolioTitulo : 'Portfolio';
                                     ?>
                                     <div class="portfolio-card"
                                         data-index="<?= $globalIndex ?>"
                                         data-title="<?= htmlspecialchars($portfolioTitulo, ENT_QUOTES); ?>"
                                         data-description="<?= htmlspecialchars($portfolioDescricao, ENT_QUOTES); ?>">
-                                        <img src="<?= htmlspecialchars($item['imagem']); ?>"
-                                            alt="<?= htmlspecialchars($portfolioAlt); ?>">
-                                        <div class="overlay">
-                                            <i class="fas fa-magnifying-glass-plus"></i>
+                                        <div class="portfolio-card-title"><?= htmlspecialchars($portfolioCardTitulo); ?></div>
+                                        <div class="portfolio-card-image">
+                                            <img src="<?= htmlspecialchars($item['imagem']); ?>"
+                                                alt="<?= htmlspecialchars($portfolioAlt); ?>">
+                                            <div class="overlay">
+                                                <i class="fas fa-magnifying-glass-plus"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
@@ -219,7 +223,7 @@ $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
 <section id="sobre" class="about-section section-padding">
     <div class="container">
         <div class="section-header">
-            <h2 class="section-title">Sobre Nós</h2>
+            <h2 class="section-title">Sobre nós</h2>
             <div class="section-line"></div>
         </div>
         <div class="row about-grid">

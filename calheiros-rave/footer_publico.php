@@ -41,7 +41,7 @@
                     <div class="footer-col">
                         <h6 class="footer-col-title">Páginas</h6>
                         <ul>
-                            <li><a href="<?= $link_sobre; ?>">Sobre Nós</a></li>
+                            <li><a href="<?= $link_sobre; ?>">Sobre nós</a></li>
                             <?php if (!empty($servicos)): ?>
                                 <li><a href="<?= $link_servicos; ?>">Serviços</a></li>
                             <?php endif; ?>
@@ -58,12 +58,12 @@
                         <ul>
                             <li>
                                 <a href="<?= $link_politica; ?>">
-                                    Política de Privacidade
+                                    Política de privacidade
                                 </a>
                             </li>
                             <li>
                                 <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank">
-                                    Livro de Reclamações
+                                    Livro de reclamações
                                 </a>
                             </li>
                         </ul>

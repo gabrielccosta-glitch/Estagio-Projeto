@@ -170,8 +170,8 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 
             <div>
                 <h5>Legal</h5>
-                <a href="politica_privacidade_freebox.php">Política de Privacidade</a>
-                <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener">Livro de Reclamações</a>
+                <a href="politica_privacidade_freebox.php">Política de privacidade</a>
+                <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener">Livro de reclamações</a>
             </div>
 
             <div>

@@ -1,4 +1,7 @@
-﻿<?php
+<?php
+if (!headers_sent()) {
+    header('Content-Type: text/html; charset=UTF-8');
+}
 $is_tenant = (basename(__DIR__) !== 'template');
 if ($is_tenant) {
     $link_home = "./";
@@ -30,7 +33,7 @@ if ($is_tenant) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/site_publico.css?v=20260625-scrollbar-normal">
+    <link rel="stylesheet" href="../css/site_publico.css?v=20260702-portfolio-titles">
     <?php
     $cor_primaria = $website['cor_primaria'] ?? '#1a1a1a';
     $cor_secundaria = $website['cor_secundaria'] ?? '#555555';
@@ -179,9 +182,9 @@ if ($is_tenant) {
         .brand-logo {
             display: block;
             width: auto;
-            height: 70px;
-            max-width: 180px;
-            max-height: 70px;
+            height: 58px;
+            max-width: 150px;
+            max-height: 58px;
             object-fit: contain;
         }
 
@@ -355,7 +358,7 @@ if ($is_tenant) {
             color: #356096;
         }
 
-        /* ── MENU HAMBÚRGUER ── */
+        /* â”€â”€ MENU HAMBÃšRGUER â”€â”€ */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -408,7 +411,7 @@ if ($is_tenant) {
         .mobile-menu a:last-child { border-bottom: none; }
         .mobile-menu a:hover { color: #356096; }
 
-        /* ── SELETOR DE LÍNGUA ── */
+        /* â”€â”€ SELETOR DE LÃNGUA â”€â”€ */
         .lang-selector { position: relative; }
 
         .lang-btn {
@@ -463,7 +466,7 @@ if ($is_tenant) {
 
         .lang-option:hover { background: #f4f7fb; color: #356096; }
 
-        /* ── RESPONSIVO ── */
+        /* â”€â”€ RESPONSIVO â”€â”€ */
         @media (max-width: 1024px) {
             .nav-links { display: none; }
             .hamburger { display: flex; }
@@ -478,9 +481,101 @@ if ($is_tenant) {
             .carousel-page { grid-template-columns: 1fr; }
         }
     </style>
+    <style>
+        /* Transparent public navbar over hero */
+        body.transparent-header .public-navbar {
+            position: fixed !important;
+            left: 0 !important;
+            right: 0 !important;
+            top: 0 !important;
+            background: rgba(15, 23, 42, 0.28) !important;
+            border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+            box-shadow: none !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+        }
+
+        body.transparent-header .public-navbar.navbar-scrolled {
+            background: rgba(255, 255, 255, 0.94) !important;
+            border-bottom-color: #e2eaf5 !important;
+            box-shadow: 0 1px 4px rgba(53, 96, 150, 0.07) !important;
+        }
+
+        body.transparent-header .public-navbar .nav-links a {
+            color: rgba(255, 255, 255, 0.9) !important;
+            text-shadow: 0 1px 2px rgba(15, 23, 42, 0.25) !important;
+        }
+
+        body.transparent-header .public-navbar.navbar-scrolled .nav-links a {
+            color: #64748b !important;
+            text-shadow: none !important;
+        }
+
+        body.transparent-header .public-navbar .nav-links a::after {
+            background: #ffffff !important;
+        }
+
+        body.transparent-header .public-navbar.navbar-scrolled .nav-links a::after {
+            background: #356096 !important;
+        }
+
+        body.transparent-header .public-navbar .nav-links a:hover {
+            color: #ffffff !important;
+        }
+
+        body.transparent-header .public-navbar.navbar-scrolled .nav-links a:hover {
+            color: #356096 !important;
+        }
+
+        body.transparent-header .public-navbar .lang-btn {
+            background: rgba(255, 255, 255, 0.12) !important;
+            border-color: rgba(255, 255, 255, 0.45) !important;
+            color: #ffffff !important;
+        }
+
+        body.transparent-header .public-navbar .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.18) !important;
+            border-color: rgba(255, 255, 255, 0.75) !important;
+            color: #ffffff !important;
+        }
+
+        body.transparent-header .public-navbar.navbar-scrolled .lang-btn {
+            background: #f7f9fc !important;
+            border-color: #e2eaf5 !important;
+            color: #444 !important;
+        }
+
+        body.transparent-header .public-navbar.navbar-scrolled .lang-btn:hover {
+            background: #e8f1ff !important;
+            border-color: #356096 !important;
+            color: #356096 !important;
+        }
+
+        body.transparent-header .public-navbar .hamburger {
+            background: rgba(255, 255, 255, 0.12) !important;
+            border-color: rgba(255, 255, 255, 0.45) !important;
+        }
+
+        body.transparent-header .public-navbar .hamburger span {
+            background: #ffffff !important;
+        }
+
+        body.transparent-header .public-navbar.navbar-scrolled .hamburger {
+            background: transparent !important;
+            border-color: #e2eaf5 !important;
+        }
+
+        body.transparent-header .public-navbar.navbar-scrolled .hamburger span {
+            background: #1a2332 !important;
+        }
+    </style>
 </head>
 
-<body>
+<?php
+    $transparent_header = basename($_SERVER['SCRIPT_NAME'] ?? '') === 'index.php';
+?>
+<body class="<?= $transparent_header ? 'transparent-header' : ''; ?>">
 
     <header class="public-navbar">
         <div class="container navbar-inner">
@@ -499,17 +594,17 @@ if ($is_tenant) {
             <!-- LINKS DESKTOP -->
             <nav class="nav-links">
                 <?php if (!empty($servicos)): ?>
-                    <a href="<?= $link_servicos; ?>">Serviços</a>
+                    <a href="<?= $link_servicos; ?>">Servi&ccedil;os</a>
                 <?php endif; ?>
                 <?php if (!empty($portfolio)): ?>
-                    <a href="<?= $link_portfolio; ?>">Portfólio</a>
+                    <a href="<?= $link_portfolio; ?>">Portf&oacute;lio</a>
                 <?php endif; ?>
-                <a href="<?= $link_sobre; ?>">Sobre Nós</a>
+                <a href="<?= $link_sobre; ?>">Sobre n&oacute;s</a>
                 <a href="<?= $link_contato; ?>">Contacto</a>
             </nav>
 
             <div style="display:flex;align-items:center;gap:12px;">
-                <!-- SELETOR DE LÍNGUA -->
+                <!-- SELETOR DE LÃNGUA -->
                 <div class="lang-selector" id="langSelector">
                     <button class="lang-btn" id="langBtn">
                         <img id="langCurrent" src="https://flagcdn.com/w20/pt.png" width="18" alt="PT">
@@ -517,21 +612,21 @@ if ($is_tenant) {
                     </button>
                     <div class="lang-dropdown" id="langDropdown">
                         <button class="lang-option" onclick="changeLang('pt', 'https://flagcdn.com/w20/pt.png', 'PT')">
-                            <img src="https://flagcdn.com/w20/pt.png" width="18"> Português
+                            <img src="https://flagcdn.com/w20/pt.png" width="18"> Portugu&ecirc;s
                         </button>
                         <button class="lang-option" onclick="changeLang('en', 'https://flagcdn.com/w20/gb.png', 'EN')">
                             <img src="https://flagcdn.com/w20/gb.png" width="18"> English
                         </button>
                         <button class="lang-option" onclick="changeLang('es', 'https://flagcdn.com/w20/es.png', 'ES')">
-                            <img src="https://flagcdn.com/w20/es.png" width="18"> Español
+                            <img src="https://flagcdn.com/w20/es.png" width="18"> Espa&ntilde;ol
                         </button>
                         <button class="lang-option" onclick="changeLang('fr', 'https://flagcdn.com/w20/fr.png', 'FR')">
-                            <img src="https://flagcdn.com/w20/fr.png" width="18"> Français
+                            <img src="https://flagcdn.com/w20/fr.png" width="18"> Fran&ccedil;ais
                         </button>
                     </div>
                 </div>
 
-                <!-- HAMBÚRGUER -->
+                <!-- HAMBÃšRGUER -->
                 <button class="hamburger" id="hamburger" aria-label="Menu">
                     <span></span><span></span><span></span>
                 </button>
@@ -544,20 +639,27 @@ if ($is_tenant) {
     <nav class="mobile-menu" id="mobileMenu">
         <?php if (!empty($servicos)): ?>
             <a href="<?= $link_servicos; ?>"
-               onclick="closeMobile()">Serviços</a>
+               onclick="closeMobile()">Servi&ccedil;os</a>
         <?php endif; ?>
         <?php if (!empty($portfolio)): ?>
             <a href="<?= $link_portfolio; ?>"
-               onclick="closeMobile()">Portfólio</a>
+               onclick="closeMobile()">Portf&oacute;lio</a>
         <?php endif; ?>
         <a href="<?= $link_sobre; ?>"
-           onclick="closeMobile()">Sobre Nós</a>
+           onclick="closeMobile()">Sobre n&oacute;s</a>
         <a href="<?= $link_contato; ?>"
            onclick="closeMobile()">Contacto</a>
     </nav>
 
     <script>
-        // ── Hambúrguer ──
+        // â”€â”€ HambÃºrguer â”€â”€
+        const publicNavbar = document.querySelector('.public-navbar');
+        function updatePublicNavbarState() {
+            if (!publicNavbar) return;
+            publicNavbar.classList.toggle('navbar-scrolled', window.scrollY > 12);
+        }
+        updatePublicNavbarState();
+        window.addEventListener('scroll', updatePublicNavbarState, { passive: true });
         const hamburger  = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
 
@@ -578,7 +680,7 @@ if ($is_tenant) {
             }
         });
 
-        // ── Tradutor MyMemory ──
+        // â”€â”€ Tradutor MyMemory â”€â”€
         let originalTexts = [];
         let currentLang = 'pt';
 
@@ -666,3 +768,4 @@ if ($is_tenant) {
             document.getElementById('langDropdown').classList.remove('open');
         });
     </script>
+

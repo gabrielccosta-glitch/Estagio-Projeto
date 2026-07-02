@@ -85,7 +85,7 @@ include 'header_publico.php';
 <section class="section-padding">
     <div class="container" style="max-width: 1000px;">
 
-        <h1 class="section-title" style="font-size: 2.4rem; letter-spacing: 2px;">Política de Privacidade</h1>
+        <h1 class="section-title" style="font-size: 2.4rem; letter-spacing: 2px;">Política de privacidade</h1>
         <div class="section-line"></div>
 
         <div class="privacy-content">
@@ -207,9 +207,9 @@ include 'header_publico.php';
                 perda ou divulgação indevida.
             </p>
 
-            <h2>Livro de Reclamações</h2>
+            <h2>Livro de reclamações</h2>
 
-            <p>Pode aceder ao Livro de Reclamações Online através do link:</p>
+            <p>Pode aceder ao Livro de reclamações online através do link:</p>
 
             <p>
                 <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank">
@@ -219,7 +219,7 @@ include 'header_publico.php';
 
             <h2>Alterações à política</h2>
 
-            <p>Esta Política de Privacidade pode ser alterada sem aviso prévio.</p>
+            <p>Esta Política de privacidade pode ser alterada sem aviso prévio.</p>
 
             <h2>Legislação aplicável</h2>
 

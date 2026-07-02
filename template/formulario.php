@@ -92,7 +92,7 @@ include 'header_publico.php';
 
 <section class="about-section section-padding">
     <div class="container">
-        <h1 class="section-title" style="font-size: 2.0rem; letter-spacing: 2px; text-transform: none;">Formulário de Contacto</h1>
+        <h1 class="section-title" style="font-size: 2.0rem; letter-spacing: 2px; text-transform: none;">Formulário de contacto</h1>
         <div class="section-line"></div>
 
         <div class="row justify-content-center mt-4">

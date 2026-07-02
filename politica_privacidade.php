@@ -14,7 +14,7 @@ $link_site =
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Política de Privacidade</title>
+    <title>Política de privacidade</title>
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -53,7 +53,7 @@ $link_site =
             <div class="privacy-container">
 
                 <h1 class="privacy-title">
-                    Política de Privacidade
+                    Política de privacidade
                 </h1>
 
                 <p class="privacy-subtitle">
@@ -211,7 +211,7 @@ $link_site =
                     <h2>9. Alterações desta política</h2>
 
                     <p>
-                        Esta Política de Privacidade poderá ser atualizada periodicamente
+                        Esta Política de privacidade poderá ser atualizada periodicamente
                         de forma a refletir melhorias no website
                         ou alterações legislativas.
 

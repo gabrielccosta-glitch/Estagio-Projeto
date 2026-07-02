@@ -74,12 +74,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/imagens/' . $portfolio['empresa_id'] . '/';
         if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
-
-        $ext         = pathinfo($_FILES['portfolio_imagem']['name'], PATHINFO_EXTENSION);
-        $filename    = uniqid() . '.' . $ext;
+        $filename    = uniqid() . '.webp';
         $nova_imagem = '/imagens/' . $portfolio['empresa_id'] . '/' . $filename;
 
-        if (!move_uploaded_file($_FILES['portfolio_imagem']['tmp_name'], $upload_dir . $filename)) {
+        if (!guardarImagemWebp($_FILES['portfolio_imagem']['tmp_name'], $upload_dir . $filename, $file_type, 82)) {
             $_SESSION['error_message'] = "Erro ao fazer upload da nova imagem.";
             header("Location: editar_portfolio.php?id=" . $portfolio_id);
             exit();

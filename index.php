@@ -43,7 +43,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreeBox Sites | Criação de Websites Empresariais</title>
+    <title>FreeBox Sites | Criação de websites empresariais</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -60,7 +60,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
             <div class="navbar-left">
                 <a href="./" class="brand">
                     <img src="./imagens/logotipo_freebox.png" alt="FreeBox Sites"
-                        style="height: 70px; width: 70px; max-height: 100%; display: block;">
+                        style="height: 58px; width: 58px; max-height: 100%; display: block;">
                 </a>
             </div>
 
@@ -221,7 +221,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-circle-info"></i></div>
-                    <h4>Informações da Empresa</h4>
+                    <h4>Informações da empresa</h4>
                     <p>Nome, morada, telefone, email e contacto principal.</p>
                 </div>
 
@@ -313,7 +313,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
 
             <div>
                 <h5>Legal</h5>
-                <a href="politica_privacidade_freebox.php">Política de Privacidade</a>
+                <a href="politica_privacidade_freebox.php">Política de privacidade</a>
                 <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener">Livro de
                     Reclamações</a>
             </div>
@@ -442,8 +442,7 @@ if ($esta_logado && $tipo_usuario === 'admin') {
         document.addEventListener('click', function () {
             document.getElementById('langDropdown').classList.remove('open');
         });
-
-        const hamburger = document.getElementById('hamburger');
+const hamburger = document.getElementById('hamburger');
         const mobileNav = document.getElementById('mobileNav');
 
         hamburger.addEventListener('click', function (e) {

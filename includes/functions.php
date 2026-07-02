@@ -192,4 +192,69 @@ function eliminarDiretorio($dir)
 
     return rmdir($dir);
 }
+
+function guardarImagemWebp($ficheiro_temporario, $destino_webp, $mime_type = null, $qualidade = 82)
+{
+    if (!extension_loaded('gd') || !function_exists('imagewebp')) {
+        return false;
+    }
+
+    if (empty($ficheiro_temporario) || !is_file($ficheiro_temporario)) {
+        return false;
+    }
+
+    $mime_type = $mime_type ?: mime_content_type($ficheiro_temporario);
+    $imagem = false;
+
+    switch ($mime_type) {
+        case 'image/jpeg':
+        case 'image/pjpeg':
+            $imagem = @imagecreatefromjpeg($ficheiro_temporario);
+            break;
+
+        case 'image/png':
+            $imagem = @imagecreatefrompng($ficheiro_temporario);
+            if ($imagem && function_exists('imagepalettetotruecolor')) {
+                imagepalettetotruecolor($imagem);
+            }
+            if ($imagem) {
+                imagealphablending($imagem, true);
+                imagesavealpha($imagem, true);
+            }
+            break;
+
+        case 'image/gif':
+            $imagem = @imagecreatefromgif($ficheiro_temporario);
+            if ($imagem && function_exists('imagepalettetotruecolor')) {
+                imagepalettetotruecolor($imagem);
+            }
+            break;
+
+        case 'image/webp':
+            if (function_exists('imagecreatefromwebp')) {
+                $imagem = @imagecreatefromwebp($ficheiro_temporario);
+            }
+            break;
+    }
+
+    if (!$imagem) {
+        return false;
+    }
+
+    $diretorio = dirname($destino_webp);
+    if (!is_dir($diretorio) && !mkdir($diretorio, 0777, true)) {
+        imagedestroy($imagem);
+        return false;
+    }
+
+    $guardado = imagewebp($imagem, $destino_webp, $qualidade);
+    imagedestroy($imagem);
+
+    if ($guardado && file_exists($destino_webp)) {
+        @chmod($destino_webp, 0644);
+        return true;
+    }
+
+    return false;
+}
 ?>

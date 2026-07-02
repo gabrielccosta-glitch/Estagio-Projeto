@@ -144,7 +144,7 @@ include 'header_publico.php';
                         $tem_redes = !empty($website['link_facebook']) || !empty($website['link_instagram']) || !empty($website['link_x']);
                         if ($tem_redes): ?>
                             <div class="about-contact-card" style="margin-top: 16px;">
-                                <p style="font-weight:600; margin-bottom:8px;">Redes Sociais</p>
+                                <p style="font-weight:600; margin-bottom:8px;">Redes sociais</p>
                                 <?php if (!empty($website['link_facebook'])): ?>
                                     <p>
                                         <i class="fab fa-facebook-f"></i>

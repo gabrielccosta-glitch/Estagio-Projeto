@@ -87,9 +87,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (in_array($file_type, $allowed) && $_FILES['logotipo']['size'] <= 2 * 1024 * 1024) {
                 $upload_dir = '../imagens/' . $nome_pasta . '/';
                 if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
-                $ext      = pathinfo($_FILES['logotipo']['name'], PATHINFO_EXTENSION);
-                $logotipo = '../imagens/' . $nome_pasta . '/logotipo.' . $ext;
-                move_uploaded_file($_FILES['logotipo']['tmp_name'], $upload_dir . 'logotipo.' . $ext);
+                $logotipo = '../imagens/' . $nome_pasta . '/logotipo.webp';
+                if (!guardarImagemWebp($_FILES['logotipo']['tmp_name'], $upload_dir . 'logotipo.webp', $file_type, 82)) {
+                    $_SESSION['error_message'] = "Erro ao converter o logotipo para WEBP.";
+                    header("Location: empresa_website.php?id=$empresa_id&show_message=1");
+                    exit();
+                }
             } else {
                 $_SESSION['error_message'] = "Logotipo inválido. Use JPG, PNG, GIF ou WEBP até 2MB.";
                 header("Location: empresa_website.php?id=$empresa_id&show_message=1");
@@ -127,9 +130,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (in_array($file_type, $allowed) && $_FILES['capa_empresa']['size'] <= 5 * 1024 * 1024) {
             $upload_dir = '../imagens/' . $nome_pasta . '/';
             if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
-            $ext          = pathinfo($_FILES['capa_empresa']['name'], PATHINFO_EXTENSION);
-            $capa_empresa = '../imagens/' . $nome_pasta . '/capa.' . $ext;
-            move_uploaded_file($_FILES['capa_empresa']['tmp_name'], $upload_dir . 'capa.' . $ext);
+            $capa_empresa = '../imagens/' . $nome_pasta . '/capa.webp';
+            if (!guardarImagemWebp($_FILES['capa_empresa']['tmp_name'], $upload_dir . 'capa.webp', $file_type, 82)) {
+                $_SESSION['error_message'] = "Erro ao converter a capa para WEBP.";
+                header("Location: empresa_website.php?id=$empresa_id&show_message=1");
+                exit();
+            }
         } else {
             $_SESSION['error_message'] = "Capa inválida. Use JPG, PNG, GIF ou WEBP até 5MB.";
             header("Location: empresa_website.php?id=$empresa_id&show_message=1");

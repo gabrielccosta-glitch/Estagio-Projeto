@@ -83,7 +83,7 @@ function assetHomeUrl($path)
             <div class="navbar-left">
                 <a href="./" class="brand">
                     <img src="./imagens/logotipo_freebox.png" alt="FreeBox Sites"
-                        style="height: 70px; width: 70px; max-height: 100%; display: block;">
+                        style="height: 58px; width: 58px; max-height: 100%; display: block;">
                 </a>
             </div>
 
@@ -152,7 +152,7 @@ function assetHomeUrl($path)
     <main class="sites-page">
         <section class="sites-hero">
             <div class="container sites-hero-inner">
-                <h1>Empresas com site Online</h1>
+                <h1>Empresas com site online</h1>
                 <p>Explora as empresas que j&aacute; t&ecirc;m o website criado na FreeBox Sites. Cada card abre diretamente o site p&uacute;blico da empresa.</p>
             </div>
         </section>

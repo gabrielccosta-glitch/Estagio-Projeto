@@ -209,7 +209,7 @@ $tem_conteudo  = $tem_titulo || $tem_subtitulo || $tem_botao;
 <section id="sobre" class="about-section section-padding">
     <div class="container">
         <div class="section-header">
-            <h2 class="section-title">Sobre Nós</h2>
+            <h2 class="section-title">Sobre nós</h2>
             <div class="section-line"></div>
         </div>
         <div class="row about-grid">

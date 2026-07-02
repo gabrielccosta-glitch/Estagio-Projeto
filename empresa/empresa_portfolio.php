@@ -49,12 +49,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['adicionar_portfolio'])
 
         $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/imagens/' . $empresa_id . '/';
         if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
-
-        $ext           = pathinfo($_FILES['portfolio_imagem']['name'], PATHINFO_EXTENSION);
-        $filename      = uniqid() . '.' . $ext;
+        $filename      = uniqid() . '.webp';
         $uploaded_file = '/imagens/' . $empresa_id . '/' . $filename;
 
-        if (move_uploaded_file($_FILES['portfolio_imagem']['tmp_name'], $upload_dir . $filename)) {
+        if (guardarImagemWebp($_FILES['portfolio_imagem']['tmp_name'], $upload_dir . $filename, $file_type, 82)) {
             $insert_sql  = "INSERT INTO portfolio (empresa_id, imagem, titulo, descricao_imagem) VALUES (?, ?, ?, ?)";
             $insert_stmt = $conn->prepare($insert_sql);
             $insert_stmt->bind_param("isss", $empresa_id, $uploaded_file, $titulo, $descricao_imagem);
